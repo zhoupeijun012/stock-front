@@ -1,119 +1,141 @@
 <template>
-    <div class="layout-warp" ref="z-table">
-      <div class="layout-table-warp">
-        <div class="tool-bar">
-          <div class="left">更新时间：{{$store.state.lastUpdate}}</div>
-          <div class="right">
-            <div
-              class="full-icon"
-              v-if="!inFull"
-              @click="requestFullScreen"
-              title="全屏"
-            ></div>
-            <div class="exit-icon" v-if="inFull" @click="exitFull" title="退出全屏"></div>
-          </div>
-        </div>
-        <div class="bottom-warp">
-            <slot></slot>
+  <div class="layout-warp" ref="z-table">
+    <div class="layout-table-warp"ref="layout-table-warp" >
+      <div class="tool-bar">
+        <div class="left">更新时间：{{ $store.state.lastUpdate }}</div>
+        <div class="right">
+          <switch-icon
+            open-title="列表"
+            :open-icon="require('@/assets/列表.png')"
+            close-title="平铺"
+            :close-icon="require('@/assets/平铺.png')"
+            @open="type = 'list'"
+            @close="type = 'flat'"
+          ></switch-icon>
+          <switch-icon
+            open-title="截图"
+            style="margin-left: 10px"
+            :open-icon="require('@/assets/快照.png')"
+            close-title="截图"
+            :close-icon="require('@/assets/快照.png')"
+            @open="capture"
+            @close="capture"
+          ></switch-icon>
+          <switch-icon
+            open-title="全屏"
+            style="margin-left: 10px"
+            :open-icon="require('@/assets/全屏.png')"
+            close-title="退出全屏"
+            :close-icon="require('@/assets/退出全屏.png')"
+            @open="requestFullScreen"
+            @close="exitFull"
+          ></switch-icon>
         </div>
       </div>
+      <div class="bottom-warp">
+        <slot :type="type"></slot>
+      </div>
     </div>
-  </template>
-  <script lang="js">
-  export default {
-    data() {
-      return {
-        inFull: false,
-      }
+  </div>
+</template>
+<script lang="js">
+import switchIcon from './switch-icon.vue';
+import html2canvas from 'html2canvas';
+export default {
+  components: { switchIcon },
+  data() {
+    return {
+      type: 'list'
+    }
+  },
+  methods: {
+    requestFullScreen() {
+      // 获取要全屏显示的元素
+      var element = this.$refs['z-table'];
+      // 请求全屏
+      element.requestFullscreen().then(function () {
+        console.log("进入全屏模式");
+      }).catch(function (error) {
+        console.error("无法进入全屏模式:", error);
+      });
     },
-    methods: {
-      requestFullScreen() {
-        // 获取要全屏显示的元素
-        var element = this.$refs['z-table'];
-        this.inFull = true;
-        // 请求全屏
-        element.requestFullscreen().then(function () {
-          console.log("进入全屏模式");
-        }).catch(function (error) {
-          console.error("无法进入全屏模式:", error);
-        });
-      },
-      //退出全屏 判断浏览器种类
-      exitFull() {
-        this.inFull = false;
-        document.exitFullscreen().then(function () {
-          console.log("退出全屏模式");
-        }).catch(function (error) {
-          console.error("无法退出全屏模式:", error);
-        });
-      }
+    //退出全屏 判断浏览器种类
+    exitFull() {
+      document.exitFullscreen().then(function () {
+        console.log("退出全屏模式");
+      }).catch(function (error) {
+        console.error("无法退出全屏模式:", error);
+      });
     },
-  
+    capture() {
+      html2canvas(this.$refs['layout-table-warp']).then((canvas) => {
+        canvas.toBlob((blob) => {
+          const imgUrl = URL.createObjectURL(blob)
+          const a = document.createElement('a');
+          a.href = imgUrl;
+          a.download = '快照.png';
+          a.click();
+          window.URL.revokeObjectURL(imgUrl);
+        }, 'image/png');
+      });
+
+    }
+  },
+
+}
+</script>
+
+<style lang="less" scoped>
+.layout-warp {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+
+  .layout-table-warp {
+    box-sizing: border-box;
+    position: relative;
+    border: 1px solid #e3e4e5;
+    padding: 32px 0 12px;
+    height: 100%;
   }
-  </script>
-  
-  <style lang="less" scoped>
-  .layout-warp {
-    width: 100%;
+
+  .tool-bar {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: absolute;
+    left: 12px;
+    top: 0;
+    right: 12px;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .bottom-warp {
     height: 100%;
     box-sizing: border-box;
-    background: #fff;
-    position: relative;
-    overflow: hidden;
-    padding: 12px;
-    .layout-table-warp {
-      box-sizing: border-box;
-      position: relative;
-      border: 1px solid #e3e4e5;
-      padding: 32px 0 12px;
-      height: 100%;
-    }
-  
-    .tool-bar {
-      display: flex;
-      justify-content: space-between;
-      box-sizing: border-box;
-      position: absolute;
-      left: 12px;
-      top: 0;
-      right: 12px;
-      height: 40px;
-      line-height: 40px;
-    }
-  
-    .bottom-warp {
-      height: 100%;
-      box-sizing: border-box;
-    }
-  
-    .table-title {
-      padding: 0 5px;
-      line-height: 16px;
-    }
-  
-    .table-content {
-      height: calc(100% - 16px);
-    }
   }
-  
-  .full-icon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: url("~@/assets/全屏.png");
-    background-size: cover;
-    margin-top: 10px;
-    cursor: pointer;
+
+  .table-title {
+    padding: 0 5px;
+    line-height: 16px;
   }
-  
-  .exit-icon {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    background: url("~@/assets/退出全屏.png");
-    background-size: cover;
-    margin-top: 10px;
-    cursor: pointer;
+
+  .table-content {
+    height: calc(100% - 16px);
   }
-  </style>
-  
+}
+
+/deep/.happy-scroll-container .happy-scroll-content {
+  display: block !important;
+}
+
+/deep/ .happy-scroll-container {
+  padding-right: 22px !important;
+  box-sizing: border-box;
+}
+</style>

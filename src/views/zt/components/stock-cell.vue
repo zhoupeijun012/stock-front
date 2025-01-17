@@ -37,22 +37,24 @@ export default {
 <style lang="less" scoped>
 .stock-cell {
   display: flex;
-  border: 1px solid #e3e4e5;
-  width: calc(25% - 22px);
+  width: 100%;
   float: left;
   font-size: 14px;
   line-height: 28px;
-  border-radius: 4px;
   box-sizing: border-box;
-  padding: 4px;
   cursor: pointer;
-  margin: 5px;
+  margin-top: 2px;
+  justify-content: center;
+  border: 1px solid #e3e4e5;
+  border-radius: 4px;
   .name {
     width: 60px;
+    color: #003398;
   }
   .lb {
     margin-left: 4px;
     width: 50px;
+    color: #ff0000;
   }
   .prec {
     margin-left: 4px;

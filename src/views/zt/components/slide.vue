@@ -72,7 +72,7 @@ export default {
   .slide-icon {
     right: 0;
     top: 50%;
-    width: 30px;
+    width: 18px;
     height: 60px;
     transform: translate(100%, -50%);
   }
@@ -98,7 +98,7 @@ export default {
   .slide-icon {
     left: 0;
     top: 50%;
-    width: 30px;
+    width: 18px;
     height: 60px;
     transform: translate(-100%, -50%);
   }
@@ -124,7 +124,7 @@ export default {
     left: 50%;
     top: 0;
     width: 60px;
-    height: 30px;
+    height: 18px;
     transform: translate(-50%, -100%);
     transform-origin: center center;
   }
@@ -151,7 +151,7 @@ export default {
     bottom: 0;
     transform: translate(-50%, 100%);
     width: 60px;
-    height: 30px;
+    height: 18px;
   }
   &.open {
     transform: translateY(0);

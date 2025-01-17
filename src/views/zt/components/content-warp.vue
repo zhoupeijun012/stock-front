@@ -60,6 +60,9 @@ export default {
     height: 100%;
     padding: 12px;
   }
+  .scroll-warp {
+    width: 100%;
+  }
 }
 .table-title {
   //   padding: 0 5px;
