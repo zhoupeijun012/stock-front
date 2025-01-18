@@ -1,10 +1,11 @@
 <template>
-  <layout-warp :lastUpdate="$store.state.zt.lastUpdate">
+  <layout-warp :lastUpdate="lastUpdate">
     <template slot="layout-right">
       <switch-icon open-title="列表" :open-icon="require('@/assets/列表.png')" close-title="平铺"
-        :close-icon="require('@/assets/平铺.png')" :open="open" @open="$store.commit($STORE_TYPES.UPDATE_SHOW_TYPE ,'list')" @close="$store.commit($STORE_TYPES.UPDATE_SHOW_TYPE ,'flat')"></switch-icon>
+        :close-icon="require('@/assets/平铺.png')" :open="open" @open="switchType('list')"
+        @close="switchType('flat')"></switch-icon>
     </template>
-    <content-warp v-bind="$attrs" :title="title" >
+    <content-warp v-bind="$attrs" :title="title">
       <template v-if="type == 'flat'">
         <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
       </template>
@@ -12,10 +13,10 @@
         <sc-table :cloumns="cloumns" :options="options" :table-data="tableData"></sc-table>
       </template>
     </content-warp>
-    <slide direction="bottom" append-to-body width="90%">
-      <layout-warp :lastUpdate="$store.state.zt.lastUpdate">
-        <content-warp title="数据统计">
-          4343
+    <slide direction="bottom" append-to-body width="50%">
+      <layout-warp :lastUpdate="lastUpdate">
+        <content-warp title="设置">
+          <setting-pane></setting-pane>
         </content-warp>
       </layout-warp>
     </slide>
@@ -28,8 +29,11 @@ import Slide from '@/components/slide';
 import scTable from '@/components/sc-table';
 import scFlat from '@/components/sc-flat';
 import switchIcon from '@/components/switch-icon';
+import { mapGetters, mapState, mapMutations } from 'vuex';
+import * as STORE_TYPES from '@/store/store_types';
+import SettingPane from './components/setting-pane.vue';
 export default {
-  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon },
+  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon,SettingPane },
   data() {
     return {
       cloumns: [
@@ -45,8 +49,8 @@ export default {
         }, {
           title: '涨跌幅',
           prop: 'zdp',
-          color: (row)=>{
-            if(row.zdp > 0 ) {
+          color: (row) => {
+            if (row.zdp > 0) {
               return '#f00'
             } else {
               return 'green'
@@ -173,25 +177,30 @@ export default {
           }
         }
       },
+
     }
   },
   computed: {
+    ...mapState('zt', {
+      lastUpdate: 'lastUpdate',
+      type: 'showType'
+    }),
+    ...mapGetters('zt', [
+      'tableData',
+      'tabeleHeader'
+    ]),
     title() {
       return `触及涨停:${this.tableData.length}只`
     },
     open() {
       return this.type == 'list'
     },
-    type() {
-      return this.$store.state.zt.showType;
-    },
-    tableData() {
-      return this.$store.state.zt.list;
-    },
-    tabeleHeader() {
-      return this.$store.state.zt.tabeleHeader;
-    }
   },
+  methods: {
+    ...mapMutations('zt', {
+      switchType: STORE_TYPES.UPDATE_SHOW_TYPE,
+    }),
+  }
 }
 </script>
 

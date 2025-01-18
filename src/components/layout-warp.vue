@@ -7,7 +7,7 @@
           <slot name="layout-right"></slot>
           <switch-icon open-title="截图" style="margin-left: 10px" :open-icon="require('@/assets/快照.png')"
             close-title="截图" :close-icon="require('@/assets/快照.png')" @open="capture" @close="capture"></switch-icon>
-          <switch-icon open-title="全屏" style="margin-left: 10px" :open="isFull" :open-icon="require('@/assets/全屏.png')"
+          <switch-icon open-title="全屏" style="margin-left: 10px" :open="fullScreen" :open-icon="require('@/assets/全屏.png')"
             close-title="退出全屏" :close-icon="require('@/assets/退出全屏.png')" @open="requestFullScreen"
             @close="exitFull"></switch-icon>
         </div>
@@ -21,6 +21,7 @@
 <script lang="js">
 import switchIcon from './switch-icon.vue';
 import html2canvas from 'html2canvas';
+import { mapState,mapMutations } from 'vuex';
 export default {
   props: {
     lastUpdate: {
@@ -29,17 +30,20 @@ export default {
     }
   },
   components: { switchIcon },
-  data() {
-    return {
-      isFull: false
-    }
+  computed: {
+    ...mapState([
+      'fullScreen'
+    ])
   },
   methods: {
+    ...mapMutations([
+      'switchFull'
+    ]),
     requestFullScreen() {
       // 获取要全屏显示的元素
       var element = this.$refs['z-table'];
       // 请求全屏
-      this.isFull = true;
+     this.switchFull(true);
       element.requestFullscreen().then(function () {
         console.log("进入全屏模式");
       }).catch(function (error) {
@@ -48,7 +52,7 @@ export default {
     },
     //退出全屏 判断浏览器种类
     exitFull() {
-      this.isFull = false;
+      this.switchFull(false);
       document.exitFullscreen().then(function () {
         console.log("退出全屏模式");
       }).catch(function (error) {

@@ -13,6 +13,8 @@
 import zt from '@/views/zt';
 import unZt from '@/views/un-zt';
 import zb from '@/views/zb';
+import { mapActions } from 'vuex';
+import * as STORE_TYPES from '@/store/store_types';
 export default {
   components: {  zt, unZt, zb },
   data() {
@@ -21,12 +23,14 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch(this.$STORE_TYPES.UPDATE_LIST_TODAY_ACTION).then(()=>{
+    this.getToday().then(()=>{
 
     })
   },
   methods: {
-
+    ...mapActions('zt',{
+      getToday: STORE_TYPES.UPDATE_LIST_TODAY_ACTION
+    })
   },
 }
 </script>
