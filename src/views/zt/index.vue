@@ -1,10 +1,10 @@
 <template>
-  <layout-warp>
+  <layout-warp :lastUpdate="$store.state.zt.lastUpdate">
     <template slot="layout-right">
       <switch-icon open-title="列表" :open-icon="require('@/assets/列表.png')" close-title="平铺"
         :close-icon="require('@/assets/平铺.png')" :open="open" @open="$store.commit($STORE_TYPES.UPDATE_SHOW_TYPE ,'list')" @close="$store.commit($STORE_TYPES.UPDATE_SHOW_TYPE ,'flat')"></switch-icon>
     </template>
-    <content-warp v-bind="$attrs" :title="title" :lastUpdate="$store.state.zt.lastUpdate">
+    <content-warp v-bind="$attrs" :title="title" >
       <template v-if="type == 'flat'">
         <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
       </template>
@@ -13,7 +13,7 @@
       </template>
     </content-warp>
     <slide direction="bottom" append-to-body width="90%">
-      <layout-warp>
+      <layout-warp :lastUpdate="$store.state.zt.lastUpdate">
         <content-warp title="数据统计">
           4343
         </content-warp>
@@ -45,7 +45,13 @@ export default {
         }, {
           title: '涨跌幅',
           prop: 'zdp',
-          color: '#f00',
+          color: (row)=>{
+            if(row.zdp > 0 ) {
+              return '#f00'
+            } else {
+              return 'green'
+            }
+          },
           formatter: (row) => {
             return parseInt(row.zdp * 100) / 100 + '%'
           }

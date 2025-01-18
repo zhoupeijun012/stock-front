@@ -97,6 +97,7 @@ export default {
           item['zb'] = true;
         })
         const list = [...ztData,...zbData];
+        list.sort((cur,next)=>cur.fbt - next.fbt);
         commit(StoreTypes.UPDATE_LIST,list);
         commit(StoreTypes.UPDATE_TIME);
         commit(StoreTypes.UPDATE_HEADER);
@@ -111,6 +112,7 @@ export default {
           item['zb'] = true;
         })
         const list = [...ztData,...zbData];
+        list.sort((cur,next)=>cur.fbt - next.fbt);
         commit(StoreTypes.UPDATE_LIST,list);
         commit(StoreTypes.UPDATE_TIME);
         commit(StoreTypes.UPDATE_HEADER);

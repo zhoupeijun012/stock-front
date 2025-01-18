@@ -92,6 +92,7 @@ export default {
   actions: {
     async [StoreTypes.UPDATE_LIST_YESTERDAY_ACTION]({ commit }) {
       const zrztData = (await getZRZT()).data.pool || [];
+      zrztData.sort((cur,next)=>cur.fbt - next.fbt);
       commit(StoreTypes.UPDATE_LIST, zrztData);
       commit(StoreTypes.UPDATE_TIME);
       commit(StoreTypes.UPDATE_HEADER);
