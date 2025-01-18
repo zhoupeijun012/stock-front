@@ -1,39 +1,19 @@
 <template>
   <div class="layout-warp" ref="z-table">
-    <div class="layout-table-warp"ref="layout-table-warp" >
+    <div class="layout-table-warp" ref="layout-table-warp">
       <div class="tool-bar">
-        <div class="left">更新时间：{{ $store.state.lastUpdate }}</div>
+        <div class="left">更新时间：{{ lastUpdate }}</div>
         <div class="right">
-          <switch-icon
-            open-title="列表"
-            :open-icon="require('@/assets/列表.png')"
-            close-title="平铺"
-            :close-icon="require('@/assets/平铺.png')"
-            @open="type = 'list'"
-            @close="type = 'flat'"
-          ></switch-icon>
-          <switch-icon
-            open-title="截图"
-            style="margin-left: 10px"
-            :open-icon="require('@/assets/快照.png')"
-            close-title="截图"
-            :close-icon="require('@/assets/快照.png')"
-            @open="capture"
-            @close="capture"
-          ></switch-icon>
-          <switch-icon
-            open-title="全屏"
-            style="margin-left: 10px"
-            :open-icon="require('@/assets/全屏.png')"
-            close-title="退出全屏"
-            :close-icon="require('@/assets/退出全屏.png')"
-            @open="requestFullScreen"
-            @close="exitFull"
-          ></switch-icon>
+          <slot name="layout-right"></slot>
+          <switch-icon open-title="截图" style="margin-left: 10px" :open-icon="require('@/assets/快照.png')"
+            close-title="截图" :close-icon="require('@/assets/快照.png')" @open="capture" @close="capture"></switch-icon>
+          <switch-icon open-title="全屏" style="margin-left: 10px" :open="isFull" :open-icon="require('@/assets/全屏.png')"
+            close-title="退出全屏" :close-icon="require('@/assets/退出全屏.png')" @open="requestFullScreen"
+            @close="exitFull"></switch-icon>
         </div>
       </div>
       <div class="bottom-warp">
-        <slot :type="type"></slot>
+        <slot></slot>
       </div>
     </div>
   </div>
@@ -42,10 +22,16 @@
 import switchIcon from './switch-icon.vue';
 import html2canvas from 'html2canvas';
 export default {
+  props: {
+    lastUpdate: {
+      type: String,
+      default: ''
+    }
+  },
   components: { switchIcon },
   data() {
     return {
-      type: 'list'
+      isFull: false
     }
   },
   methods: {
@@ -53,6 +39,7 @@ export default {
       // 获取要全屏显示的元素
       var element = this.$refs['z-table'];
       // 请求全屏
+      this.isFull = true;
       element.requestFullscreen().then(function () {
         console.log("进入全屏模式");
       }).catch(function (error) {
@@ -61,6 +48,7 @@ export default {
     },
     //退出全屏 判断浏览器种类
     exitFull() {
+      this.isFull = false;
       document.exitFullscreen().then(function () {
         console.log("退出全屏模式");
       }).catch(function (error) {

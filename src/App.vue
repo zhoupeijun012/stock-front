@@ -10,7 +10,6 @@
   </div>
 </template>
 <script lang="js">
-import { getZT, getZB, getZRZT } from '@/api/index.js';
 import zt from '@/views/zt';
 import unZt from '@/views/un-zt';
 import zb from '@/views/zb';
@@ -18,46 +17,17 @@ export default {
   components: {  zt, unZt, zb },
   data() {
     return {
-      zt: [],
-      zb: [],
-      zrzt: []
+
     }
   },
   mounted() {
-    this.getToday();
-    // setInterval(() => {
-    //   this.getZT();
-    //   this.getZB();
-    //   this.$store.commit('updated');
-    // }, 3000);
+    this.$store.dispatch(this.$STORE_TYPES.UPDATE_LIST_TODAY_ACTION).then(()=>{
+
+    })
   },
   methods: {
-    getToday() {
-      this.getZT();
-      this.getZRZT();
-      this.getZB();
-      this.$store.commit('updated');
-    },
-    getZT() {
-      getZT().then((res) => {
-        this.zt = res.data.pool || [];
-        this.$refs['zt-ref'] && this.$refs['zt-ref'].refreshDate(this.zt);
-      })
-    },
-    getZB() {
-      getZB().then((res) => {
-        this.zb = res.data.pool || [];
-        this.$refs['zb-ref'] && this.$refs['zb-ref'].refreshDate(this.zb);
-      })
-    },
-    getZRZT() {
-      getZRZT().then((res) => {
-        this.zrzt = res.data.pool || [];
-        this.$refs['zrzt-ref'] && this.$refs['zrzt-ref'].refreshDate(this.zrzt);
-      })
-    }
-  },
 
+  },
 }
 </script>
 

@@ -1,15 +1,20 @@
 <template>
   <div class="exit-icon" :style="{
     backgroundImage: `url(${closeIcon})`,
-  }" v-if="inFull" @click="close" :title="closeTitle"></div>
-  <div class="full-icon" v-else @click="open" :title="openTitle" :style="{
+  }" v-if="open" @click="switchClose" :title="closeTitle"></div>
+  <div class="full-icon" v-else @click="switchOpen" :title="openTitle" :style="{
     backgroundImage: `url(${openIcon})`,
   }"></div>
 
 </template>
 <script lang="js">
+
 export default {
   props: {
+    open: {
+      type: Boolean,
+      default: true
+    },
     openTitle: {
       type: String,
       default: ''
@@ -28,17 +33,13 @@ export default {
   },
   data() {
     return {
-      inFull: false
     }
   },
   methods: {
-    open() {
-      this.inFull = true;
+    switchOpen() {
       this.$emit('open');
-
     },
-    close() {
-      this.inFull = false;
+    switchClose() {
       this.$emit('close');
     }
   }

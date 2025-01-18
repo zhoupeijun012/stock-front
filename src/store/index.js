@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import dayjs from 'dayjs';
+import zt from './modules/zt';
+import zrzt from './modules/zrzt';
+import * as STORE_TYPES from './store_types';
+Vue.prototype.$STORE_TYPES = STORE_TYPES;
 Vue.use(Vuex)
-
 export default new Vuex.Store({
-  state: {
-    lastUpdate: ''
-  },
-  mutations: {
-    updated(state) {
-      state.lastUpdate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    }
+  namespaced: true,
+  modules: {
+    zt,
+    zrzt
   }
 })

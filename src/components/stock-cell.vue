@@ -1,10 +1,10 @@
 <template>
-  <div class="stock-cell">
+  <div class="stock-cell" :style="cellStyle">
     <div class="name" v-if="showCloumn.includes('name')">
       {{ data.n }}
     </div>
-    <div class="lb" v-if="showCloumn.includes('lb')">
-      {{ (data.ylbc || data.lbc) <= 1 ? "首板" : `${(data.ylbc || data.lbc) }连板` }}
+    <div class="lb" v-if="showCloumn.includes('lb')" :style="textStyle">
+      {{ !data.zb ? ((data.ylbc || data.lbc) <= 1 ? "首板" : `${(data.ylbc || data.lbc) }连板`): '炸板' }}
     </div>
     <div
       class="prec"
@@ -30,6 +30,26 @@ export default {
         return {
 
         }
+    },
+    computed: {
+      cellStyle() {
+        if(this.data.zb) {
+          return {
+            background: '#ccc'
+          }
+        }
+      },
+      textStyle() {
+        if(this.data.zb) {
+          return {
+            color: 'green'
+          }
+        } else if(this.data.zdp > 0) {
+          return '#f00'
+        } else {
+          return 'green'
+        }
+      }
     }
 }
 </script>
