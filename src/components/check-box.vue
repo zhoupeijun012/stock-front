@@ -1,6 +1,6 @@
 <template>
     <div class="check-box-warp">
-        <div class="check-box-item" v-if="options.length > 0" :class="{ active: full }" @click="switchFull">全部</div>
+        <div class="check-box-item" style="text-align: center;" v-if="options.length > 0" :class="{ active: full }" @click="switchFull">全部</div>
         <div class="check-box-item" v-for="(option, index) in options" :class="{ active: value.includes(option.value) }"
             :key="'check-box-item-' + index" @click="tagClick(option)">{{ option.label }}<span class="count">（{{ option.count }}只）</span></div>
     </div>
