@@ -223,20 +223,6 @@ export default {
     },
   },
   actions: {
-    async [StoreTypes.UPDATE_LIST_ACTION]({ commit }, date) {
-      const ztData = (await getZT()).data.pool || [];
-      ztData.forEach((item) => {
-        item["zb"] = 0;
-      });
-      const zbData = (await getZB()).data.pool || [];
-      zbData.forEach((item) => {
-        item["zb"] = 1;
-      });
-      const list = [...ztData, ...zbData];
-      list.sort((cur, next) => cur.fbt - next.fbt);
-      commit(StoreTypes.UPDATE_LIST, list);
-      commit(StoreTypes.UPDATE_TIME);
-    },
     async [StoreTypes.UPDATE_LIST_TODAY_ACTION]({ commit }) {
       const ztData = (await getZT()).data.pool || [];
       ztData.forEach((item) => {

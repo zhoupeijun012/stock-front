@@ -1,14 +1,25 @@
 <template>
-  <layout-warp v-slot:default="{ type }">
+  <layout-warp :lastUpdate="lastUpdate">
+    <template slot="layout-right">
+      <switch-icon open-title="列表" :open-icon="require('@/assets/列表.png')" close-title="平铺"
+        :close-icon="require('@/assets/平铺.png')" :open="open" @open="switchType('list')"
+        @close="switchType('flat')"></switch-icon>
+    </template>
     <content-warp v-bind="$attrs" :title="title">
-      <!-- <zt-table ref="zt-table" :type="type"></zt-table> -->
       <template v-if="type == 'flat'">
         <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
       </template>
       <template v-if="type == 'list'">
-        <sc-table :cloumns="cloumns" :table-data="tableData"></sc-table>
+        <sc-table :cloumns="cloumns" :options="options" :table-data="tableData"></sc-table>
       </template>
     </content-warp>
+    <slide direction="bottom" append-to-body width="50%">
+      <layout-warp :lastUpdate="lastUpdate">
+        <content-warp title="设置">
+          <setting-pane></setting-pane>
+        </content-warp>
+      </layout-warp>
+    </slide>
   </layout-warp>
 </template>
 <script lang="js">
@@ -17,68 +28,15 @@ import layoutWarp from '@/components/layout-warp';
 import Slide from '@/components/slide';
 import scTable from '@/components/sc-table';
 import scFlat from '@/components/sc-flat';
+import switchIcon from '@/components/switch-icon';
+import { mapGetters, mapState, mapMutations } from 'vuex';
+import * as STORE_TYPES from '@/store/store_types';
+import SettingPane from './components/setting-pane.vue';
+import { mapActions } from 'vuex';
 export default {
-  components: { Slide,contentWarp,layoutWarp ,scTable,scFlat},
+  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon, SettingPane },
   data() {
     return {
-      count: 0,
-      tabeleHeader: [
-        {
-          title: '竞价集合',
-          start: 92500,
-          end: 93000,
-          list: []
-        },
-        {
-          title: '9:30-10:00',
-          start: 93000,
-          end: 100000,
-          list: []
-        },
-        {
-          title: '10:00-10:30',
-          start: 100000,
-          end: 103000,
-          list: []
-        },
-        {
-          title: '10:30-11:00',
-          start: 103000,
-          end: 110000,
-          list: []
-        },
-        {
-          title: '11:00-11:30',
-          start: 110000,
-          end: 113000,
-          list: []
-        },
-        {
-          title: '13:00-13:30',
-          start: 130000,
-          end: 133000,
-          list: []
-        },
-        {
-          title: '13:30-14:00',
-          start: 133000,
-          end: 140000,
-          list: []
-        },
-        {
-          title: '14:00-14:30',
-          start: 140000,
-          end: 143000,
-          list: []
-        },
-        {
-          title: '14:30-15:00',
-          start: 143000,
-          end: 150000,
-          list: []
-        },
-      ],
-      tableData: [],
       cloumns: [
         {
           title: '代码',
@@ -92,115 +50,165 @@ export default {
         }, {
           title: '涨跌幅',
           prop: 'zdp',
-          color: '#f00',
-          formatter: (row)=>{
-            return parseInt(row.zdp * 100) / 100 +'%'
+          color: (row) => {
+            if (row.zdp > 0) {
+              return '#f00'
+            } else {
+              return 'green'
+            }
+          },
+          formatter: (row) => {
+            return parseInt(row.zdp * 100) / 100 + '%'
           }
         }, {
           title: '最新价',
           prop: 'p',
           color: '#f00',
-          formatter: (row)=>{
+          formatter: (row) => {
             return row.p / 1000
           }
         }, {
           title: '成交额',
           prop: 'amount',
           align: 'left',
-          formatter: (row)=>{
-            return row.amount > 100000000 ? (parseInt(row.amount / 100000000 * 100)/100 + '亿'):(parseInt(row.amount / 10000 * 100)/100 + '万')
+          formatter: (row) => {
+            return row.amount > 100000000 ? (parseInt(row.amount / 100000000 * 100) / 100 + '亿') : (parseInt(row.amount / 10000 * 100) / 100 + '万')
           }
         }, {
           title: '流通市值',
           prop: 'ltsz',
-          formatter: (row)=>{
-            return row.ltsz > 100000000 ? (parseInt(row.ltsz / 100000000 * 100)/100 + '亿'):(parseInt(row.ltsz / 10000 * 100)/100 + '万')
+          formatter: (row) => {
+            return row.ltsz > 100000000 ? (parseInt(row.ltsz / 100000000 * 100) / 100 + '亿') : (parseInt(row.ltsz / 10000 * 100) / 100 + '万')
           }
         }, {
           title: '总市值',
           prop: 'tshare',
-          formatter: (row)=>{
-            return row.tshare > 100000000 ? (parseInt(row.tshare / 100000000 * 100)/100 + '亿'):(parseInt(row.tshare / 10000 * 100)/100 + '万')
+          formatter: (row) => {
+            return row.tshare > 100000000 ? (parseInt(row.tshare / 100000000 * 100) / 100 + '亿') : (parseInt(row.tshare / 10000 * 100) / 100 + '万')
           }
         }, {
           title: '换手率',
           prop: 'hs',
-          formatter: (row)=>{
+          formatter: (row) => {
             return parseInt(row.hs * 100) / 100 + '%'
           }
         }, {
           title: '封板资金',
           prop: 'fund',
-          formatter: (row)=>{
-            return row.fund > 100000000 ? (parseInt(row.fund / 100000000 * 100)/100 + '亿'):(parseInt(row.fund / 10000 * 100)/100 + '万')
+          color: (row) => {
+            if (row.zb) {
+              return 'green'
+            }
+          },
+          formatter: (row) => {
+            if (row.zb) {
+              return '0'
+            }
+            return row.fund > 100000000 ? (parseInt(row.fund / 100000000 * 100) / 100 + '亿') : (parseInt(row.fund / 10000 * 100) / 100 + '万')
           }
         }, {
           title: '首次封板',
           prop: 'fbt',
-          formatter: (row)=>{
+          formatter: (row) => {
             const fbt = row.fbt < 100000 ? ('0' + row.fbt) : (row.fbt + '');
-            return fbt.slice(0,2) + ':' + fbt.slice(2,4) + ':' + fbt.slice(4,6)
+            return fbt.slice(0, 2) + ':' + fbt.slice(2, 4) + ':' + fbt.slice(4, 6)
           }
         },
         {
           title: '最后封板',
           prop: 'lbt',
-          formatter: (row)=>{
+          formatter: (row) => {
+            if (row.zb) {
+              return ''
+            }
             const lbt = row.lbt < 100000 ? ('0' + row.lbt) : (row.lbt + '');
-            return lbt.slice(0,2) + ':' + lbt.slice(2,4) + ':' + lbt.slice(4,6)
+            return lbt.slice(0, 2) + ':' + lbt.slice(2, 4) + ':' + lbt.slice(4, 6)
           }
         },
         {
           title: '炸板次数',
           prop: 'zbc',
-          formatter: (row)=>{
-            return  row.zbc + '次'
+          formatter: (row) => {
+            return row.zbc + '次'
           }
         }, {
           title: '涨停统计',
           prop: 'zttj',
-          color: '#f00',
-          formatter: (row)=>{
-            return  row.zttj.ct + '/' + row.zttj.days
+          color: (row) => {
+            if (row.zb) {
+              return 'green'
+            }
+            return '#f00'
+          },
+          formatter: (row) => {
+            return row.zttj.ct + '/' + row.zttj.days
           }
         }, {
           title: '连板数',
           prop: '名称',
-          color: '#f00',
-          formatter: (row)=>{
-            return row.lbc <= 1 ? '首板' :row.lbc + '板'
+          color: (row) => {
+            if (row.zb) {
+              return 'green'
+            }
+            return '#f00'
+          },
+          formatter: (row) => {
+            if (row.zb) {
+              return '炸板'
+            }
+            return row.lbc <= 1 ? '首板' : row.lbc + '板'
           }
         },
         {
           title: '所属行业',
           prop: 'hybk',
         },
-      ]
+      ],
+      options: {
+        row: {
+          style: (row) => {
+            if (row.zb) {
+              return {
+                background: '#ccc'
+              }
+            } else {
+              return {
+              }
+            }
+          }
+        }
+      },
     }
   },
   computed: {
+    ...mapState('zt', {
+      lastUpdate: 'lastUpdate',
+      type: 'showType'
+    }),
+    ...mapGetters('zt', [
+      'tableData',
+      'tabeleHeader'
+    ]),
     title() {
-      return `涨停:${this.count}只`
+      return `触及涨停:${this.tableData.length}只`
     },
-    tableList() {
-      return []
+    open() {
+      return this.type == 'list'
     },
+  },
+  mounted() {
+    this.getToday().then(() => {
+
+    })
   },
   methods: {
-    refreshDate(list) {
-      this.tableData = list;
-      this.count = list.length;
-      list.forEach((stockItem) => {
-        const findItem = this.tabeleHeader.find((headerItem) => {
-          return parseInt(stockItem.fbt) >= headerItem.start && parseInt(stockItem.fbt) < headerItem.end
-        })
-        if (findItem) {
-          findItem.list.push(stockItem);
-        }
-      })
-    }
-  },
-
+    ...mapMutations('zt', {
+      switchType: STORE_TYPES.UPDATE_SHOW_TYPE,
+    }),
+    ...mapActions('zt', {
+      getToday: STORE_TYPES.UPDATE_LIST_TODAY_ACTION
+    })
+  }
 }
 </script>
 
