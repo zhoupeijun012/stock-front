@@ -1,34 +1,27 @@
 <template>
-  <div class="zt-table">
-    <template v-if="type == 'flat'">
-      <div class="table-cell" v-for="(header, index) in tabeleHeader" :key="`table-header-` + index">
-        <div class="table-heade-title">{{ header.title }}</div>
-        <stock-cell v-for="(ztCell, index) in header.list" :showCloumn="['name', 'lb']" :data="ztCell"
-          :key="ztCell.c"></stock-cell>
-      </div>
-    </template>
-    <template v-if="type == 'list'">
-      <sc-table :cloumns="cloumns" :table-data="tableData"></sc-table>
-    </template>
-  </div>
+  <layout-warp v-slot:default="{ type }">
+    <content-warp v-bind="$attrs" :title="title">
+      <!-- <zt-table ref="zt-table" :type="type"></zt-table> -->
+      <template v-if="type == 'flat'">
+        <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
+      </template>
+      <template v-if="type == 'list'">
+        <sc-table :cloumns="cloumns" :table-data="tableData"></sc-table>
+      </template>
+    </content-warp>
+  </layout-warp>
 </template>
 <script lang="js">
-import stockCell from './stock-cell';
-import scTable from './sc-table.vue';
+import contentWarp from '@/components/content-warp';
+import layoutWarp from '@/components/layout-warp';
+import Slide from '@/components/slide';
+import scTable from '@/components/sc-table';
+import scFlat from '@/components/sc-flat';
 export default {
-  components: { stockCell,scTable },
-  props: {
-    tableList: {
-      type: Array,
-      default: () => []
-    },
-    type: {
-      type: String,
-      default: 'flat'
-    }
-  },
+  components: { Slide,contentWarp,layoutWarp ,scTable,scFlat},
   data() {
     return {
+      count: 0,
       tabeleHeader: [
         {
           title: '竞价集合',
@@ -185,9 +178,18 @@ export default {
       ]
     }
   },
+  computed: {
+    title() {
+      return `涨停:${this.count}只`
+    },
+    tableList() {
+      return []
+    },
+  },
   methods: {
     refreshDate(list) {
       this.tableData = list;
+      this.count = list.length;
       list.forEach((stockItem) => {
         const findItem = this.tabeleHeader.find((headerItem) => {
           return parseInt(stockItem.fbt) >= headerItem.start && parseInt(stockItem.fbt) < headerItem.end
@@ -197,29 +199,9 @@ export default {
         }
       })
     }
-  }
+  },
+
 }
 </script>
-<style lang="less" scoped>
-.zt-table {
-  display: flex;
-  flex-direction: row;
-  min-height: 100%;
 
-  .table-cell {
-    &:last-child {
-      border-right: none;
-    }
-  }
-
-  .table-cell {
-    flex: 1;
-  }
-}
-
-.table-heade-title {
-  text-align: center;
-  line-height: 28px;
-  margin-bottom: 5px;
-}
-</style>
+<style lang="less" scoped></style>
