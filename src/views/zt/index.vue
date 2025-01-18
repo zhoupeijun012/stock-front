@@ -32,8 +32,9 @@ import switchIcon from '@/components/switch-icon';
 import { mapGetters, mapState, mapMutations } from 'vuex';
 import * as STORE_TYPES from '@/store/store_types';
 import SettingPane from './components/setting-pane.vue';
+import { mapActions } from 'vuex';
 export default {
-  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon,SettingPane },
+  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon, SettingPane },
   data() {
     return {
       cloumns: [
@@ -177,7 +178,6 @@ export default {
           }
         }
       },
-
     }
   },
   computed: {
@@ -196,10 +196,18 @@ export default {
       return this.type == 'list'
     },
   },
+  mounted() {
+    this.getToday().then(() => {
+
+    })
+  },
   methods: {
     ...mapMutations('zt', {
       switchType: STORE_TYPES.UPDATE_SHOW_TYPE,
     }),
+    ...mapActions('zt', {
+      getToday: STORE_TYPES.UPDATE_LIST_TODAY_ACTION
+    })
   }
 }
 </script>

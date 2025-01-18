@@ -41,7 +41,7 @@ export default {
     ]),
     requestFullScreen() {
       // 获取要全屏显示的元素
-      var element = this.$refs['z-table'];
+      var element = document.querySelector('#root');
       // 请求全屏
      this.switchFull(true);
       element.requestFullscreen().then(function () {
