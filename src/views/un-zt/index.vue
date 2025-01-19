@@ -181,11 +181,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('zt', {
+    ...mapState('zrzt', {
       lastUpdate: 'lastUpdate',
       type: 'showType'
     }),
-    ...mapGetters('zt', [
+    ...mapGetters('zrzt', [
       'tableData',
       'tabeleHeader'
     ]),
@@ -202,10 +202,10 @@ export default {
     })
   },
   methods: {
-    ...mapMutations('zt', {
+    ...mapMutations('zrzt', {
       switchType: STORE_TYPES.UPDATE_SHOW_TYPE,
     }),
-    ...mapActions('zt', {
+    ...mapActions('zrzt', {
       getToday: STORE_TYPES.UPDATE_LIST_TODAY_ACTION
     })
   }

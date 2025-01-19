@@ -111,11 +111,11 @@ export default {
 }
 
 .show-enter-active {
-  animation: show .4s;
+  animation: show .2s;
 }
 
 .show-leave-active {
-  animation: hide .4s;
+  animation: hide .2s;
 }
 
 .show-enter,

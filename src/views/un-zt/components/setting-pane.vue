@@ -19,19 +19,19 @@ import CheckBox from '@/components/check-box.vue';
 export default {
     components: { CheckBox },
     computed: {
-        ...mapState('zt', [
+        ...mapState('zrzt', [
             'ztType',
             'ztCount',
             'ztHy'
         ]),
-        ...mapGetters('zt', [
+        ...mapGetters('zrzt', [
             'ztOptions',
             'ztCountOptions',
             'ztHyOptions'
         ])
     },
     methods: {
-        ...mapMutations('zt', {
+        ...mapMutations('zrzt', {
             'updateZtType': STORE_TYPES.UPDATE_ZT_TYPE,
             'updateZtCount': STORE_TYPES.UPDATE_ZT_COUNT,
             'updateZtHy': STORE_TYPES.UPDATE_ZT_HY,

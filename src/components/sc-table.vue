@@ -7,13 +7,16 @@
         </div>
         <div class="content-warp">
             <div class="header-row" v-for="(tableItem, index) in tableData" :key="'header-row-' + index"
-                :style="options.row && options.row.style ? (options.row.style(tableItem)) : {}">
+                :style="options.row && options.row.style ? (options.row.style(tableItem)) : {}" @click="switchOpen(tableItem)">
                 <div class="table-row" v-for="(headerItem, index) in cloumns" :key="'table-row-' + index"
                     :title="headerItem.title" :style="{
                         textAlign: headerItem.align ? headerItem.align : 'center',
                         color: headerItem.color ? (typeof headerItem.color == 'function' ? headerItem.color(tableItem) : headerItem.color) : '#000',
                     }">
                     {{ headerItem.formatter ? headerItem.formatter(tableItem) : tableItem[headerItem.prop] }}
+                </div>
+                <div class="slot-row" v-if="tableItem.open">
+                    <slot name="slot-row" :code="tableItem.c"></slot>
                 </div>
             </div>
         </div>
@@ -34,6 +37,15 @@ export default {
             type: Object,
             default: () => { }
         }
+    },
+    methods: {
+        switchOpen(row) {
+            if(row.open) {
+                this.$set(row,'open',false);
+            } else {
+                this.$set(row,'open',true);
+            }
+        }
     }
 }
 </script>
@@ -49,7 +61,7 @@ export default {
 .header-row {
     display: flex;
     flex-direction: row;
-
+    flex-wrap: wrap;
     .header-item,
     .table-row {
         font-size: 14px;
@@ -75,5 +87,9 @@ export default {
     &:hover {
         background: #e3e4e5;
     }
+}
+
+.slot-row {
+    width: 100%;
 }
 </style>

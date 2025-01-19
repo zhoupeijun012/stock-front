@@ -10,7 +10,11 @@
         <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
       </template>
       <template v-if="type == 'list'">
-        <sc-table :cloumns="cloumns" :options="options" :table-data="tableData"></sc-table>
+        <sc-table :cloumns="cloumns" :options="options" :table-data="tableData">
+          <template v-slot:slot-row="{ code }">
+            <stock-info :code="code"></stock-info>
+          </template>
+        </sc-table>
       </template>
     </content-warp>
     <slide direction="bottom" append-to-body width="50%">
@@ -33,8 +37,9 @@ import { mapGetters, mapState, mapMutations } from 'vuex';
 import * as STORE_TYPES from '@/store/store_types';
 import SettingPane from './components/setting-pane.vue';
 import { mapActions } from 'vuex';
+import StockInfo from './components/stock-info.vue';
 export default {
-  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon, SettingPane },
+  components: { Slide, contentWarp, layoutWarp, scTable, scFlat, switchIcon, SettingPane, StockInfo },
   data() {
     return {
       cloumns: [
