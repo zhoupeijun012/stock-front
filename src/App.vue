@@ -1,40 +1,20 @@
 <template>
-  <div class="root" id="root">
-    <swiper :list="list" :default="1"></swiper>
+  <div id="app">
+    <Layout></Layout>
   </div>
 </template>
-<script lang="js">
-import swiper from '@/components/swiper';
+
+<script>
+import Layout from "@/layout";
 export default {
-  components: { swiper },
-  data() {
-    return {
-      list: [
-        {
-          title: '昨日涨停',
-          component: ()=>import('@/views/un-zt')
-        },
-        {
-          title: '今日涨停',
-          component: ()=>import('@/views/zt')
-        },
-        {
-          title: '今日炸板',
-          component: ()=>import('@/views/zb')
-        }
-      ]
-    }
-  },
+  name: 'App',
+  components: {
+    Layout
+  }
 }
 </script>
-
 <style lang="less" scoped>
-.root {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  background: #fff;
+#app {
   position: relative;
-  overflow: hidden;
 }
 </style>

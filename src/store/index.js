@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import zt from './modules/zt';
-import zrzt from './modules/zrzt';
+import app from './modules/app';
 Vue.use(Vuex)
 export default new Vuex.Store({
   namespaced: true,
@@ -9,12 +8,9 @@ export default new Vuex.Store({
     fullScreen: false
   },
   mutations: {
-    switchFull(state,data) {
-      state.fullScreen = data
-    }
+
   },
   modules: {
-    zt,
-    zrzt
+    app
   }
 })

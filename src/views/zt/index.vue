@@ -6,13 +6,15 @@
         @close="switchType('flat')"></switch-icon>
     </template>
     <content-warp v-bind="$attrs" :title="title">
+      <!-- <stock-info>
+        
+      </stock-info> -->
       <template v-if="type == 'flat'">
         <sc-flat :tabeleHeader="tabeleHeader"></sc-flat>
       </template>
       <template v-if="type == 'list'">
         <sc-table :cloumns="cloumns" :options="options" :table-data="tableData">
           <template v-slot:slot-row="{ code }">
-            <stock-info :code="code"></stock-info>
           </template>
         </sc-table>
       </template>
@@ -202,9 +204,10 @@ export default {
     },
   },
   mounted() {
-    this.getToday().then(() => {
-
-    })
+    setInterval(() => {
+      this.getToday().then(() => {
+      })
+    }, 3000)
   },
   methods: {
     ...mapMutations('zt', {
