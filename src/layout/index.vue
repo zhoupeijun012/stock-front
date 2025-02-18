@@ -12,17 +12,22 @@
     </div>
     <div class="app-right">
       <div class="app-header">
-        <div class="header-left">
+        <div class="header-left" >
           <hamger :is-active="!isCollapse" @toggleClick="toggleSideBar"></hamger>
-          <div class="header-title">股票列表</div>
+          <div class="header-title" @click="toggleSideBar">列表</div>
+        </div>
+        <div class="header-right">
+          <switch-icon open-title="截图" style="margin-left: 10px" :open-icon="require('@/assets/快照.png')"
+            close-title="截图" :close-icon="require('@/assets/快照.png')" @open="capture" @close="capture"></switch-icon>
+          <switch-icon open-title="全屏" style="margin-left: 10px" :open="fullScreen" :open-icon="require('@/assets/全屏.png')"
+            close-title="退出全屏" :close-icon="require('@/assets/退出全屏.png')" @open="requestFullScreen"
+            @close="exitFull"></switch-icon>
         </div>
       </div>
-      <div class="app-content">
-        <el-scrollbar class="scroll-warp">
-          <div class="scroll-content">
+      <div class="app-content" ref="root">
+          <div class="scroll-content" >
             <router-view></router-view>
           </div>
-        </el-scrollbar>
       </div>
     </div>
   </div>
@@ -31,10 +36,14 @@
 <script>
 import hamger from './hamger.vue';
 import { routes } from '@/router/index';
+import switchIcon from '@/components/switch-icon';
+import html2canvas from 'html2canvas';
 export default {
   name: 'Layout',
   components: {
-    hamger
+    hamger,
+    switchIcon,
+    html2canvas
   },
   computed: {
     menuList() {
@@ -43,12 +52,46 @@ export default {
   },
   data() {
     return {
-      isCollapse: true
+      isCollapse: true,
+      fullScreen: false
     }
   },
   methods: {
     toggleSideBar() {
       this.isCollapse = !this.isCollapse;
+    },
+    requestFullScreen() {
+      // this.fullScreen = true;
+      // 获取要全屏显示的元素
+      var element = this.$refs['root'];
+      // 请求全屏
+      element.requestFullscreen().then(function () {
+        console.log("进入全屏模式");
+      }).catch(function (error) {
+        console.error("无法进入全屏模式:", error);
+      });
+    },
+    //退出全屏 判断浏览器种类
+    exitFull() {
+      // this.fullScreen = false;
+      document.exitFullscreen().then(function () {
+        console.log("退出全屏模式");
+      }).catch(function (error) {
+        console.error("无法退出全屏模式:", error);
+      });
+    },
+    capture() {
+      html2canvas(this.$refs['root']).then((canvas) => {
+        canvas.toBlob((blob) => {
+          const imgUrl = URL.createObjectURL(blob)
+          const a = document.createElement('a');
+          a.href = imgUrl;
+          a.download = '快照.png';
+          a.click();
+          window.URL.revokeObjectURL(imgUrl);
+        }, 'image/png');
+      });
+
     }
   }
 }
@@ -100,27 +143,37 @@ export default {
       color: #000;
       line-height: 50px;
       font-size: 14px;
+      cursor: pointer;
     }
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
   }
 
   .app-content {
     height: calc(100% - 50px);
     position: relative;
+    padding: 10px;
+    background: #fafafa;
+    box-sizing: border-box;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 }
 
 .scroll-warp {
   height: 100%;
-
   /deep/.el-scrollbar__wrap {
     overflow-x: hidden;
   }
 }
 
 .scroll-content {
-  min-height: calc(100vh - 50px);
-  border: 10px solid #fafafa;
   box-sizing: border-box;
+  background: #fff;
+  min-height: 100%;
 }
 
 .el-menu-vertical-demo {

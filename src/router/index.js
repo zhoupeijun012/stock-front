@@ -18,10 +18,11 @@ export const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
+  scrollBehavior:()=>({ x: 0, y: 0 }),
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   // start progress bar
   NProgress.start();
   // document.title = to.meta.title;
