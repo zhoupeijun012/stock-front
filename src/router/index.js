@@ -25,6 +25,10 @@ export const routes = [
     component: () => import("@/views/etf/t+1.vue"),
     meta: { title: "ETF（ T+1 ）", icon: "el-icon-notebook-2" },
   },
+  {
+    path: '*',
+    redirect: '/home'
+  }
 ];
 
 const router = new VueRouter({
