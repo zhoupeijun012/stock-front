@@ -2,8 +2,8 @@
   <div class="app-wrapper" :class="{ 'app-collapse': isCollapse }">
     <div class="app-left">
       <el-scrollbar class="scroll-warp">
-        <el-menu default-active="0" class="el-menu-vertical-demo" :collapse="isCollapse">
-          <el-menu-item :index="index + ''" v-for="(menuItem, index) in menuList" :key="`menu-item-` + index">
+        <el-menu default-active="0" text-color="#bfcbd9" active-text-color="#409eff" router class="el-menu-vertical-demo" :collapse="isCollapse">
+          <el-menu-item :index="index + ''" v-for="(menuItem, index) in menuList" :key="`menu-item-` + index" :route="menuItem">
             <i :class="menuItem.meta && menuItem.meta.icon"></i>
             <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
           </el-menu-item>
@@ -173,7 +173,7 @@ export default {
 .scroll-content {
   box-sizing: border-box;
   background: #fff;
-  min-height: 100%;
+  height: 100%;
 }
 
 .el-menu-vertical-demo {

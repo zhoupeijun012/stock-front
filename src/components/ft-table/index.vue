@@ -1,10 +1,29 @@
 <template>
   <div class="ft-table" v-loading="loading">
     <div class="search-bar" v-if="options.search">
-        <component :is="options.search"></component>
+      <div class="search-filter-warp" :class="{ close: fold }">
+        <component :is="options.search" ref="search"></component>
+      </div>
+      <div class="search-btn-warp">
+        <el-button type="text" @click="foldChange">{{
+          fold ? "展开" : "收起"
+        }}</el-button>
+        <el-button type="primary" size="middle" @click="onReset"
+          >重置</el-button
+        >
+        <el-button type="plain" @click="onSubmit">查询</el-button>
+      </div>
     </div>
-    <div class="ft-table-warp">
-      <el-table :data="tableData" v-bind="$attrs" style="width: 100%">
+    <div class="ft-table-warp" v-height-change="heightChange">
+      <el-table
+        :data="tableData"
+        v-bind="$attrs"
+        v-on="$listeners"
+        style="width: 100%"
+        :height="maxHeight"
+        @sort-change="sortChange"
+         :header-cell-class-name="handleHeaderCellClass"
+      >
         <el-table-column label="序号" width="80" align="center" fixed="left">
           <template scope="scope">
             {{ scope.$index + 1 + baseIndex }}
@@ -66,10 +85,16 @@ export default {
       pageSize: 10,
       queryParams: {},
       queryCallback: () => {},
-      loading: false
+      loading: false,
+      fold: true,
+      maxHeight: '1000px',
+      orderArray:[]
     };
   },
   methods: {
+    heightChange(height) {
+      this.maxHeight = height;
+    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.pageNum = 1;
@@ -84,22 +109,75 @@ export default {
       this.queryCallback = queryCallback;
       this.doQuery();
     },
+    onSubmit() {
+      this.doQuery();
+    },
+    onReset() {
+      this.$emit("onReset");
+      setTimeout(() => {
+        this.doQuery();
+      }, 0);
+    },
     doQuery() {
       this.loading = true;
+      const searchRef = this.$refs.search;
+      let searchParams = {};
+      if (searchRef) {
+        searchParams = searchRef.onSubmit() || {};
+      }
       const params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         ...this.queryParams,
+        ...searchParams,
+        orders: this.orderArray
       };
-      this.requestFunction(params).then((res) => {
-        this.queryCallback && this.queryCallback(res);
-        const { pageNum, pageSize, total, list, template } = res;
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-        this.total = total;
-        this.tableData = list || [];
-      }).finally(()=>{
-        this.loading = false;
+      this.requestFunction(params)
+        .then((res) => {
+          this.queryCallback && this.queryCallback(res);
+          const { pageNum, pageSize, total, list, template } = res;
+          this.pageNum = pageNum;
+          this.pageSize = pageSize;
+          this.total = total;
+          this.tableData = list || [];
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    foldChange() {
+      this.fold = !this.fold;
+    },
+    sortChange({ column, prop, order }) {
+      if (order) {
+        //参与排序
+        let flagIsHave = false;
+        this.orderArray.forEach((element) => {
+          if (element.prop === prop) {
+            element.order = order;
+            flagIsHave = true;
+          }
+        });
+        if (!flagIsHave) {
+          this.orderArray.push({
+            prop: prop,
+            order: order,
+          });
+        }
+      } else {
+        //不参与排序
+        this.orderArray = this.orderArray.filter((element) => {
+          return element.prop !== prop
+        });
+      }
+
+      this.handleCurrentChange(1);
+    },
+    handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {
+      this.orderArray.forEach((element) => {
+        if (column.property === element.prop) {
+          column.order = element.order;
+        }
       });
     },
   },
@@ -108,13 +186,45 @@ export default {
 
 <style lang="less" scoped>
 .ft-table {
-  padding: 10px;
+  // padding: 10px;
   box-sizing: border-box;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .ft-table-warp {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  flex: 1;
 }
 .ft-pagination {
   text-align: right;
   padding: 8px 0;
+  height: 48px;
+  background: #fff;
+  box-sizing: border-box;
+  border-top: 1px solid #e3e4e5;
+}
+.search-bar {
+  display: flex;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  .search-filter-warp {
+    flex: 1;
+    margin-bottom: -10px;
+    &.close {
+      height: 50px;
+      overflow: hidden;
+    }
+  }
+  /deep/.el-form-item {
+    width: 25%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }
 </style>

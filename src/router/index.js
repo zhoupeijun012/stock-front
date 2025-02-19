@@ -10,8 +10,20 @@ export const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("@/views/home/index.vue"),
+    component: () => import("@/views/stock/index.vue"),
     meta: { title: "股票列表", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/etf/0",
+    name: "T+0",
+    component: () => import("@/views/etf/t+0.vue"),
+    meta: { title: "ETF（ T+0 ）", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/etf/1",
+    name: "T+1",
+    component: () => import("@/views/etf/t+1.vue"),
+    meta: { title: "ETF（ T+1 ）", icon: "el-icon-notebook-2" },
   },
 ];
 
