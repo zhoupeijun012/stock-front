@@ -1,18 +1,14 @@
 <template>
     <el-form :inline="true" :model="row" class="demo-form-inline">
-        <el-form-item label="股票名称">
+        <el-form-item label="ETF名称">
             <el-input v-model.trim="row.f14" placeholder="请输入" clearable style="width:100%"/>
-        </el-form-item>
-        <el-form-item label="股票代码">
-            <el-input v-model.trim="row.f12" placeholder="请输入" clearable style="width:100%"/>
         </el-form-item>
     </el-form>
 </template>
 
 <script >
 const model = {
-    f14: '',
-    f12: ''
+    f14: ''
 }
 export default {
     data() {

@@ -22,6 +22,7 @@ export default {
       getEtfList,
       loading: false,
       options: {
+        search: ()=>import('./components/search.vue'),
         columns: [
           {
             prop: "f14",
@@ -39,6 +40,13 @@ export default {
               return row.f21 > 100000000 || row.f62 < -100000000
                 ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
                 : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+            },
+          },
+          {
+            prop:'c1',
+            label:'交易类型',
+            formatter: (row) => {
+              return row.c1 == '0' ? 'T+0': 'T+1';
             },
           },
           {
@@ -105,7 +113,7 @@ export default {
             prop: "f8",
             label: "换手率",
             formatter: (row) => {
-              return row.f8 / 100;
+              return row.f8 / 100 + '%';
             },
           },
           {
@@ -122,6 +130,9 @@ export default {
   mounted() {
     this.$refs["ft-table"].query({
       matchKey: this.options.columns.map((item) => item.prop),
+      filters: {
+        'c1': 0
+      }
     });
   },
 };

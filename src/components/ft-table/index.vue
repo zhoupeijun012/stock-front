@@ -8,9 +8,7 @@
         <el-button type="text" @click="foldChange">{{
           fold ? "展开" : "收起"
         }}</el-button>
-        <el-button type="primary" size="middle" @click="onReset"
-          >重置</el-button
-        >
+        <el-button type="primary" @click="onReset">重置</el-button>
         <el-button type="plain" @click="onSubmit">查询</el-button>
       </div>
     </div>
@@ -61,6 +59,7 @@
   </div>
 </template>
 <script>
+import deepmerge from "deepmerge";
 export default {
   props: {
     requestFunction: {
@@ -113,7 +112,8 @@ export default {
       this.doQuery();
     },
     onReset() {
-      this.$emit("onReset");
+      const searchRef = this.$refs.search;
+      searchRef && searchRef.onReset();
       setTimeout(() => {
         this.doQuery();
       }, 0);
@@ -125,22 +125,34 @@ export default {
       if (searchRef) {
         searchParams = searchRef.onSubmit() || {};
       }
-      const params = {
+      let params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-        ...this.queryParams,
-        ...searchParams,
         orders: this.orderArray,
       };
+      params = deepmerge(params, this.queryParams);
+      params = deepmerge(params, {
+        filters: searchParams,
+      });
+
+      const filters = {};
+      for (let filterItemKey of Object.keys(params.filters)) {
+        if (params.filters[filterItemKey]) {
+          filters[filterItemKey] = params.filters[filterItemKey];
+        }
+      }
+      params.filters = filters;
+
       this.requestFunction(params)
         .then((res) => {
           this.queryCallback && this.queryCallback(res);
-          const { pageNum, pageSize, total, list, template } = res;
+          const { pageNum, pageSize, total, list } = res;
           this.pageNum = pageNum;
           this.pageSize = pageSize;
           this.total = total;
           this.tableData = list || [];
         })
+        .catch(() => {})
         .finally(() => {
           this.loading = false;
         });
@@ -217,7 +229,7 @@ export default {
     flex: 1;
     margin-bottom: -10px;
     &.close {
-      height: 50px;
+      height: 43px;
       overflow: hidden;
     }
   }

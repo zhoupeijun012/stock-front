@@ -2,7 +2,7 @@
   <div class="app-wrapper" :class="{ 'app-collapse': isCollapse }">
     <div class="app-left">
       <el-scrollbar class="scroll-warp">
-        <el-menu default-active="0" text-color="#bfcbd9" active-text-color="#409eff" router class="el-menu-vertical-demo" :collapse="isCollapse">
+        <el-menu :default-active="defaultActive" text-color="#bfcbd9" active-text-color="#409eff" router class="el-menu-vertical-demo" :collapse="isCollapse">
           <el-menu-item :index="index + ''" v-for="(menuItem, index) in menuList" :key="`menu-item-` + index" :route="menuItem">
             <i :class="menuItem.meta && menuItem.meta.icon"></i>
             <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
@@ -48,6 +48,9 @@ export default {
   computed: {
     menuList() {
       return routes
+    },
+    defaultActive() {
+      return routes.findIndex((item)=>item.path == this.$route.path) + ''
     }
   },
   data() {

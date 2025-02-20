@@ -16,11 +16,11 @@ instance.interceptors.response.use(
         title: "网络错误",
         message: response.data.message,
       });
-      return {
+      return Promise.reject({
         success: false,
-        message: error.message,
+        message: "网络错误",
         data: null,
-      };
+      });
     }
   },
   (error) => {
@@ -30,11 +30,11 @@ instance.interceptors.response.use(
         message: error.message,
       });
     }
-    return {
+    return Promise.reject({
       success: false,
-      message: error.message,
+      message: "网络错误",
       data: null,
-    };
+    });
   }
 );
 
