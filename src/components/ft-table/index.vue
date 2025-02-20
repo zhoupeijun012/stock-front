@@ -134,10 +134,9 @@ export default {
       params = deepmerge(params, {
         filters: searchParams,
       });
-
       const filters = {};
       for (let filterItemKey of Object.keys(params.filters)) {
-        if (params.filters[filterItemKey]) {
+        if (params.filters[filterItemKey] !=null && params.filters[filterItemKey]!= undefined && params.filters[filterItemKey]!=='') {
           filters[filterItemKey] = params.filters[filterItemKey];
         }
       }
