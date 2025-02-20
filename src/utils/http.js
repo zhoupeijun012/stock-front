@@ -4,7 +4,7 @@ import { Notification } from "element-ui";
 // 创建一个具有默认配置的axios实例
 const instance = axios.create({
   baseURL: "/api",
-  timeout: 5 * 1000,
+  timeout: 60 * 1000,
 });
 
 instance.interceptors.response.use(
