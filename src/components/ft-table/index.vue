@@ -22,7 +22,7 @@
         style="width: 100%"
         :height="maxHeight"
         @sort-change="sortChange"
-         :header-cell-class-name="handleHeaderCellClass"
+        :header-cell-class-name="handleHeaderCellClass"
       >
         <el-table-column label="序号" width="80" align="center" fixed="left">
           <template scope="scope">
@@ -87,8 +87,8 @@ export default {
       queryCallback: () => {},
       loading: false,
       fold: true,
-      maxHeight: '1000px',
-      orderArray:[]
+      maxHeight: "1000px",
+      orderArray: [],
     };
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
         pageSize: this.pageSize,
         ...this.queryParams,
         ...searchParams,
-        orders: this.orderArray
+        orders: this.orderArray,
       };
       this.requestFunction(params)
         .then((res) => {
@@ -167,7 +167,7 @@ export default {
       } else {
         //不参与排序
         this.orderArray = this.orderArray.filter((element) => {
-          return element.prop !== prop
+          return element.prop !== prop;
         });
       }
 
