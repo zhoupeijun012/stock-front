@@ -2,7 +2,11 @@
   <div class="ft-table" v-loading="loading">
     <div class="search-bar" v-if="options.search">
       <div class="search-filter-warp" :class="{ close: fold }">
-        <component :is="options.search" ref="search"></component>
+        <component
+          :is="options.search"
+          ref="search"
+          @keyup.enter.native="onSubmit"
+        ></component>
       </div>
       <div class="search-btn-warp">
         <el-button type="text" @click="foldChange">{{
@@ -133,11 +137,11 @@ export default {
       const searchRef = this.$refs.search;
       searchRef && searchRef.onReset();
       this.orderArray = [];
-      this.options.columns.forEach((item)=>{
-        if(item.sortable) {
-          this.$refs.table && this.$refs.table.sort(item.prop, null);
-        }
-      })
+      this.$refs.table.$el.querySelectorAll(".is-sortable").forEach((item) => {
+        // 移除table表头中的排序样式descending和ascending
+        item.classList.remove("descending");
+        item.classList.remove("ascending");
+      });
       setTimeout(() => {
         this.doQuery();
       }, 0);
