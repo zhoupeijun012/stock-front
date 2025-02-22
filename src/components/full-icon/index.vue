@@ -1,0 +1,53 @@
+<template>
+  <switch-icon
+    open-title="全屏"
+    :open="fullScreen"
+    :open-icon="require('@/assets/全屏.png')"
+    close-title="退出全屏"
+    :close-icon="require('@/assets/退出全屏.png')"
+    @open="requestFullScreen"
+    @close="exitFull"
+  ></switch-icon>
+</template>
+<script>
+import switchIcon from "@/components/switch-icon";
+export default {
+  components: { switchIcon },
+  props: {
+    fullDom: String
+  },
+  data() {
+    return {
+      fullScreen: false,
+    };
+  },
+  methods: {
+    requestFullScreen() {
+      this.fullScreen = true;
+      // 获取要全屏显示的元素
+      var element = document.querySelector(this.fullDom);
+      // 请求全屏
+      element
+        .requestFullscreen()
+        .then(function () {
+          console.log("进入全屏模式");
+        })
+        .catch(function (error) {
+          console.error("无法进入全屏模式:", error);
+        });
+    },
+    //退出全屏 判断浏览器种类
+    exitFull() {
+      this.fullScreen = false;
+      document
+        .exitFullscreen()
+        .then(function () {
+          console.log("退出全屏模式");
+        })
+        .catch(function (error) {
+          console.error("无法退出全屏模式:", error);
+        });
+    },
+  },
+};
+</script>

@@ -27,7 +27,7 @@ export default {
           {
             prop: "f14",
             label: "股票名称",
-            minWidth: "140x",
+            width: "120x",
             fixed: "left",
             cellStyle: (row) => {
               return {
@@ -37,41 +37,28 @@ export default {
             "show-overflow-tooltip": true,
           },
           {
-            prop: "f12",
-            label: "股票代码",
-            minWidth: "80px",
-            cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
-            },
-            fixed: "left",
-          },
-          {
-            prop: "f21",
-            label: "流通市值",
-            fixed: "left",
-            minWidth: "120px",
+            prop: "f3",
+            label: "涨跌幅",
+            minWidth: "90px",
             sortable: "custom",
-            formatter: (row) => {
-              return row.f21 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+            fixed: "left",
+            cellStyle: (row) => {
+              return row.f3 > 0
+                ? { color: "#f00" }
+                : row.f3 == 0
+                ? { color: "#000" }
+                : { color: "green" };
             },
-          },
-          {
-            prop: "c1",
-            label: "交易类型",
-            minWidth: "120px",
             formatter: (row) => {
-              return row.c1 == "0" ? "T+0" : "T+1";
+              return row.f3 / 100 + "%";
             },
           },
           {
             prop: "f24",
             label: "60涨跌幅",
-            minWidth: "120px",
+            minWidth: "110px",
             sortable: "custom",
+            fixed: "left",
             cellStyle: (row) => {
               return row.f24 > 0
                 ? { color: "#f00" }
@@ -84,6 +71,36 @@ export default {
             },
           },
           {
+            prop: "f12",
+            label: "股票代码",
+            width: "80px",
+            cellStyle: (row) => {
+              return {
+                color: "blue",
+              };
+            },
+            
+          },
+          {
+            prop: "f21",
+            label: "流通市值",
+            minWidth: "120px",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f21 > 100000000 || row.f62 < -100000000
+                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
+                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+            },
+          },
+          {
+            prop: "c1",
+            label: "交易类型",
+            minWidth: "100px",
+            formatter: (row) => {
+              return row.c1 == "0" ? "T+0" : "T+1";
+            },
+          },
+          {
             prop: "f2",
             label: "最新价",
             minWidth: "120px",
@@ -92,22 +109,7 @@ export default {
               return row.f2 / 100;
             },
           },
-          {
-            prop: "f3",
-            label: "涨跌幅",
-            minWidth: "120px",
-            sortable: "custom",
-            cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
-            },
-            formatter: (row) => {
-              return row.f3 / 100 + "%";
-            },
-          },
+
           {
             prop: "f4",
             label: "涨跌额",
@@ -149,7 +151,7 @@ export default {
           {
             prop: "f7",
             label: "振幅",
-            minWidth: "120px",
+            minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
               return row.f7 / 100 + "%";
@@ -158,8 +160,9 @@ export default {
           {
             prop: "f10",
             label: "量比",
-            minWidth: "120px",
+            minWidth: "80px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return row.f10 > 100
                 ? { color: "#f00" }
@@ -174,8 +177,9 @@ export default {
           {
             prop: "f8",
             label: "换手率",
-            minWidth: "120px",
+            minWidth: "90px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -187,9 +191,10 @@ export default {
           },
           {
             prop: "f11",
-            label: "5分钟涨跌",
-            minWidth: "120px",
+            label: "5分涨跌",
+            minWidth: "100px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return row.f11 > 0
                 ? { color: "#f00" }

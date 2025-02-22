@@ -8,8 +8,13 @@
         <el-button type="text" @click="foldChange">{{
           fold ? "展开" : "收起"
         }}</el-button>
-        <el-button type="primary" @click="onReset">重置</el-button>
-        <el-button type="plain" @click="onSubmit">查询</el-button>
+        <el-button type="plain" @click="onReset">重置</el-button>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <!-- <capture-icon style="margin-left: 10px; width: 36px; height: 36px" full-dom="#app-content"></capture-icon> -->
+        <full-icon
+          style="margin-left: 10px; width: 36px; height: 36px"
+          full-dom="#app-content"
+        ></full-icon>
       </div>
     </div>
     <div class="ft-table-warp" v-height-change="heightChange">
@@ -70,7 +75,10 @@
 </template>
 <script>
 import deepmerge from "deepmerge";
+import fullIcon from "@/components/full-icon";
+import captureIcon from "@/components/capture-icon";
 export default {
+  components: { fullIcon, captureIcon },
   props: {
     requestFunction: {
       type: Function,
@@ -125,7 +133,11 @@ export default {
       const searchRef = this.$refs.search;
       searchRef && searchRef.onReset();
       this.orderArray = [];
-      this.$refs.table && this.$refs.table.clearSort();
+      this.options.columns.forEach((item)=>{
+        if(item.sortable) {
+          this.$refs.table && this.$refs.table.sort(item.prop, null);
+        }
+      })
       setTimeout(() => {
         this.doQuery();
       }, 0);
@@ -209,7 +221,7 @@ export default {
     },
     cellStyle({ column, row }) {
       const style = column.cellStyle ? column.cellStyle(row) : {};
-      return style
+      return style;
     },
   },
 };
@@ -264,5 +276,9 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
   }
+}
+.search-btn-warp {
+  display: flex;
+  align-items: center;
 }
 </style>

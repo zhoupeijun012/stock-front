@@ -27,7 +27,7 @@ export default {
           {
             prop: "f14",
             label: "股票名称",
-            width: "140x",
+            width: "120x",
             fixed: "left",
             cellStyle: (row) => {
               return {
@@ -35,6 +35,40 @@ export default {
               };
             },
             "show-overflow-tooltip": true,
+          },
+          {
+            prop: "f3",
+            label: "涨跌幅",
+            minWidth: "90px",
+            sortable: "custom",
+            fixed: "left",
+            cellStyle: (row) => {
+              return row.f3 > 0
+                ? { color: "#f00" }
+                : row.f3 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
+            formatter: (row) => {
+              return row.f3 / 100 + "%";
+            },
+          },
+          {
+            prop: "f24",
+            label: "60涨跌幅",
+            minWidth: "110px",
+            sortable: "custom",
+            fixed: "left",
+            cellStyle: (row) => {
+              return row.f24 > 0
+                ? { color: "#f00" }
+                : row.f24 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
+            formatter: (row) => {
+              return row.f24 / 100 + "%";
+            },
           },
           {
             prop: "f12",
@@ -45,12 +79,11 @@ export default {
                 color: "blue",
               };
             },
-            fixed: "left",
+            
           },
           {
             prop: "f21",
             label: "流通市值",
-            fixed: "left",
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
@@ -68,22 +101,6 @@ export default {
             },
           },
           {
-            prop: "f24",
-            label: "60涨跌幅",
-            minWidth: "120px",
-            sortable: "custom",
-            cellStyle: (row) => {
-              return row.f24 > 0
-                ? { color: "#f00" }
-                : row.f24 == 0
-                ? { color: "#000" }
-                : { color: "green" };
-            },
-            formatter: (row) => {
-              return row.f24 / 100 + "%";
-            },
-          },
-          {
             prop: "f2",
             label: "最新价",
             minWidth: "120px",
@@ -92,22 +109,7 @@ export default {
               return row.f2 / 100;
             },
           },
-          {
-            prop: "f3",
-            label: "涨跌幅",
-            minWidth: "120px",
-            sortable: "custom",
-            cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
-            },
-            formatter: (row) => {
-              return row.f3 / 100 + "%";
-            },
-          },
+
           {
             prop: "f4",
             label: "涨跌额",
@@ -158,8 +160,9 @@ export default {
           {
             prop: "f10",
             label: "量比",
-            minWidth: "120px",
+            minWidth: "80px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return row.f10 > 100
                 ? { color: "#f00" }
@@ -174,8 +177,9 @@ export default {
           {
             prop: "f8",
             label: "换手率",
-            minWidth: "120px",
+            minWidth: "90px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -187,9 +191,10 @@ export default {
           },
           {
             prop: "f11",
-            label: "5分钟涨跌",
-            minWidth: "120px",
+            label: "5分涨跌",
+            minWidth: "100px",
             sortable: "custom",
+            fixed:'right',
             cellStyle: (row) => {
               return row.f11 > 0
                 ? { color: "#f00" }

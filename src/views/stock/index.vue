@@ -35,16 +35,23 @@ export default {
             fixed: "left",
           },
           {
-            prop: "f12",
-            label: "股票代码",
+            prop: "f3",
+            label: "涨跌幅",
             minWidth: "100px",
-            cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
-            },
+            sortable: "custom",
             fixed: "left",
+            cellStyle: (row) => {
+              return row.f3 > 0
+                ? { color: "#f00" }
+                : row.f3 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
+            formatter: (row) => {
+              return row.f3 / 100 + "%";
+            },
           },
+
           {
             prop: "f21",
             label: "流通市值",
@@ -76,23 +83,13 @@ export default {
                 : parseInt((row.f62 / 10000) * 100) / 100 + "万";
             },
           },
-          {
-            prop: "f20",
-            label: "总市值",
-            sortable: "custom",
-            minWidth: "110px",
-            formatter: (row) => {
-              return row.f20 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f20 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f20 / 10000) * 100) / 100 + "万";
-            },
-          },
-
+  
           {
             prop: "f24",
             label: "60日涨幅",
             sortable: "custom",
             minWidth: "110px",
+            fixed: "left",
             cellStyle: (row) => {
               return row.f24 > 0
                 ? { color: "#f00" }
@@ -105,28 +102,24 @@ export default {
             },
           },
           {
-            prop: "f2",
-            label: "最新价",
+            prop: "f12",
+            label: "股票代码",
             minWidth: "100px",
-            sortable: "custom",
-            formatter: (row) => {
-              return row.f2 / 100;
+            cellStyle: (row) => {
+              return {
+                color: "blue",
+              };
             },
           },
           {
-            prop: "f3",
-            label: "涨跌幅",
-            minWidth: "100px",
+            prop: "f20",
+            label: "总市值",
             sortable: "custom",
-            cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
-            },
+            minWidth: "110px",
             formatter: (row) => {
-              return row.f3 / 100 + "%";
+              return row.f20 > 100000000 || row.f62 < -100000000
+                ? parseInt((row.f20 / 100000000) * 100) / 100 + "亿"
+                : parseInt((row.f20 / 10000) * 100) / 100 + "万";
             },
           },
           {
@@ -144,6 +137,16 @@ export default {
               return row.f2 / 100;
             },
           },
+          {
+            prop: "f2",
+            label: "最新价",
+            minWidth: "100px",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f2 / 100;
+            },
+          },
+
           {
             prop: "f12",
             label: "成交量(手)",
@@ -175,11 +178,35 @@ export default {
               return row.f7 / 100 + "%";
             },
           },
+
+          {
+            prop: "f23",
+            label: "市净率",
+            minWidth: "100px",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f23 / 100;
+            },
+          },
+
+          {
+            prop: "f100",
+            label: "行业",
+            minWidth: "100px",
+            sortable: "custom",
+          },
+          {
+            prop: "f102",
+            label: "地区板块",
+            minWidth: "100px",
+            sortable: "custom",
+          },
           {
             prop: "f10",
             label: "量比",
-            minWidth: "100px",
+            minWidth: "80px",
             sortable: "custom",
+            fixed: "right",
             cellStyle: (row) => {
               return row.f4 > 100
                 ? { color: "#f00" }
@@ -194,8 +221,9 @@ export default {
           {
             prop: "f8",
             label: "换手率",
-            minWidth: "100px",
+            minWidth: "90px",
             sortable: "custom",
+            fixed: "right",
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -208,25 +236,19 @@ export default {
           {
             prop: "f9",
             label: "市盈率",
-            minWidth: "100px",
+            minWidth: "90px",
             sortable: "custom",
+            fixed: "right",
             formatter: (row) => {
               return row.f9 / 100;
             },
           },
           {
-            prop: "f23",
-            label: "市净率",
+            prop: "f11",
+            label: "5分涨跌",
             minWidth: "100px",
             sortable: "custom",
-            formatter: (row) => {
-              return row.f23 / 100;
-            },
-          },
-          {
-            prop: "f11",
-            label: "5分钟涨跌",
-            minWidth: "100px",
+            fixed: "right",
             cellStyle: (row) => {
               return row.f11 > 0
                 ? { color: "#f00" }
@@ -242,26 +264,13 @@ export default {
             prop: "f63",
             label: "集合竞价",
             minWidth: "100px",
+            fixed: "right",
             sortable: "custom",
             formatter: (row) => {
               return row.f6 > 100000000 || row.f6 < -100000000
                 ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
                 : parseInt((row.f6 / 10000) * 100) / 100 + "万";
             },
-          },
-          {
-            prop: "f100",
-            label: "行业",
-            minWidth: "100px",
-            sortable: "custom",
-            fixed: "right",
-          },
-          {
-            prop: "f102",
-            label: "地区板块",
-            minWidth: "100px",
-            sortable: "custom",
-            fixed: "right",
           },
         ],
       },
