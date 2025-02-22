@@ -112,7 +112,7 @@ export default {
     border-right: 1px solid #e3e4e5;
     float: left;
     background: rgb(48, 65, 86);
-    transition: all .4s;
+    transition: all .2s;
 
     /deep/.el-submenu__title {
       background: rgb(48, 65, 86);
@@ -128,7 +128,7 @@ export default {
   .app-right {
     margin-left: 200px;
     height: 100%;
-    transition: all .4s;
+    transition: all .2s;
   }
 
   .app-header {

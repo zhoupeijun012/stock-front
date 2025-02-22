@@ -21,16 +21,36 @@ export default {
       getStockList,
       loading: false,
       options: {
-        search: ()=>import('./components/search.vue'),
+        search: () => import("./components/search.vue"),
         columns: [
-          { prop: "f14", label: "股票名称", width: "100px", fixed: "left" },
-          { prop: "f12", label: "股票代码", width: "100px", fixed: "left" },
+          {
+            prop: "f14",
+            label: "股票名称",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: "blue",
+              };
+            },
+            fixed: "left",
+          },
+          {
+            prop: "f12",
+            label: "股票代码",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: "blue",
+              };
+            },
+            fixed: "left",
+          },
           {
             prop: "f21",
             label: "流通市值",
-            width: "100px",
+            minWidth: "100px",
             fixed: "left",
-            sortable:"custom",
+            sortable: "custom",
             formatter: (row) => {
               return row.f21 > 100000000 || row.f62 < -100000000
                 ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
@@ -40,9 +60,16 @@ export default {
           {
             prop: "f62",
             label: "主力净流入",
-            width: "120px",
+            minWidth: "120px",
             fixed: "left",
-            sortable:"custom",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return row.f62 > 0
+                ? { color: "#f00" }
+                : row.f62 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
             formatter: (row) => {
               return row.f62 > 100000000 || row.f62 < -100000000
                 ? parseInt((row.f62 / 100000000) * 100) / 100 + "亿"
@@ -52,8 +79,8 @@ export default {
           {
             prop: "f20",
             label: "总市值",
-            sortable:"custom",
-            width: "110px",
+            sortable: "custom",
+            minWidth: "110px",
             formatter: (row) => {
               return row.f20 > 100000000 || row.f62 < -100000000
                 ? parseInt((row.f20 / 100000000) * 100) / 100 + "亿"
@@ -64,8 +91,15 @@ export default {
           {
             prop: "f24",
             label: "60日涨幅",
-            sortable:"custom",
-            width: "110px",
+            sortable: "custom",
+            minWidth: "110px",
+            cellStyle: (row) => {
+              return row.f24 > 0
+                ? { color: "#f00" }
+                : row.f24 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
             formatter: (row) => {
               return row.f24 / 100 + "%";
             },
@@ -73,8 +107,8 @@ export default {
           {
             prop: "f2",
             label: "最新价",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f2 / 100;
             },
@@ -82,8 +116,15 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return row.f3 > 0
+                ? { color: "#f00" }
+                : row.f3 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
             formatter: (row) => {
               return row.f3 / 100 + "%";
             },
@@ -91,7 +132,14 @@ export default {
           {
             prop: "f4",
             label: "涨跌额",
-            width: "100px",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return row.f4 > 0
+                ? { color: "#f00" }
+                : row.f4 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
             formatter: (row) => {
               return row.f2 / 100;
             },
@@ -99,8 +147,8 @@ export default {
           {
             prop: "f12",
             label: "成交量(手)",
-            width: "110px",
-            sortable:"custom",
+            minWidth: "110px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f12 > 100000000
                 ? parseInt((row.f12 / 100000000) * 100) / 100 + "亿"
@@ -110,8 +158,8 @@ export default {
           {
             prop: "f6",
             label: "成交额",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "120px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f6 > 100000000 || row.f6 < -100000000
                 ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
@@ -121,8 +169,8 @@ export default {
           {
             prop: "f7",
             label: "振幅",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f7 / 100 + "%";
             },
@@ -130,8 +178,15 @@ export default {
           {
             prop: "f10",
             label: "量比",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return row.f4 > 100
+                ? { color: "#f00" }
+                : row.f4 == 100
+                ? { color: "#000" }
+                : { color: "green" };
+            },
             formatter: (row) => {
               return row.f10 / 100;
             },
@@ -139,17 +194,22 @@ export default {
           {
             prop: "f8",
             label: "换手率",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
+            },
             formatter: (row) => {
-              return row.f8 / 100;
+              return row.f8 / 100 + "%";
             },
           },
           {
             prop: "f9",
             label: "市盈率",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f9 / 100;
             },
@@ -157,26 +217,52 @@ export default {
           {
             prop: "f23",
             label: "市净率",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f23 / 100;
             },
           },
-          { prop: "f11", label: "5分钟涨跌", width: "100px" },
+          {
+            prop: "f11",
+            label: "5分钟涨跌",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return row.f11 > 0
+                ? { color: "#f00" }
+                : row.f11 == 0
+                ? { color: "#000" }
+                : { color: "green" };
+            },
+            formatter: (row) => {
+              return row.f11 / 100 + "%";
+            },
+          },
           {
             prop: "f63",
             label: "集合竞价",
-            width: "100px",
-            sortable:"custom",
+            minWidth: "100px",
+            sortable: "custom",
             formatter: (row) => {
               return row.f6 > 100000000 || row.f6 < -100000000
                 ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
                 : parseInt((row.f6 / 10000) * 100) / 100 + "万";
             },
           },
-          { prop: "f100", label: "行业", width: "100px",sortable:"custom", fixed: "right" },
-          { prop: "f102", label: "地区板块", width: "100px",sortable:"custom", fixed: "right" },
+          {
+            prop: "f100",
+            label: "行业",
+            minWidth: "100px",
+            sortable: "custom",
+            fixed: "right",
+          },
+          {
+            prop: "f102",
+            label: "地区板块",
+            minWidth: "100px",
+            sortable: "custom",
+            fixed: "right",
+          },
         ],
       },
     };

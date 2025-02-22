@@ -19,8 +19,9 @@
         v-on="$listeners"
         style="width: 100%"
         :height="maxHeight"
+        ref="table"
         @sort-change="sortChange"
-        :header-cell-class-name="handleHeaderCellClass"
+        :header-cell-class-name="handleHeadercellStyle"
       >
         <el-table-column label="序号" width="80" align="center" fixed="left">
           <template scope="scope">
@@ -33,11 +34,20 @@
           :key="'column-' + index"
         >
           <template scope="scope">
-            {{
-              column.formatter
-                ? column.formatter(scope.row)
-                : scope.row[column.prop]
-            }}
+            <div
+              :style="
+                cellStyle({
+                  column,
+                  row: scope.row,
+                })
+              "
+            >
+              {{
+                column.formatter
+                  ? column.formatter(scope.row)
+                  : scope.row[column.prop]
+              }}
+            </div>
           </template>
         </el-table-column>
         <slot></slot>
@@ -114,6 +124,8 @@ export default {
     onReset() {
       const searchRef = this.$refs.search;
       searchRef && searchRef.onReset();
+      this.orderArray = [];
+      this.$refs.table && this.$refs.table.clearSort();
       setTimeout(() => {
         this.doQuery();
       }, 0);
@@ -136,7 +148,11 @@ export default {
       });
       const filters = {};
       for (let filterItemKey of Object.keys(params.filters)) {
-        if (params.filters[filterItemKey] !=null && params.filters[filterItemKey]!= undefined && params.filters[filterItemKey]!=='') {
+        if (
+          params.filters[filterItemKey] != null &&
+          params.filters[filterItemKey] != undefined &&
+          params.filters[filterItemKey] !== ""
+        ) {
           filters[filterItemKey] = params.filters[filterItemKey];
         }
       }
@@ -184,12 +200,16 @@ export default {
 
       this.handleCurrentChange(1);
     },
-    handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {
+    handleHeadercellStyle({ row, column, rowIndex, columnIndex }) {
       this.orderArray.forEach((element) => {
         if (column.property === element.prop) {
           column.order = element.order;
         }
       });
+    },
+    cellStyle({ column, row }) {
+      const style = column.cellStyle ? column.cellStyle(row) : {};
+      return style
     },
   },
 };
@@ -236,6 +256,13 @@ export default {
     width: 25%;
     margin-right: 0;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+  /deep/.el-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 </style>
