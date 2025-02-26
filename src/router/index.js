@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 
 export const routes = [
   {
-    path: "/home",
-    name: "home",
+    path: "/stock",
+    name: "stock",
     component: () => import("@/views/stock/index.vue"),
     meta: { title: "股票列表", icon: "el-icon-notebook-2" },
   },
@@ -26,8 +26,32 @@ export const routes = [
     meta: { title: "ETF（ T+1 ）", icon: "el-icon-notebook-2" },
   },
   {
+    path: "/lof",
+    name: "lof",
+    component: () => import("@/views/lof/index.vue"),
+    meta: { title: "LOF", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/concept",
+    name: "concept",
+    component: () => import("@/views/concept/index.vue"),
+    meta: { title: "概念板块", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/industry",
+    name: "industry",
+    component: () => import("@/views/industry/index.vue"),
+    meta: { title: "行业板块", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/region",
+    name: "region",
+    component: () => import("@/views/region/index.vue"),
+    meta: { title: "地区板块", icon: "el-icon-notebook-2" },
+  },
+  {
     path: '*',
-    redirect: '/home'
+    redirect: '/stock'
   }
 ];
 

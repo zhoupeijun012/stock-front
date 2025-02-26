@@ -7,3 +7,20 @@ export const getStockList = (params)=>{
 export const getEtfList = (params)=>{
   return httpRequest.post('/getEtfList',params)
 }
+
+export const getConceptList = (params)=>{
+  return httpRequest.post('/getConceptList',params)
+}
+
+export const getIndustryList = (params)=>{
+  return httpRequest.post('/getIndustryList',params)
+}
+
+export const getRegionList = (params)=>{
+  return httpRequest.post('/getRegionList',params)
+}
+
+export const getLofList = (params)=>{
+  return httpRequest.post('/getLofList',params)
+}
+
