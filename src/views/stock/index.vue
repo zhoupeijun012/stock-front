@@ -83,7 +83,7 @@ export default {
                 : parseInt((row.f62 / 10000) * 100) / 100 + "万";
             },
           },
-  
+
           {
             prop: "f24",
             label: "60日涨幅",
@@ -194,13 +194,23 @@ export default {
             label: "行业",
             minWidth: "100px",
             sortable: "custom",
+            showOverflowTooltip: true
           },
           {
             prop: "f102",
             label: "地区板块",
             minWidth: "100px",
             sortable: "custom",
+            showOverflowTooltip: true
           },
+          {
+            prop: "f103",
+            label: "概念",
+            minWidth: "100px",
+            sortable: "custom",
+            showOverflowTooltip: true
+          },
+
           {
             prop: "f10",
             label: "量比",

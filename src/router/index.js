@@ -50,6 +50,12 @@ export const routes = [
     meta: { title: "地区板块", icon: "el-icon-notebook-2" },
   },
   {
+    path: "/limit",
+    name: "limit",
+    component: () => import("@/views/limit/index.vue"),
+    meta: { title: "涨停池", icon: "el-icon-notebook-2" },
+  },
+  {
     path: '*',
     redirect: '/stock'
   }

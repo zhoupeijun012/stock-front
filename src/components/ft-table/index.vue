@@ -6,6 +6,7 @@
           :is="options.search"
           ref="search"
           @keyup.enter.native="onSubmit"
+          @onSubmit="onSubmit"
         ></component>
       </div>
       <div class="search-btn-warp">
@@ -128,7 +129,9 @@ export default {
     query(queryParams, queryCallback) {
       this.queryParams = queryParams;
       this.queryCallback = queryCallback;
-      this.doQuery();
+      setTimeout(()=>{
+        this.doQuery();
+      })
     },
     onSubmit() {
       this.doQuery();
@@ -283,6 +286,6 @@ export default {
 }
 .search-btn-warp {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 </style>
