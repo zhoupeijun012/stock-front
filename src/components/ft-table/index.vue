@@ -4,9 +4,10 @@
       <div class="search-filter-warp" :class="{ close: fold }">
         <component
           :is="options.search"
+          v-bind="$attrs"
           ref="search"
-          @keyup.enter.native="onSubmit"
-          @onSubmit="onSubmit"
+          :otherSearchRow="otherSearchRow"
+          :row="searchRow"
         ></component>
       </div>
       <div class="search-btn-warp">
@@ -31,6 +32,7 @@
         :height="maxHeight"
         ref="table"
         @sort-change="sortChange"
+        @cell-click="cellClick"
         :header-cell-class-name="handleHeadercellStyle"
       >
         <el-table-column label="序号" width="80" align="center" fixed="left">
@@ -79,7 +81,6 @@
   </div>
 </template>
 <script>
-import deepmerge from "deepmerge";
 import fullIcon from "@/components/full-icon";
 import captureIcon from "@/components/capture-icon";
 export default {
@@ -90,6 +91,10 @@ export default {
       default: () => {},
     },
     options: {
+      type: Object,
+      default: () => {},
+    },
+    otherSearchRow: {
       type: Object,
       default: () => {},
     },
@@ -106,11 +111,11 @@ export default {
       pageNum: 1,
       pageSize: 10,
       queryParams: {},
-      queryCallback: () => {},
       loading: false,
       fold: true,
       maxHeight: "1000px",
       orderArray: [],
+      searchRow:{}
     };
   },
   methods: {
@@ -126,13 +131,6 @@ export default {
       this.pageNum = val;
       this.doQuery();
     },
-    query(queryParams, queryCallback) {
-      this.queryParams = queryParams;
-      this.queryCallback = queryCallback;
-      setTimeout(()=>{
-        this.doQuery();
-      })
-    },
     onSubmit() {
       this.doQuery();
     },
@@ -145,41 +143,33 @@ export default {
         item.classList.remove("descending");
         item.classList.remove("ascending");
       });
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.doQuery();
-      }, 0);
+      });
     },
     doQuery() {
       this.loading = true;
-      const searchRef = this.$refs.search;
-      let searchParams = {};
-      if (searchRef) {
-        searchParams = searchRef.onSubmit() || {};
-      }
       let params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-        orders: this.orderArray,
+        order: this.orderArray,
+        where: this.searchRow,
       };
-      params = deepmerge(params, this.queryParams);
-      params = deepmerge(params, {
-        filters: searchParams,
-      });
+      const searchParams = this.searchRow;
       const filters = {};
-      for (let filterItemKey of Object.keys(params.filters)) {
+      for (let filterItemKey of Object.keys(searchParams)) {
         if (
-          params.filters[filterItemKey] != null &&
-          params.filters[filterItemKey] != undefined &&
-          params.filters[filterItemKey] !== ""
+          searchParams[filterItemKey] != null &&
+          searchParams[filterItemKey] != undefined &&
+          searchParams[filterItemKey] !== ""
         ) {
-          filters[filterItemKey] = params.filters[filterItemKey];
+          filters[filterItemKey] = searchParams[filterItemKey];
         }
       }
-      params.filters = filters;
+      params.where = filters;
 
       this.requestFunction(params)
         .then((res) => {
-          this.queryCallback && this.queryCallback(res);
           const { pageNum, pageSize, total, list } = res;
           this.pageNum = pageNum;
           this.pageSize = pageSize;
@@ -229,6 +219,11 @@ export default {
     cellStyle({ column, row }) {
       const style = column.cellStyle ? column.cellStyle(row) : {};
       return style;
+    },
+    cellClick(row, column, cell, event) {
+      const columns = this.options.columns;
+      const findObj = columns.find((item) => item.prop == column.property);
+      findObj && findObj.click && findObj.click(row);
     },
   },
 };

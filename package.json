@@ -8,17 +8,17 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "chinese-calendar": "^1.0.3",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.13",
     "element-ui": "^2.15.14",
     "html2canvas": "^1.4.1",
     "jsonp": "^0.2.1",
-    "vue": "^2.6.14",
-    "vue-happy-scroll": "^2.1.1",
-    "vue-router": "^3.5.1",
-    "vuex": "^3.6.2",
     "nprogress": "0.2.0",
-    "path-to-regexp": "2.4.0"
+    "path-to-regexp": "2.4.0",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

@@ -1,20 +1,31 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="getRegionList"
+      :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    ></ft-table>
+      ><el-table-column label="操作" width="80" align="center" fixed="right">
+        <template scope="scope">
+          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
+        </template>
+      </el-table-column></ft-table
+    >
+    <region-drilling ref="region-drilling"></region-drilling>
+    <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getRegionList } from "@/api/index";
+import RegionDrilling from "./components/region-drilling.vue";
+import BaseDetail from "../components/base-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
+    RegionDrilling,
+    BaseDetail,
   },
   data() {
     return {
@@ -30,10 +41,17 @@ export default {
             showOverflowTooltip: true,
             cellStyle: (row) => {
               return {
+                cursor: "pointer",
                 color: "blue",
               };
             },
             fixed: "left",
+            click: (row) => {
+              this.$refs["region-drilling"].show({
+                title: row.f14,
+                ...row,
+              });
+            },
           },
           {
             prop: "f3",
@@ -87,9 +105,7 @@ export default {
             label: "股票代码",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
+              return {};
             },
           },
           {
@@ -211,10 +227,17 @@ export default {
       },
     };
   },
-  mounted() {
-    this.$refs["ft-table"].query({
-      matchKey: this.options.columns.map((item) => item.prop),
-    });
+  methods: {
+    toDetail(row) {
+      this.$refs["base-detail"].show({
+        title: row.f14,
+        ...row
+      });
+    },
+    requestFunction(params) {
+      params["matchKey"] = this.options.columns.map((item) => item.prop);
+      return getRegionList(params);
+    },
   },
 };
 </script>

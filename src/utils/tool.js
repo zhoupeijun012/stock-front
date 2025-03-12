@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import calendar from 'chinese-calendar'
 const getCount = (time) => {
   const sec = parseInt(time.slice(4, 6));
   const min = parseInt(time.slice(2, 4));
@@ -33,32 +35,57 @@ export const getFormatTime = (time, split = "-") => {
   return [hour, min].join(split);
 };
 
-export const jsonp = (req,error) =>{
+export const jsonp = (req, error) => {
   var script = document.createElement("script");
   var url = req;
   script.src = url;
   document.getElementsByTagName("head")[0].appendChild(script);
   script.onerror = error;
-}
+};
 
-const isObject = (item)=> {
-  return (item && typeof item === 'object' && !Array.isArray(item));
-}
+const isObject = (item) => {
+  return item && typeof item === "object" && !Array.isArray(item);
+};
 export const deepMerge = (target, ...sources) => {
   if (!sources.length) return target;
   const source = sources.shift();
 
   if (isObject(target) && isObject(source)) {
-      for (const key in source) {
-          if (isObject(source[key])) {
-              if (!target[key]) Object.assign(target, { [key]: {} });
-              deepMerge(target[key], source[key]);
-          } else {
-              Object.assign(target, { [key]: source[key] });
-          }
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        deepMerge(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
       }
+    }
   }
 
   return deepMerge(target, ...sources);
-}
+};
 
+export const IS_OPEN_DAY = (date) => {
+  return !calendar.isHoliday(date);
+};
+
+export const GET_LAST_OPENDAY = (count) => {
+  let i = 1;
+  let j = 0;
+  let date = "";
+  do {
+    date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
+    if (IS_OPEN_DAY(date)) {
+      j++;
+    }
+    i++;
+  } while (j < count);
+  return date.replaceAll("-", "");
+};
+
+export const GET_LAST_DATE = (count) => {
+  const arr = [];
+  for (let i = 1; i <= count; i++) {
+    arr.push(GET_LAST_OPENDAY(i));
+  }
+  return arr;
+};

@@ -1,6 +1,6 @@
 <template>
   <el-select
-    v-model="productForm.sysList"
+    v-model="$attrs.value"
     v-bind="$attrs"
     v-on="$listeners"
     class="remote-multiple-select"
@@ -34,7 +34,6 @@ export default {
       codeLoading: false,
       codeOptions: [],
       keyWord: "", // 存储查询字段
-      productForm: { sysList: "" },
       codePage: {
         pageNum: 1,
         pageSize: 20,
@@ -59,9 +58,9 @@ export default {
   },
   methods: {
     focus() {
-      if (!this.keyWord && this.codeOptions.length <= 0) {
+      // if (!this.keyWord ) {
         this.codeRemoteMethod();
-      }
+      // }
     },
     // 懒加载
     loadmore() {
@@ -82,7 +81,7 @@ export default {
       let obj = Object.assign({}, this.codePage, this.defaultAttrs);
       if (this.keyWord) {
         obj = Object.assign(obj, {
-          filters: {
+          where: {
             [this.matchKey]: this.keyWord,
           },
         });

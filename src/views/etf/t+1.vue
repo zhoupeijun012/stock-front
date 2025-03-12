@@ -1,21 +1,30 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="getEtfList"
+      :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
       max-height="100%"
-    ></ft-table>
+    >
+      <el-table-column label="操作" width="80" align="center" fixed="right">
+        <template scope="scope">
+          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
+        </template>
+      </el-table-column></ft-table
+    >
+    <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getEtfList } from "@/api/index";
+import BaseDetail from "../components/base-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
+    BaseDetail,
   },
   data() {
     return {
@@ -75,11 +84,8 @@ export default {
             label: "股票代码",
             width: "80px",
             cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
+              return {};
             },
-            
           },
           {
             prop: "f21",
@@ -162,7 +168,7 @@ export default {
             label: "量比",
             minWidth: "80px",
             sortable: "custom",
-            fixed:'right',
+            fixed: "right",
             cellStyle: (row) => {
               return row.f10 > 100
                 ? { color: "#f00" }
@@ -179,7 +185,7 @@ export default {
             label: "换手率",
             minWidth: "90px",
             sortable: "custom",
-            fixed:'right',
+            fixed: "right",
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -194,7 +200,7 @@ export default {
             label: "5分涨跌",
             minWidth: "100px",
             sortable: "custom",
-            fixed:'right',
+            fixed: "right",
             cellStyle: (row) => {
               return row.f11 > 0
                 ? { color: "#f00" }
@@ -210,13 +216,18 @@ export default {
       },
     };
   },
-  mounted() {
-    this.$refs["ft-table"].query({
-      matchKey: this.options.columns.map((item) => item.prop),
-      filters: {
-        c1: 1,
-      },
-    });
+  methods: {
+    toDetail(row) {
+            this.$refs["base-detail"].show({
+        title: row.f14,
+        ...row
+      });
+    },
+    requestFunction(params) {
+      params["where"]["c1"] = 1;
+      params["matchKey"] = this.options.columns.map((item) => item.prop);
+      return getEtfList(params);
+    },
   },
 };
 </script>

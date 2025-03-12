@@ -4,6 +4,7 @@
     label-width="80px"
     :model="row"
     class="demo-form-inline"
+    @keyup.enter.native="change"
   >
     <el-form-item label="股票名称">
       <el-input
@@ -64,6 +65,7 @@
         style="width: 100%"
         @change="change"
         v-model.trim="row.f103"
+        ref="f103"
         collapse-tags
         :defaultAttrs="{
           matchKey: ['f14', 'f3'],
@@ -153,25 +155,42 @@ export default {
   components: {
     LazySelect,
   },
+  props: {
+    row: {
+      type: Object,
+    },
+  },
   data() {
     return {
-      row: JSON.parse(JSON.stringify(model)),
       getIndustryList,
       getConceptList,
       getRegionList,
     };
   },
+  mounted() {
+    this.onReset();
+    this.$nextTick(() => {
+      this.$parent.doQuery();
+    });
+  },
   methods: {
     change() {
-      this.$emit('onSubmit');
-    },
-    onSubmit() {
-      return {
-        ...this.row,
-      };
+      this.$parent.doQuery();
     },
     onReset() {
-      Object.assign(this.row, model);
+      Object.keys(model).forEach((key) => {
+        this.$set(this.row, key, model[key]);
+      });
+      const otherSearchRow = this.$attrs.otherSearchRow || {};
+      if (otherSearchRow.f103) {
+        this.$set(this.row, "f103", otherSearchRow.f103);
+      }
+      if (otherSearchRow.f100) {
+        this.$set(this.row, "f100", otherSearchRow.f100);
+      }
+      if (otherSearchRow.f102) {
+        this.$set(this.row, "f102", otherSearchRow.f102);
+      }
     },
   },
 };

@@ -2,8 +2,20 @@
   <div class="app-wrapper" :class="{ 'app-collapse': isCollapse }">
     <div class="app-left">
       <el-scrollbar class="scroll-warp">
-        <el-menu :default-active="defaultActive" text-color="#bfcbd9" active-text-color="#409eff" router class="el-menu-vertical-demo" :collapse="isCollapse">
-          <el-menu-item :index="index + ''" v-for="(menuItem, index) in menuList" :key="`menu-item-` + index" :route="menuItem">
+        <el-menu
+          :default-active="defaultActive"
+          text-color="#bfcbd9"
+          active-text-color="#409eff"
+          router
+          class="el-menu-vertical-demo"
+          :collapse="isCollapse"
+        >
+          <el-menu-item
+            :index="index + ''"
+            v-for="(menuItem, index) in menuList"
+            :key="`menu-item-` + index"
+            :route="menuItem"
+          >
             <i :class="menuItem.meta && menuItem.meta.icon"></i>
             <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
           </el-menu-item>
@@ -12,50 +24,51 @@
     </div>
     <div class="app-right">
       <div class="app-header">
-        <div class="header-left" >
-          <hamger :is-active="!isCollapse" @toggleClick="toggleSideBar"></hamger>
+        <div class="header-left">
+          <hamger
+            :is-active="!isCollapse"
+            @toggleClick="toggleSideBar"
+          ></hamger>
           <div class="header-title" @click="toggleSideBar">列表</div>
         </div>
-        <div class="header-right">
-
-        </div>
+        <div class="header-right"></div>
       </div>
       <div class="app-content" ref="root" id="app-content">
-          <div class="scroll-content" >
-            <router-view></router-view>
-          </div>
+        <div class="scroll-content">
+          <router-view></router-view>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import hamger from './hamger.vue';
-import { routes } from '@/router/index';
+import hamger from "./hamger.vue";
+import { routes } from "@/router/index";
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: {
     hamger,
   },
   computed: {
     menuList() {
-      return routes
+      return routes;
     },
     defaultActive() {
-      return routes.findIndex((item)=>item.path == this.$route.path) + ''
-    }
+      return routes.findIndex((item) => item.path == this.$route.path) + "";
+    },
   },
   data() {
     return {
       isCollapse: true,
-    }
+    };
   },
   methods: {
     toggleSideBar() {
       this.isCollapse = !this.isCollapse;
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -70,7 +83,7 @@ export default {
     border-right: 1px solid #e3e4e5;
     float: left;
     background: rgb(48, 65, 86);
-    transition: all .2s;
+    transition: all 0.2s;
 
     /deep/.el-submenu__title {
       background: rgb(48, 65, 86);
@@ -86,12 +99,12 @@ export default {
   .app-right {
     margin-left: 200px;
     height: 100%;
-    transition: all .2s;
+    transition: all 0.2s;
   }
 
   .app-header {
     height: 50px;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -120,6 +133,7 @@ export default {
     background: #fafafa;
     box-sizing: border-box;
     overflow: hidden;
+
     // overflow-y: scroll;
   }
 }
@@ -135,6 +149,8 @@ export default {
   box-sizing: border-box;
   background: #fff;
   height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .el-menu-vertical-demo {

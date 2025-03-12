@@ -1,24 +1,35 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="getConceptList"
+      :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    ></ft-table>
+    >
+      <el-table-column label="操作" width="80" align="center" fixed="right">
+        <template scope="scope">
+          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
+        </template>
+      </el-table-column></ft-table
+    >
+    <concept-drilling ref="concept-drilling"></concept-drilling>
+    <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getConceptList } from "@/api/index";
+import ConceptDrilling from "./components/concept-drilling.vue";
+import BaseDetail from "../components/base-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
+    ConceptDrilling,
+    BaseDetail,
   },
   data() {
     return {
-      getConceptList,
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
@@ -30,10 +41,17 @@ export default {
             showOverflowTooltip: true,
             cellStyle: (row) => {
               return {
+                cursor: "pointer",
                 color: "blue",
               };
             },
             fixed: "left",
+            click: (row) => {
+              this.$refs["concept-drilling"].show({
+                title: row.f14,
+                ...row,
+              });
+            },
           },
           {
             prop: "f3",
@@ -52,7 +70,6 @@ export default {
               return row.f3 / 100 + "%";
             },
           },
-
           {
             prop: "f21",
             label: "流通市值",
@@ -87,9 +104,7 @@ export default {
             label: "股票代码",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
+              return {};
             },
           },
           {
@@ -147,7 +162,6 @@ export default {
               return row.f7 / 100 + "%";
             },
           },
-
           {
             prop: "f10",
             label: "量比",
@@ -211,10 +225,16 @@ export default {
       },
     };
   },
-  mounted() {
-    this.$refs["ft-table"].query({
-      matchKey: this.options.columns.map((item) => item.prop),
-    });
+  methods: {
+    toDetail(row) {
+            this.$refs["base-detail"].show({
+        title: row.f14,
+        ...row
+      });
+    },
+    requestFunction(params) {
+      return getConceptList(params);
+    },
   },
 };
 </script>
