@@ -28,7 +28,7 @@
         v-model.trim="row.f100"
         :defaultAttrs="{
           matchKey: ['f14', 'f3'],
-          orders: [{ prop: 'f3', order: 'descending' }],
+          order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
         :requestFunction="getIndustryList"
@@ -69,7 +69,7 @@
         collapse-tags
         :defaultAttrs="{
           matchKey: ['f14', 'f3'],
-          orders: [{ prop: 'f3', order: 'descending' }],
+          order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
         :requestFunction="getConceptList"
@@ -107,7 +107,7 @@
         collapse-tags
         :defaultAttrs="{
           matchKey: ['f14', 'f3'],
-          orders: [{ prop: 'f3', order: 'descending' }],
+          order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
         :requestFunction="getRegionList"
