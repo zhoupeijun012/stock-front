@@ -18,7 +18,7 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
         <!-- <capture-icon style="margin-left: 10px; width: 36px; height: 36px" full-dom="#app-content"></capture-icon> -->
         <full-icon
-          style="margin-left: 10px; width: 36px; height: 36px"
+          style="margin-left: 10px; width: 40px; height: 40px"
           full-dom="#app-content"
         ></full-icon>
       </div>

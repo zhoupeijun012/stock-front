@@ -57,7 +57,7 @@ export default {
 }
 .drawer-header {
   height: 48px;
-  border-bottom: 1px solid #e3e4e5;
+  border-bottom: 1px solid rgba(227,228,229,0.3);
   display: flex;
   align-items: center;
   justify-content: flex-start;

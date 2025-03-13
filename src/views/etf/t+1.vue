@@ -35,7 +35,7 @@ export default {
         columns: [
           {
             prop: "f14",
-            label: "股票名称",
+            label: "名称",
             width: "120x",
             fixed: "left",
             cellStyle: (row) => {

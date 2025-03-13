@@ -36,7 +36,7 @@ export default {
         columns: [
           {
             prop: "f14",
-            label: "股票名称",
+            label: "名称",
             minWidth: "100px",
             showOverflowTooltip: true,
             cellStyle: (row) => {
