@@ -69,8 +69,8 @@ export default {
   }
   .header-back {
     padding: 0 12px;
-    border-right: 1px solid #eee;
-    line-height: 16px;
+    border-right: 1px solid rgba(227,228,229,0.3);
+    line-height: 48px;
     user-select: none;
     cursor: pointer;
   }

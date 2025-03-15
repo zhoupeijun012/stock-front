@@ -115,7 +115,7 @@ export default {
       fold: true,
       maxHeight: "1000px",
       orderArray: [],
-      searchRow:{}
+      searchRow: {},
     };
   },
   methods: {
