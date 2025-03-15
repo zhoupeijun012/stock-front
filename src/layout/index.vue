@@ -155,6 +155,15 @@ export default {
 
 .el-menu-vertical-demo {
   border: none;
+  /deep/.el-menu-item {
+    padding: 0 10px !important;
+  }
+  /deep/.el-tooltip {
+    padding-left: 12px !important;
+  }
+  /deep/.el-menu-item.is-active {
+    background: #fafafa;
+  }
 }
 
 .app-collapse {
