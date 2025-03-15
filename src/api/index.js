@@ -31,3 +31,7 @@ export const getLimitList = (params) => {
 export const getTaskList =  (params) => {
   return httpRequest.post("/getTaskList", params);
 };
+
+export const getNpList =  (params) => {
+  return httpRequest.post("/getNpList", params);
+};

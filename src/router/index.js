@@ -56,20 +56,27 @@ export const routes = [
     meta: { title: "涨停池", icon: "el-icon-notebook-2" },
   },
   {
+    path: "/np",
+    name: "np",
+    component: () => import("@/views/np/index.vue"),
+    meta: { title: "指数列表", icon: "el-icon-notebook-2" },
+  },
+  {
     path: "/task-queue",
     name: "task-queue",
     component: () => import("@/views/task-queue/index.vue"),
     meta: { title: "任务列表", icon: "el-icon-notebook-2" },
   },
+
   {
-    path: '*',
-    redirect: '/stock'
-  }
+    path: "*",
+    redirect: "/stock",
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
-  scrollBehavior:()=>({ x: 0, y: 0 }),
+  scrollBehavior: () => ({ x: 0, y: 0 }),
   routes,
 });
 
