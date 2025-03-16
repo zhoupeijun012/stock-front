@@ -5,13 +5,20 @@
       :options="options"
       ref="ft-table"
     >
+      <el-table-column label="操作" width="80" align="center" fixed="right">
+        <template scope="scope">
+          <el-button type="text" @click="handleRetry(scope.row)"
+            >重试</el-button
+          >
+        </template>
+      </el-table-column>
     </ft-table>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getTaskList } from "@/api/index";
+import { getTaskList, taskRetry } from "@/api/index";
 export default {
   components: {
     FtTable,
@@ -81,6 +88,26 @@ export default {
     requestFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
       return getTaskList(params);
+    },
+    handleRetry(row) {
+      const { uuid } = row;
+      this.$confirm("确定重试?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          taskRetry({
+            uuid,
+          }).then(() => {
+            this.$message({
+              type: "success",
+              message: "重试提交成功!",
+            });
+            this.$set(row, "retryCount", "1");
+          });
+        })
+        .catch(() => {});
     },
   },
 };

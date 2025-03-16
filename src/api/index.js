@@ -35,3 +35,10 @@ export const getTaskList =  (params) => {
 export const getNpList =  (params) => {
   return httpRequest.post("/getNpList", params);
 };
+
+export const taskRetry =  (params) => {
+  return httpRequest.post("/taskRetry", params);
+};
+
+
+
