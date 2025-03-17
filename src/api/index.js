@@ -40,5 +40,10 @@ export const taskRetry =  (params) => {
   return httpRequest.post("/taskRetry", params);
 };
 
+export const getKLineList =  (params) => {
+  return httpRequest.post("/getKLineList", params);
+};
+
+
 
 
