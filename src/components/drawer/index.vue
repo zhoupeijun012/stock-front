@@ -9,8 +9,8 @@
         <div class="header-title">{{ title }}</div>
       </div>
     </div>
-    <div class="drawer-content">
-      <slot v-if="open"></slot>
+    <div class="drawer-content" v-if="open">
+      <slot ></slot>
     </div>
   </div>
 </template>

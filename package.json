@@ -14,6 +14,7 @@
     "element-ui": "^2.15.14",
     "html2canvas": "^1.4.1",
     "jsonp": "^0.2.1",
+    "klinecharts": "^10.0.0-alpha5",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "vue": "^2.6.14",

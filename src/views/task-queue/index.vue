@@ -27,6 +27,7 @@ export default {
     return {
       loading: false,
       options: {
+        search: () => import("./components/search.vue"),
         columns: [
           {
             prop: "taskLevel",
@@ -80,9 +81,6 @@ export default {
         ],
       },
     };
-  },
-  mounted() {
-    this.$refs["ft-table"].doQuery();
   },
   methods: {
     requestFunction(params) {

@@ -44,6 +44,10 @@ export const getKLineList =  (params) => {
   return httpRequest.post("/getKLineList", params);
 };
 
+export const getKLineOne =  (params) => {
+  return httpRequest.post("/getKLineOne", params);
+};
+
 
 
 

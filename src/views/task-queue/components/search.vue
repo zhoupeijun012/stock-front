@@ -6,17 +6,9 @@
     class="demo-form-inline"
     @keyup.enter.native="change"
   >
-    <el-form-item label="概念名称">
+    <el-form-item label="任务名称">
       <el-input
-        v-model.trim="row.f14"
-        placeholder="请输入"
-        clearable
-        style="width: 100%"
-      />
-    </el-form-item>
-    <el-form-item label="概念代码">
-      <el-input
-        v-model.trim="row.f12"
+        v-model.trim="row.taskName"
         placeholder="请输入"
         clearable
         style="width: 100%"
