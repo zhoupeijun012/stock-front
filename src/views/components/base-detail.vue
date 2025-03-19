@@ -20,7 +20,7 @@
 import drawer from "@/components/drawer";
 import { getKLineOne } from "@/api/index";
 import KLineChart from "@/components/k-line-chart";
-import dayjs from "dayjs";
+import { formatMoney } from "@/utils/tool";
 export default {
   components: {
     drawer,
@@ -67,7 +67,7 @@ export default {
             high: parseFloat(splitArr[3]),
             low: parseFloat(splitArr[4]),
             volume: parseFloat(splitArr[5]),
-            turnover: parseFloat(splitArr[6]),
+            turnover: formatMoney(splitArr[6]),
           };
         });
         this.$refs["k-line-chart"].refreshData(chartData);

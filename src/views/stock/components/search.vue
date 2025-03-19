@@ -139,6 +139,16 @@
         </template></lazy-select
       >
     </el-form-item>
+    <el-form-item label="上市地区">
+      <el-select v-model="row.f6666" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in f6666Options"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -149,6 +159,7 @@ import { getIndustryList, getConceptList, getRegionList } from "@/api/index";
 const model = {
   f14: "",
   f12: "",
+  f6666: "",
   f100: [],
   f103: [],
   f102: [],
@@ -164,9 +175,11 @@ export default {
   },
   data() {
     return {
-      getIndustryList,
-      getConceptList,
-      getRegionList,
+      f6666Options: [
+        { label: "主板", value: "0" },
+        { label: "创业", value: "1" },
+        { label: "科创", value: "2" },
+      ],
     };
   },
   mounted() {
@@ -176,6 +189,9 @@ export default {
     });
   },
   methods: {
+    getIndustryList,
+    getConceptList,
+    getRegionList,
     change() {
       this.$parent.handDoQuery();
     },

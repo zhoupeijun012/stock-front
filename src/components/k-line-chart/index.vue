@@ -3,11 +3,11 @@
 </template>
 <script>
 import { init, dispose } from "klinecharts";
+import { formatMoney } from '@/utils/tool';
 export default {
   data() {
     this.chart = null;
     return {
-      lineType: "day",
     };
   },
   computed: {
@@ -40,11 +40,7 @@ export default {
           formatDate(timestamp, _, type) {
             return timestamp;
           },
-          formatBigNumber: (value) => {
-            return value > 100000000 || value < -100000000
-              ? parseInt((value / 100000000) * 100) / 100 + "亿"
-              : parseInt((value / 10000) * 100) / 100 + "万";
-          },
+          formatBigNumber: formatMoney,
         },
         styles: {
           grid: {
@@ -163,8 +159,7 @@ export default {
     this.chart = chart;
   },
   methods: {
-    refreshData(data, type) {
-      this.lineType = type;
+    refreshData(data) {
       this.chart.applyNewData(data);
     },
   },
