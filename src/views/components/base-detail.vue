@@ -1,9 +1,18 @@
 <template>
   <drawer ref="drawer" :title="title">
-    <k-line-chart
-      ref="k-line-chart"
-      style="width: 300px; height: 500px"
-    ></k-line-chart>
+    <div
+      style="
+        height: 100%;
+        width: 100%;
+        border: 8px solid #fff;
+        box-sizing: border-box;
+      "
+    >
+      <k-line-chart
+        ref="k-line-chart"
+        style="width: 100%; height: 100%"
+      ></k-line-chart>
+    </div>
   </drawer>
 </template>
 
@@ -11,7 +20,7 @@
 import drawer from "@/components/drawer";
 import { getKLineOne } from "@/api/index";
 import KLineChart from "@/components/k-line-chart";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 export default {
   components: {
     drawer,
@@ -50,14 +59,15 @@ export default {
         //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
         chartData = chartData.map((item) => {
           const splitArr = item.split(",");
+
           return {
-            timestamp: dayjs(splitArr[0]).valueOf(),
-            open: splitArr[1],
-            close: splitArr[2],
-            high: splitArr[3],
-            low: splitArr[4],
-            volume: splitArr[5],
-            turnover: splitArr[6],
+            timestamp: splitArr[0],
+            open: parseFloat(splitArr[1]),
+            close: parseFloat(splitArr[2]),
+            high: parseFloat(splitArr[3]),
+            low: parseFloat(splitArr[4]),
+            volume: parseFloat(splitArr[5]),
+            turnover: parseFloat(splitArr[6]),
           };
         });
         this.$refs["k-line-chart"].refreshData(chartData);
