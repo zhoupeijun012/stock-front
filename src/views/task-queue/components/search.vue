@@ -12,6 +12,7 @@
         placeholder="请输入"
         clearable
         style="width: 100%"
+        @clear="change"
       />
     </el-form-item>
   </el-form>
@@ -34,12 +35,12 @@ export default {
   created() {
     this.onReset();
     this.$nextTick(() => {
-      this.$parent.doQuery();
+      this.$parent.handDoQuery();
     });
   },
   methods: {
     change() {
-      this.$parent.doQuery();
+      this.$parent.handDoQuery();
     },
     onReset() {
       Object.keys(model).forEach((key) => {

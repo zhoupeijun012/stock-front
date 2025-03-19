@@ -17,14 +17,13 @@ export default {
             show: false,
           },
         },
+
         candle: {
           bar: {
             upColor: "#26A69A",
             downColor: "#EF5350",
             noChangeColor: "#888888",
           },
-        },
-        candle: {
           tooltip: {
             // follow_cross是指图表失焦时不展示顶部文案
             showRule: "always", // 'always' | 'follow_cross' | 'none'

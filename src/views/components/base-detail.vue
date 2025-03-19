@@ -2,7 +2,7 @@
   <drawer ref="drawer" :title="title">
     <k-line-chart
       ref="k-line-chart"
-      style="width: 400px; height: 600px"
+      style="width: 300px; height: 500px"
     ></k-line-chart>
   </drawer>
 </template>

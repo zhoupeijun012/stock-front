@@ -147,6 +147,10 @@ export default {
         this.doQuery();
       });
     },
+    handDoQuery() {
+      this.pageNum = 1;
+      this.doQuery();
+    },
     doQuery() {
       this.loading = true;
       let params = {
