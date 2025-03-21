@@ -8,14 +8,27 @@
         </div>
         <div class="header-title">{{ title }}</div>
       </div>
+      <div class="header-right">
+        <capture-icon
+          style="width: 32px; height: 32px"
+          full-dom="#app-content"
+        ></capture-icon>
+        <full-icon
+          style="margin-right: 8px; width: 32px; height: 32px"
+          full-dom="#app-content"
+        ></full-icon>
+      </div>
     </div>
     <div class="drawer-content" v-if="open">
-      <slot ></slot>
+      <slot></slot>
     </div>
   </div>
 </template>
 <script lang="js">
+import fullIcon from "@/components/full-icon";
+import captureIcon from "@/components/capture-icon";
 export default {
+    components: { fullIcon, captureIcon },
   props:{
     title: {
       type: String,
@@ -57,10 +70,10 @@ export default {
 }
 .drawer-header {
   height: 48px;
-  border-bottom: 1px solid rgba(227,228,229,0.3);
+  border-bottom: 1px solid rgba(227, 228, 229, 0.3);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   color: #344054;
   .header-left {
     display: flex;
@@ -69,7 +82,7 @@ export default {
   }
   .header-back {
     padding: 0 12px;
-    border-right: 1px solid rgba(227,228,229,0.3);
+    border-right: 1px solid rgba(227, 228, 229, 0.3);
     line-height: 48px;
     user-select: none;
     cursor: pointer;

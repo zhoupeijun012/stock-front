@@ -68,6 +68,12 @@ export const routes = [
     meta: { title: "K线列表", icon: "el-icon-notebook-2" },
   },
   {
+    path: "/fund",
+    name: "fund",
+    component: () => import("@/views/fund/index.vue"),
+    meta: { title: "资金流", icon: "el-icon-notebook-2" },
+  },
+  {
     path: "/task-queue",
     name: "task-queue",
     component: () => import("@/views/task-queue/index.vue"),

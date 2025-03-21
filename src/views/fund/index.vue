@@ -11,19 +11,19 @@
         </template>
       </el-table-column></ft-table
     >
-    <k-detail ref="k-detail"></k-detail>
+    <fund-detail ref="fund-detail"></fund-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getKLineList } from "@/api/index";
-import KDetail from "./components/k-detail.vue";
+import { getFundList } from "@/api/index";
+import FundDetail from "./components/fund-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
-    KDetail,
+    FundDetail,
   },
   data() {
     return {
@@ -51,25 +51,20 @@ export default {
               return {};
             },
           },
-          {
-            prop: "f40001",
-            label: "K线类型",
-            minWidth: "110px",
-          },
         ],
       },
     };
   },
   methods: {
     toDetail(row) {
-      this.$refs["k-detail"].show({
+      this.$refs["fund-detail"].show({
         title: row.f14,
         ...row,
       });
     },
     requestFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
-      return getKLineList(params);
+      return getFundList(params);
     },
   },
 };

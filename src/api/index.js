@@ -28,26 +28,30 @@ export const getLimitList = (params) => {
   return httpRequest.post("/getLimitList", params);
 };
 
-export const getTaskList =  (params) => {
+export const getTaskList = (params) => {
   return httpRequest.post("/getTaskList", params);
 };
 
-export const getNpList =  (params) => {
+export const getNpList = (params) => {
   return httpRequest.post("/getNpList", params);
 };
 
-export const taskRetry =  (params) => {
+export const taskRetry = (params) => {
   return httpRequest.post("/taskRetry", params);
 };
 
-export const getKLineList =  (params) => {
+export const getKLineList = (params) => {
   return httpRequest.post("/getKLineList", params);
 };
 
-export const getKLineOne =  (params) => {
+export const getKLineOne = (params) => {
   return httpRequest.post("/getKLineOne", params);
 };
 
+export const getFundList = (params) => {
+  return httpRequest.post("/getFundList", params);
+};
 
-
-
+export const getFundOne = (params) => {
+  return httpRequest.post("/getFundOne", params);
+};
