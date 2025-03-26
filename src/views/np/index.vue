@@ -4,12 +4,7 @@
       :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    >
-      <el-table-column label="操作" width="80" align="center" fixed="right">
-        <template scope="scope">
-          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
-        </template>
-      </el-table-column></ft-table
+    ></ft-table
     >
     <base-detail ref="base-detail"></base-detail>
   </div>

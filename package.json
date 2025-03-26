@@ -11,6 +11,7 @@
     "chinese-calendar": "^1.0.3",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.13",
+    "echarts": "^5.6.0",
     "element-ui": "^2.15.14",
     "html2canvas": "^1.4.1",
     "jsonp": "^0.2.1",
