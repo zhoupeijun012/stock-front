@@ -24,6 +24,26 @@
         @clear="change"
       />
     </el-form-item>
+    <el-form-item label="多头排列">
+      <el-select v-model="row.f40008" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="60日均线">
+      <el-select v-model="row.f40010" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -31,6 +51,8 @@
 const model = {
   f14: "",
   f12: "",
+  f40008: "",
+  f40010: "",
 };
 export default {
   props: {
@@ -39,7 +61,12 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      switchOptions: [
+        { label: "是", value: "1" },
+        { label: "否", value: "0" },
+      ],
+    };
   },
   created() {
     this.onReset();

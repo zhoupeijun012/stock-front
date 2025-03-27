@@ -139,8 +139,58 @@
         </template></lazy-select
       >
     </el-form-item>
+    <el-form-item label="多头排列">
+      <el-select v-model="row.f40008" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="60日均线">
+      <el-select v-model="row.f40010" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="流通市值">
+      <el-select v-model="row.f21" @change="f21Change" clearable>
+        <el-option
+          v-for="(typeItem, index) in f21Options"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="是否亏损">
+      <el-select v-model="row.f9" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="是否破净">
+      <el-select v-model="row.f23" @change="change" clearable>
+        <el-option
+          v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="上市地区">
-      <el-select v-model="row.f6666" @change="change" clearable>
+      <el-select v-model="row.f6666" @change="f6666Change" clearable>
         <el-option
           v-for="(typeItem, index) in f6666Options"
           :key="'type-item-' + index"
@@ -159,7 +209,14 @@ import { getIndustryList, getConceptList, getRegionList } from "@/api/index";
 const model = {
   f14: "",
   f12: "",
+  f9: "",
   f6666: "",
+  f6666_ext: null,
+  f40008: "",
+  f40010: "",
+  f21: "",
+  f21_ext: null,
+  f23:'',
   f100: [],
   f103: [],
   f102: [],
@@ -176,9 +233,21 @@ export default {
   data() {
     return {
       f6666Options: [
-        { label: "主板", value: "0" },
-        { label: "创业", value: "1" },
-        { label: "科创", value: "2" },
+        { label: "主板", value: "0", range: ["00", "60"] },
+        { label: "创业", value: "1", range: ["300"] },
+        { label: "科创", value: "2", range: ["68"] },
+        { label: "北证", value: "3", range: ["8"] },
+      ],
+      switchOptions: [
+        { label: "是", value: "1" },
+        { label: "否", value: "0" },
+      ],
+      f21Options: [
+        { label: "小于20亿", value: "1", range: [0, 20] },
+        { label: "20亿-40亿", value: "2", range: [20, 40] },
+        { label: "40亿-100亿", value: "3", range: [40, 100] },
+        { label: "100亿-200亿", value: "4", range: [100, 200] },
+        { label: "大于200亿", value: "5", range: [200] },
       ],
     };
   },
@@ -194,6 +263,29 @@ export default {
     getRegionList,
     change() {
       this.$parent.handDoQuery();
+    },
+    f6666Change() {
+      if (this.row.f6666) {
+        const findObj = this.f6666Options.find(
+          (item) => item.value == this.row.f6666
+        );
+        this.$set(this.row, "f6666_ext", findObj.range);
+      } else {
+        this.$set(this.row, "f6666_ext", []);
+      }
+
+      this.change();
+    },
+    f21Change() {
+      if (this.row.f21) {
+        const findObj = this.f21Options.find(
+          (item) => item.value == this.row.f21
+        );
+        this.$set(this.row, "f21_ext", findObj.range);
+      } else {
+        this.$set(this.row, "f21_ext", []);
+      }
+      this.change();
     },
     onReset() {
       Object.keys(model).forEach((key) => {

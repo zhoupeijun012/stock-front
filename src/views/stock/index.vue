@@ -24,7 +24,7 @@ export default {
   name: "home",
   components: {
     FtTable,
-    BaseDetail
+    BaseDetail,
   },
   data() {
     return {
@@ -59,18 +59,6 @@ export default {
             },
           },
           {
-            prop: "f21",
-            label: "流通市值",
-            minWidth: "100px",
-            fixed: "left",
-            sortable: "custom",
-            formatter: (row) => {
-              return row.f21 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
-            },
-          },
-          {
             prop: "f62",
             label: "主力净流入",
             minWidth: "120px",
@@ -90,11 +78,21 @@ export default {
             },
           },
           {
+            prop: "f21",
+            label: "流通市值",
+            minWidth: "100px",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f21 > 100000000 || row.f62 < -100000000
+                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
+                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+            },
+          },
+          {
             prop: "f24",
             label: "60日涨幅",
             sortable: "custom",
             minWidth: "110px",
-            fixed: "left",
             cellStyle: (row) => {
               return row.f24 > 0
                 ? { color: "#f00" }
@@ -149,7 +147,6 @@ export default {
               return row.f2 / 100;
             },
           },
-
           {
             prop: "f12",
             label: "成交量(手)",
@@ -181,7 +178,6 @@ export default {
               return row.f7 / 100 + "%";
             },
           },
-
           {
             prop: "f23",
             label: "市净率",
@@ -196,21 +192,18 @@ export default {
             prop: "f100",
             label: "行业",
             minWidth: "100px",
-            sortable: "custom",
             showOverflowTooltip: true,
           },
           {
             prop: "f102",
             label: "地区板块",
             minWidth: "100px",
-            sortable: "custom",
             showOverflowTooltip: true,
           },
           {
             prop: "f103",
             label: "概念",
             minWidth: "100px",
-            sortable: "custom",
             showOverflowTooltip: true,
           },
 
@@ -219,7 +212,6 @@ export default {
             label: "量比",
             minWidth: "80px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return row.f4 > 100
                 ? { color: "#f00" }
@@ -236,7 +228,6 @@ export default {
             label: "换手率",
             minWidth: "90px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -251,7 +242,6 @@ export default {
             label: "市盈率",
             minWidth: "90px",
             sortable: "custom",
-            fixed: "right",
             formatter: (row) => {
               return row.f9 / 100;
             },
@@ -261,7 +251,6 @@ export default {
             label: "5分涨跌",
             minWidth: "100px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return row.f11 > 0
                 ? { color: "#f00" }
@@ -274,30 +263,125 @@ export default {
             },
           },
           {
-            prop: "f63",
-            label: "集合竞价",
+            prop: "f40005",
+            label: "暴跌倍数",
             minWidth: "100px",
-            fixed: "right",
-            sortable: "custom",
             formatter: (row) => {
-              return row.f6 > 100000000 || row.f6 < -100000000
-                ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f6 / 10000) * 100) / 100 + "万";
+              return row.f40005 <= 1 ? "历史新高" : row.f40005;
             },
+          },
+          {
+            prop: "f40003",
+            label: "历史最低价",
+            align: "center",
+            minWidth: "110px",
+          },
+          {
+            prop: "f40004",
+            label: "历史最高价",
+            align: "center",
+            minWidth: "110px",
+          },
+          {
+            prop: "f40006",
+            label: "924倍数",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            align: "center",
+          },
+          {
+            prop: "f40007",
+            label: "205倍数",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            align: "center",
+          },
+
+          {
+            prop: "f40008",
+            label: "多头排列",
+            minWidth: "80px",
+            formatter: (row) => {
+              return row.f40008 == 1 ? "是" : "否";
+            },
+            cellStyle: (row) => {
+              return {
+                color: row.f40008 == 1 ? "red" : "blue",
+              };
+            },
+            fixed: "right",
+            align: "center",
+          },
+          {
+            prop: "f40009",
+            label: "排列天数",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
+          },
+          {
+            prop: "f40010",
+            label: "60均线",
+            minWidth: "80px",
+            cellStyle: (row) => {
+              return {
+                color: row.f40010 == 1 ? "red" : "blue",
+              };
+            },
+            align: "center",
+            fixed: "right",
+            formatter: (row) => {
+              return row.f40010 == 1 ? "是" : "否";
+            },
+          },
+          {
+            prop: "f40011",
+            label: "60线天数",
+            minWidth: "120px",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
           },
         ],
       },
     };
   },
   methods: {
-    toDetail(row){
-      this.$refs['base-detail'].show({
+    toDetail(row) {
+      this.$refs["base-detail"].show({
         title: row.f14,
-        ...row
+        ...row,
       });
     },
     requestFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
+      if (params.where["f6666_ext"]) {
+        params.where["f6666"] = params.where["f6666_ext"];
+        delete params.where["f6666_ext"];
+      }
+      if (params.where["f21_ext"]) {
+        params.where["f21"] = params.where["f21_ext"];
+        delete params.where["f21_ext"];
+      }
       return getStockList(params);
     },
   },
