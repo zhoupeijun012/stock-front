@@ -29,7 +29,7 @@
             :is-active="!isCollapse"
             @toggleClick="toggleSideBar"
           ></hamger>
-          <div class="header-title" @click="toggleSideBar">列表</div>
+          <div class="header-title" @click="toggleSideBar">{{title}}</div>
         </div>
         <div class="header-right"></div>
       </div>
@@ -57,6 +57,9 @@ export default {
     defaultActive() {
       return routes.findIndex((item) => item.path == this.$route.path) + "";
     },
+    title() {
+      return this.$route.meta && this.$route.meta.title
+    }
   },
   data() {
     return {
