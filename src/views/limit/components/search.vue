@@ -58,6 +58,7 @@ export default {
       last20Days,
       pickerOptions: {
         disabledDate(val) {
+          return false
           return !last20Days.includes(dayjs(val).format("YYYYMMDD"));
         },
       },

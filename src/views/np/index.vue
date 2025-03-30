@@ -4,8 +4,7 @@
       :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    ></ft-table
-    >
+    ></ft-table>
     <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
@@ -14,6 +13,8 @@
 import FtTable from "@/components/ft-table";
 import { getNpList } from "@/api/index";
 import BaseDetail from "../components/base-detail.vue";
+import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+
 export default {
   name: "home",
   components: {
@@ -46,14 +47,10 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f3);
             },
             formatter: (row) => {
-              return row.f3 / 100 + "%";
+              return formatPrec(row.f3, "%");
             },
           },
           {
@@ -62,7 +59,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f2 / 100;
+              return formatPrec(row.f2);
             },
           },
           {
@@ -71,9 +68,7 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f6 > 100000000 || row.f6 < -100000000
-                ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f6 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f6);
             },
           },
           {
@@ -82,7 +77,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f7 / 100 + "%";
+              return formatPrec(row.f7, "%");
             },
           },
 
@@ -97,7 +92,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return row.f8 / 100 + "%";
+              return formatPrec(row.f8, "%");
             },
           },
           {
@@ -106,14 +101,10 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f11 > 0
-                ? { color: "#f00" }
-                : row.f11 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f11);
             },
             formatter: (row) => {
-              return row.f11 / 100 + "%";
+              return formatPrec(row.f11, "%");
             },
           },
         ],

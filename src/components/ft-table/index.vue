@@ -29,7 +29,7 @@
         v-bind="$attrs"
         v-on="$listeners"
         style="width: 100%"
-        :height="maxHeight"
+        :height="tableHeight"
         ref="table"
         @sort-change="sortChange"
         @cell-click="cellClick"
@@ -65,7 +65,7 @@
         <slot></slot>
       </el-table>
     </div>
-    <div class="ft-pagination">
+    <div class="ft-pagination" v-if="showPager">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -98,11 +98,26 @@ export default {
       type: Object,
       default: () => {},
     },
+    showPager: {
+      type: Boolean,
+      default: true,
+    },
+    autoHeight: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     baseIndex() {
       return (this.pageNum - 1) * this.pageSize;
     },
+    tableHeight() {
+      if(this.autoHeight) {
+        return this.maxHeight;
+      } else {
+        return null
+      }
+    }
   },
   data() {
     return {

@@ -14,24 +14,6 @@ export const routes = [
     meta: { title: "股票列表", icon: "el-icon-notebook-2" },
   },
   {
-    path: "/etf/0",
-    name: "T+0",
-    component: () => import("@/views/etf/t+0.vue"),
-    meta: { title: "ETF（ T+0 ）", icon: "el-icon-notebook-2" },
-  },
-  {
-    path: "/etf/1",
-    name: "T+1",
-    component: () => import("@/views/etf/t+1.vue"),
-    meta: { title: "ETF（ T+1 ）", icon: "el-icon-notebook-2" },
-  },
-  {
-    path: "/lof",
-    name: "lof",
-    component: () => import("@/views/lof/index.vue"),
-    meta: { title: "LOF", icon: "el-icon-notebook-2" },
-  },
-  {
     path: "/concept",
     name: "concept",
     component: () => import("@/views/concept/index.vue"),
@@ -48,6 +30,24 @@ export const routes = [
     name: "region",
     component: () => import("@/views/region/index.vue"),
     meta: { title: "地区板块", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/etf/0",
+    name: "T+0",
+    component: () => import("@/views/etf/t+0.vue"),
+    meta: { title: "ETF（ T+0 ）", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/etf/1",
+    name: "T+1",
+    component: () => import("@/views/etf/t+1.vue"),
+    meta: { title: "ETF（ T+1 ）", icon: "el-icon-notebook-2" },
+  },
+  {
+    path: "/lof",
+    name: "lof",
+    component: () => import("@/views/lof/index.vue"),
+    meta: { title: "LOF", icon: "el-icon-notebook-2" },
   },
   {
     path: "/limit",

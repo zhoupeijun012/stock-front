@@ -6,11 +6,6 @@
       ref="ft-table"
       v-bind="$attrs"
     >
-      <el-table-column label="操作" width="80" align="center" fixed="right">
-        <template scope="scope">
-          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
-        </template>
-      </el-table-column>
     </ft-table>
     <base-detail ref="base-detail"></base-detail>
   </div>
@@ -20,6 +15,7 @@
 import FtTable from "@/components/ft-table";
 import { getStockList } from "@/api/index";
 import BaseDetail from "../components/base-detail.vue";
+import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
 export default {
   name: "home",
   components: {
@@ -37,9 +33,15 @@ export default {
             label: "名称",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {};
+              return {
+                cursor: "pointer",
+                color: "blue",
+              };
             },
             fixed: "left",
+            click: (row) => {
+              this.toDetail(row);
+            },
           },
           {
             prop: "f3",
@@ -48,14 +50,10 @@ export default {
             sortable: "custom",
             fixed: "left",
             cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f3);
             },
             formatter: (row) => {
-              return row.f3 / 100 + "%";
+              return formatPrec(row.f3, "%");
             },
           },
           {
@@ -65,16 +63,10 @@ export default {
             fixed: "left",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f62 > 0
-                ? { color: "#f00" }
-                : row.f62 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f62);
             },
             formatter: (row) => {
-              return row.f62 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f62 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f62 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f62);
             },
           },
           {
@@ -83,9 +75,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f21 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f21);
             },
           },
           {
@@ -94,23 +84,16 @@ export default {
             sortable: "custom",
             minWidth: "110px",
             cellStyle: (row) => {
-              return row.f24 > 0
-                ? { color: "#f00" }
-                : row.f24 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f24);
             },
             formatter: (row) => {
-              return row.f24 / 100 + "%";
+              return formatPrec(row.f24, "%");
             },
           },
           {
             prop: "f12",
             label: "股票代码",
             minWidth: "100px",
-            cellStyle: (row) => {
-              return {};
-            },
           },
           {
             prop: "f20",
@@ -118,9 +101,7 @@ export default {
             sortable: "custom",
             minWidth: "110px",
             formatter: (row) => {
-              return row.f20 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f20 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f20 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f20);
             },
           },
           {
@@ -128,14 +109,10 @@ export default {
             label: "涨跌额",
             minWidth: "100px",
             cellStyle: (row) => {
-              return row.f4 > 0
-                ? { color: "#f00" }
-                : row.f4 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f4);
             },
             formatter: (row) => {
-              return row.f2 / 100;
+              return formatPrec(row.f4);
             },
           },
           {
@@ -144,7 +121,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f2 / 100;
+              return formatPrec(row.f2);
             },
           },
           {
@@ -153,9 +130,7 @@ export default {
             minWidth: "110px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f12 > 100000000
-                ? parseInt((row.f12 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f12 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f12);
             },
           },
           {
@@ -164,9 +139,7 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f6 > 100000000 || row.f6 < -100000000
-                ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f6 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f6);
             },
           },
           {
@@ -175,7 +148,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f7 / 100 + "%";
+              return formatPrec(row.f7, "%");
             },
           },
           {
@@ -184,7 +157,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f23 / 100;
+              return formatPrec(row.f23);
             },
           },
 
@@ -213,14 +186,10 @@ export default {
             minWidth: "80px",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f4 > 100
-                ? { color: "#f00" }
-                : row.f4 == 100
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f10);
             },
             formatter: (row) => {
-              return row.f10 / 100;
+              return isNaN(row.f10) ? "-" : row.f10 / 100;
             },
           },
           {
@@ -234,7 +203,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return row.f8 / 100 + "%";
+              return formatPrec(row.f8, "%");
             },
           },
           {
@@ -243,7 +212,7 @@ export default {
             minWidth: "90px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f9 / 100;
+              return formatPrec(row.f9);
             },
           },
           {
@@ -252,22 +221,10 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f11 > 0
-                ? { color: "#f00" }
-                : row.f11 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f11);
             },
             formatter: (row) => {
-              return row.f11 / 100 + "%";
-            },
-          },
-          {
-            prop: "f40005",
-            label: "暴跌倍数",
-            minWidth: "100px",
-            formatter: (row) => {
-              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+              return formatPrec(row.f11, "%");
             },
           },
           {
@@ -283,13 +240,28 @@ export default {
             minWidth: "110px",
           },
           {
+            prop: "f40005",
+            label: "暴跌倍数",
+            minWidth: "100px",
+            align: "center",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+            },
+          },
+          {
             prop: "f40006",
             label: "924倍数",
             minWidth: "100px",
+            align: "center",
+            sortable: "custom",
             cellStyle: (row) => {
               return {
                 color: "red",
               };
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40006, "%");
             },
             align: "center",
           },
@@ -297,36 +269,25 @@ export default {
             prop: "f40007",
             label: "205倍数",
             minWidth: "100px",
+            align: "center",
+            sortable: "custom",
             cellStyle: (row) => {
               return {
                 color: "red",
               };
             },
+            formatter: (row) => {
+              return formatPrec(row.f40007, "%");
+            },
             align: "center",
           },
-
           {
             prop: "f40008",
-            label: "多头排列",
-            minWidth: "80px",
-            formatter: (row) => {
-              return row.f40008 == 1 ? "是" : "否";
-            },
-            cellStyle: (row) => {
-              return {
-                color: row.f40008 == 1 ? "red" : "blue",
-              };
-            },
-            fixed: "right",
-            align: "center",
-          },
-          {
-            prop: "f40009",
             label: "排列天数",
             minWidth: "100px",
             cellStyle: (row) => {
               return {
-                color: "red",
+                color: row.f40008 > 0 ? "red" : "green",
               };
             },
             sortable: "custom",
@@ -334,28 +295,74 @@ export default {
             align: "center",
           },
           {
-            prop: "f40010",
-            label: "60均线",
-            minWidth: "80px",
+            prop: "f40009",
+            label: "排列涨幅",
+            minWidth: "100px",
             cellStyle: (row) => {
               return {
-                color: row.f40010 == 1 ? "red" : "blue",
+                color: row.f40009 > 0 ? "red" : "green",
               };
             },
-            align: "center",
-            fixed: "right",
             formatter: (row) => {
-              return row.f40010 == 1 ? "是" : "否";
+              return formatPrec(row.f40009, "%");
             },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
+          },
+          {
+            prop: "f40010",
+            label: "60线天数",
+            minWidth: "110px",
+            cellStyle: (row) => {
+              return {
+                color: row.f40010 > 0 ? "red" : "green",
+              };
+            },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
           },
           {
             prop: "f40011",
-            label: "60线天数",
-            minWidth: "120px",
+            label: "60线涨幅",
+            minWidth: "110px",
             cellStyle: (row) => {
               return {
-                color: "red",
+                color: row.f40011 > 0 ? "red" : "green",
               };
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40011, "%");
+            },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
+          },
+          {
+            prop: "f50004",
+            label: "流入天数",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: row.f50004 > 0 ? "red" : "green",
+              };
+            },
+            sortable: "custom",
+            fixed: "right",
+            align: "center",
+          },
+          {
+            prop: "f50005",
+            label: "流入金额",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return {
+                color: row.f50005 > 0 ? "red" : "green",
+              };
+            },
+            formatter: (row) => {
+              return formatMoney(row.f50005);
             },
             sortable: "custom",
             fixed: "right",
@@ -377,6 +384,34 @@ export default {
       if (params.where["f6666_ext"]) {
         params.where["f6666"] = params.where["f6666_ext"];
         delete params.where["f6666_ext"];
+      }
+      if (params.where["f40006_ext"]) {
+        params.where["f40006"] = params.where["f40006_ext"];
+        delete params.where["f40006_ext"];
+      }
+      if (params.where["f40007_ext"]) {
+        params.where["f40007"] = params.where["f40007_ext"];
+        delete params.where["f40007_ext"];
+      }
+      if (params.where["f40008_ext"]) {
+        params.where["f40008"] = params.where["f40008_ext"];
+        delete params.where["f40008_ext"];
+      }
+      if (params.where["f40009_ext"]) {
+        params.where["f40009"] = params.where["f40009_ext"];
+        delete params.where["f40009_ext"];
+      }
+      if (params.where["f40010_ext"]) {
+        params.where["f40010"] = params.where["f40010_ext"];
+        delete params.where["f40010_ext"];
+      }
+      if (params.where["f40011_ext"]) {
+        params.where["f40011"] = params.where["f40011_ext"];
+        delete params.where["f40011_ext"];
+      }
+      if (params.where["f50004_ext"]) {
+        params.where["f50004"] = params.where["f50004_ext"];
+        delete params.where["f50004_ext"];
       }
       if (params.where["f21_ext"]) {
         params.where["f21"] = params.where["f21_ext"];

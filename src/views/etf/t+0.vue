@@ -6,25 +6,18 @@
       ref="ft-table"
       max-height="100%"
     >
-      <el-table-column label="操作" width="80" align="center" fixed="right">
-        <template scope="scope">
-          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
-        </template>
-      </el-table-column></ft-table
-    >
-    <base-detail ref="base-detail"></base-detail>
+    </ft-table>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getEtfList } from "@/api/index";
-import BaseDetail from "../components/base-detail.vue";
+import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
 export default {
   name: "home",
   components: {
     FtTable,
-    BaseDetail,
   },
   data() {
     return {
@@ -37,11 +30,6 @@ export default {
             label: "名称",
             width: "120x",
             fixed: "left",
-            cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
-            },
             "show-overflow-tooltip": true,
           },
           {
@@ -51,14 +39,10 @@ export default {
             sortable: "custom",
             fixed: "left",
             cellStyle: (row) => {
-              return row.f3 > 0
-                ? { color: "#f00" }
-                : row.f3 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f3);
             },
             formatter: (row) => {
-              return row.f3 / 100 + "%";
+              return formatPrec(row.f3, "%");
             },
           },
           {
@@ -68,14 +52,10 @@ export default {
             sortable: "custom",
             fixed: "left",
             cellStyle: (row) => {
-              return row.f24 > 0
-                ? { color: "#f00" }
-                : row.f24 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f24);
             },
             formatter: (row) => {
-              return row.f24 / 100 + "%";
+              return formatPrec(row.f24, "%");
             },
           },
           {
@@ -91,10 +71,8 @@ export default {
             label: "流通市值",
             minWidth: "120px",
             sortable: "custom",
-            formatter: (row) => {
-              return row.f21 > 100000000 || row.f62 < -100000000
-                ? parseInt((row.f21 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f21 / 10000) * 100) / 100 + "万";
+            cellStyle: (row) => {
+              return valueStyle(row.f21);
             },
           },
           {
@@ -111,7 +89,7 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f2 / 100;
+              return formatPrec(row.f2);
             },
           },
 
@@ -121,14 +99,10 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             cellStyle: (row) => {
-              return row.f4 > 0
-                ? { color: "#f00" }
-                : row.f4 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f4);
             },
             formatter: (row) => {
-              return row.f2 / 100;
+              return formatPrec(row.f4);
             },
           },
           {
@@ -137,9 +111,7 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f12 > 100000000
-                ? parseInt((row.f12 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f12 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f12);
             },
           },
           {
@@ -148,9 +120,7 @@ export default {
             minWidth: "120px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f6 > 100000000 || row.f6 < -100000000
-                ? parseInt((row.f6 / 100000000) * 100) / 100 + "亿"
-                : parseInt((row.f6 / 10000) * 100) / 100 + "万";
+              return formatMoney(row.f6);
             },
           },
           {
@@ -159,7 +129,7 @@ export default {
             minWidth: "100px",
             sortable: "custom",
             formatter: (row) => {
-              return row.f7 / 100 + "%";
+              return formatPrec(row.f7, "%");
             },
           },
           {
@@ -169,14 +139,10 @@ export default {
             sortable: "custom",
             fixed: "right",
             cellStyle: (row) => {
-              return row.f10 > 100
-                ? { color: "#f00" }
-                : row.f10 == 100
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f10);
             },
             formatter: (row) => {
-              return row.f10 / 100;
+              return isNaN(row.f10) ? "-" : row.f10 / 100;
             },
           },
           {
@@ -191,7 +157,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return row.f8 / 100 + "%";
+              return formatPrec(row.f8, "%");
             },
           },
           {
@@ -201,14 +167,10 @@ export default {
             sortable: "custom",
             fixed: "right",
             cellStyle: (row) => {
-              return row.f11 > 0
-                ? { color: "#f00" }
-                : row.f11 == 0
-                ? { color: "#000" }
-                : { color: "green" };
+              return valueStyle(row.f11);
             },
             formatter: (row) => {
-              return row.f11 / 100 + "%";
+              return formatPrec(row.f11, "%");
             },
           },
         ],
@@ -217,9 +179,9 @@ export default {
   },
   methods: {
     toDetail(row) {
-            this.$refs["base-detail"].show({
+      this.$refs["base-detail"].show({
         title: row.f14,
-        ...row
+        ...row,
       });
     },
     requestFunction(params) {

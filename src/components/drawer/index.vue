@@ -101,6 +101,8 @@ export default {
 }
 .drawer-content {
   height: calc(100% - 48px);
+  overflow: hidden;
+  overflow-y: scroll;
 }
 .slide-icon {
   position: absolute;

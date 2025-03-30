@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import calendar from 'chinese-calendar'
+import dayjs from "dayjs";
+import calendar from "chinese-calendar";
 const getCount = (time) => {
   const sec = parseInt(time.slice(4, 6));
   const min = parseInt(time.slice(2, 4));
@@ -90,8 +90,18 @@ export const GET_LAST_DATE = (count) => {
   return arr;
 };
 
-export const formatMoney = (value)=> {
+export const formatMoney = (value) => {
   return value > 100000000 || value < -100000000
-  ? parseInt((value / 100000000) * 100) / 100 + "亿"
-  : parseInt((value / 10000) * 100) / 100 + "万";
-}
+    ? parseInt((value / 100000000) * 100) / 100 + "亿"
+    : parseInt((value / 10000) * 100) / 100 + "万";
+};
+
+export const valueStyle = (value) => {
+  return {
+    color: value > 0 ? "red" : value == 0 ? "#606266" : "blue",
+  };
+};
+
+export const formatPrec = (value, subFix = "") => {
+  return isNaN(value) ? "-" : value / 100 + subFix;
+};

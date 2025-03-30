@@ -4,12 +4,7 @@
       :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    >
-      <el-table-column label="操作" width="80" align="center" fixed="right">
-        <template scope="scope">
-          <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
-        </template>
-      </el-table-column></ft-table
+    ></ft-table
     >
     <base-detail ref="base-detail"></base-detail>
   </div>
@@ -18,7 +13,7 @@
 <script>
 import FtTable from "@/components/ft-table";
 import { getLimitList } from "@/api/index";
-import BaseDetail from "../components/base-detail.vue";
+import BaseDetail from "@/views/components/base-detail.vue";
 export default {
   name: "home",
   components: {
@@ -38,10 +33,14 @@ export default {
             showOverflowTooltip: true,
             cellStyle: (row) => {
               return {
+                cursor: "pointer",
                 color: "blue",
               };
             },
             fixed: "left",
+            click: (row) => {
+              this.toDetail(row);
+            },
           },
           {
             prop: "f3",
@@ -146,7 +145,6 @@ export default {
             prop: "f100",
             label: "所属行业",
             minWidth: "100px",
-            sortable: "custom",
             fixed: "right",
             cellStyle: (row) => {
               return {
