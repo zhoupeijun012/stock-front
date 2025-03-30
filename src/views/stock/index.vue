@@ -229,13 +229,13 @@ export default {
           },
           {
             prop: "f40003",
-            label: "历史最低价",
+            label: "历史最高价",
             align: "center",
             minWidth: "110px",
           },
           {
             prop: "f40004",
-            label: "历史最高价",
+            label: "历史最低价",
             align: "center",
             minWidth: "110px",
           },

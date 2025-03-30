@@ -125,7 +125,7 @@
     <el-form-item label="流通市值">
       <el-select
         v-model="row.f21"
-        @change="optionChange('f21', dayOptions)"
+        @change="optionChange('f21', f21Options)"
         clearable
       >
         <el-option
