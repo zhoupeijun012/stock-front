@@ -20,8 +20,7 @@
 
 <script>
 const model = {
-  f14: "",
-  f12: "",
+  taskName: "",
 };
 export default {
   props: {
