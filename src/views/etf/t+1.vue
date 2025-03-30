@@ -74,6 +74,9 @@ export default {
             cellStyle: (row) => {
               return valueStyle(row.f21);
             },
+            formatter: (row)=>{
+              return formatMoney(row.f21);
+            }
           },
           {
             prop: "c1",
