@@ -233,9 +233,7 @@ export default {
             align: "center",
             sortable: "custom",
             cellStyle: (row) => {
-              return {
-                color: "red",
-              };
+              return valueStyle(row.f40006);
             },
             formatter: (row) => {
               return formatPrec(row.f40006, "%");
@@ -249,9 +247,7 @@ export default {
             align: "center",
             sortable: "custom",
             cellStyle: (row) => {
-              return {
-                color: "red",
-              };
+              return valueStyle(row.f40007);
             },
             formatter: (row) => {
               return formatPrec(row.f40007, "%");
@@ -263,9 +259,7 @@ export default {
             label: "排列天数",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: row.f40008 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f40008);
             },
             sortable: "custom",
             fixed: "right",
@@ -276,9 +270,7 @@ export default {
             label: "排列涨幅",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: row.f40009 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f40009);
             },
             formatter: (row) => {
               return formatPrec(row.f40009, "%");
@@ -292,9 +284,7 @@ export default {
             label: "60线天数",
             minWidth: "110px",
             cellStyle: (row) => {
-              return {
-                color: row.f40010 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f40010);
             },
             sortable: "custom",
             fixed: "right",
@@ -305,9 +295,7 @@ export default {
             label: "60线涨幅",
             minWidth: "110px",
             cellStyle: (row) => {
-              return {
-                color: row.f40011 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f40011);
             },
             formatter: (row) => {
               return formatPrec(row.f40011, "%");
@@ -321,9 +309,7 @@ export default {
             label: "流入天数",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: row.f50004 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f50004);
             },
             sortable: "custom",
             fixed: "right",
@@ -334,9 +320,7 @@ export default {
             label: "流入金额",
             minWidth: "100px",
             cellStyle: (row) => {
-              return {
-                color: row.f50005 > 0 ? "red" : "green",
-              };
+              return valueStyle(row.f50005);
             },
             formatter: (row) => {
               return formatMoney(row.f50005);

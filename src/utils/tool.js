@@ -98,7 +98,7 @@ export const formatMoney = (value) => {
 
 export const valueStyle = (value) => {
   return {
-    color: value > 0 ? "red" : value == 0 ? "#606266" : "blue",
+    color: parseFloat(value) > 0 ? "red" : parseFloat(value) == 0 ? "gray" : "green",
   };
 };
 
