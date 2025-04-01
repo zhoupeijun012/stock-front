@@ -1,9 +1,9 @@
 <template>
-  <div ref="chart" />
+  <div ref="chart"  />
 </template>
 <script>
 import { init, dispose } from "klinecharts";
-import { formatMoney } from '@/utils/tool';
+import { formatMoney } from "@/utils/tool";
 export default {
   data() {
     this.chart = null;
@@ -28,13 +28,13 @@ export default {
             },
           },
           { type: "xAxis", options: { order: 9 } },
-          {
-            type: "indicator",
-            content: ["MACD"],
-            options: {
-              order: 10,
-            },
-          },
+          // {
+          //   type: "indicator",
+          //   content: ["MACD"],
+          //   options: {
+          //     order: 10,
+          //   },
+          // },
         ],
         customApi: {
           formatDate(timestamp, _, type) {
@@ -159,7 +159,7 @@ export default {
     this.chart = chart;
   },
   methods: {
-    refreshData(data) {
+    refresh(data) {
       this.chart.applyNewData(data);
     },
   },

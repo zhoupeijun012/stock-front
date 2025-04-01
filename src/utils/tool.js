@@ -91,6 +91,9 @@ export const GET_LAST_DATE = (count) => {
 };
 
 export const formatMoney = (value) => {
+  if(isNaN(value)) {
+    return '-'
+  }
   return value > 100000000 || value < -100000000
     ? parseInt((value / 100000000) * 100) / 100 + "亿"
     : parseInt((value / 10000) * 100) / 100 + "万";

@@ -1,35 +1,30 @@
 <template>
-  <drawer ref="drawer" :title="title">
-    <div
-      style="
-        height: 100%;
-        width: 100%;
-        border: 8px solid #fff;
-        box-sizing: border-box;
-      "
-    >
-      <k-line-chart
-        ref="k-line-chart"
-        style="width: 100%; height: 100%"
-      ></k-line-chart>
-    </div>
-  </drawer>
+  <div style="padding: 8px" v-loading="loading">
+    <slot></slot>
+    <k-line-chart
+      ref="k-line-chart"
+      style="height: 60vh; "
+    ></k-line-chart>
+    <fund-table ref="fund-table"></fund-table>
+  </div>
 </template>
 
 <script>
-import drawer from "@/components/drawer";
-import { getKLineOne } from "@/api/index";
-import KLineChart from "@/components/k-line-chart";
-import { formatMoney } from "@/utils/tool";
+import KLineChart from "@/views/k-line/components/k-line-chart.vue";
+import FundTable from "@/views/fund/components/fund-table.vue";
+import { getKLineOne, getFundOne } from "@/api/index";
+import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+
 export default {
   components: {
-    drawer,
     KLineChart,
+    FundTable,
   },
   data() {
     return {
       otherSearchRow: {},
       routerConfig: {},
+      loading: false,
     };
   },
   computed: {
@@ -38,44 +33,68 @@ export default {
     },
   },
   methods: {
-    show(row) {
-      this.routerConfig = row;
-      this.$refs["drawer"].show();
-      this.$nextTick(() => {
-        this.getDetail();
+    getDetail(config) {
+      this.routerConfig = config;
+      this.loading = true;
+      this.query().finally(() => {
+        this.loading = false;
       });
     },
-    getDetail() {
-      getKLineOne({
+    async query() {
+      const stockDetailParams = {
         where: [
           {
             f12: this.routerConfig.f12,
-            f40001: this.routerConfig.f40001,
           },
         ],
-      }).then((res) => {
-        const { f40001, f40002 = "[]" } = res.data || {};
-        let chartData = JSON.parse(f40002);
-        //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-        chartData = chartData.map((item) => {
-          const splitArr = item.split(",");
-
-          return {
-            timestamp: splitArr[0],
-            open: parseFloat(splitArr[1]),
-            close: parseFloat(splitArr[2]),
-            high: parseFloat(splitArr[3]),
-            low: parseFloat(splitArr[4]),
-            volume: parseFloat(splitArr[5]),
-            turnover: formatMoney(splitArr[6]),
-          };
-        });
-        this.$refs["k-line-chart"].refreshData(chartData);
+      };
+      let { f14, f50003 = "[]" } =
+        (await getFundOne(stockDetailParams)).data || {};
+      f50003 = JSON.parse(f50003);
+      f50003 = f50003.map((item) => {
+        const arr = item.split(",");
+        // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
+        return {
+          f221: arr[0],
+          f62: arr[1],
+          f84: arr[2],
+          f78: arr[3],
+          f72: arr[4],
+          f66: arr[5],
+          f2: arr[11],
+          f3: arr[12],
+        };
       });
+      this.$refs["fund-table"].refresh(f50003.reverse());
+
+      const stockKlineParams = {
+        where: [
+          {
+            f12: this.routerConfig.f12,
+            f40001: "day",
+          },
+        ],
+      };
+
+      let { f40001, f40002 = "[]" } =
+        (await getKLineOne(stockKlineParams)).data || {};
+      let chartData = JSON.parse(f40002);
+      //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+      chartData = chartData.map((item) => {
+        const splitArr = item.split(",");
+
+        return {
+          timestamp: splitArr[0],
+          open: parseFloat(splitArr[1]),
+          close: parseFloat(splitArr[2]),
+          high: parseFloat(splitArr[3]),
+          low: parseFloat(splitArr[4]),
+          volume: parseFloat(splitArr[5]),
+          turnover: formatMoney(splitArr[6]),
+        };
+      });
+      this.$refs["k-line-chart"].refresh(chartData);
     },
-    getFundDetail() {
-      
-    }
   },
 };
 </script>
@@ -89,6 +108,18 @@ export default {
 /deep/.drawer-stock {
   .search-bar {
     border-radius: 0 !important;
+  }
+}
+.content-warp {
+  display: flex;
+  .content-left,
+  .content-right {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .content-right {
+    border-left: 8px solid rgb(250, 250, 250);
   }
 }
 </style>

@@ -5,21 +5,18 @@
       :options="options"
       ref="ft-table"
     ></ft-table>
-    <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getNpList } from "@/api/index";
-import BaseDetail from "../components/base-detail.vue";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
 
 export default {
   name: "home",
   components: {
     FtTable,
-    BaseDetail,
   },
   data() {
     return {

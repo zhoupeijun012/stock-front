@@ -1,5 +1,5 @@
 <template>
-  <drawer ref="drawer" :title="title">
+  <drawer ref="drawer" :title="title" v-loading="loading">
     <div
       style="
         height: 100%;
@@ -18,9 +18,9 @@
 
 <script>
 import drawer from "@/components/drawer";
-import { getKLineOne } from "@/api/index";
-import KLineChart from "@/components/k-line-chart";
-import { formatMoney } from "@/utils/tool";
+import KLineChart from "./k-line-chart.vue";
+import { getKLineOne, getFundOne } from "@/api/index";
+import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
 export default {
   components: {
     drawer,
@@ -30,6 +30,7 @@ export default {
     return {
       otherSearchRow: {},
       routerConfig: {},
+      loading: false,
     };
   },
   computed: {
@@ -46,36 +47,39 @@ export default {
       });
     },
     getDetail() {
-      getKLineOne({
+      const stockKlineParams = {
         where: [
           {
             f12: this.routerConfig.f12,
-            f40001: this.routerConfig.f40001,
+            f40001: "day",
           },
         ],
-      }).then((res) => {
-        const { f40001, f40002 = "[]" } = res.data || {};
-        let chartData = JSON.parse(f40002);
-        //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-        chartData = chartData.map((item) => {
-          const splitArr = item.split(",");
+      };
+      this.loading = true;
+      getKLineOne(stockKlineParams)
+        .then((res) => {
+          let { f40001, f40002 = "[]" } = res.data || {};
+          let chartData = JSON.parse(f40002);
+          //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+          chartData = chartData.map((item) => {
+            const splitArr = item.split(",");
 
-          return {
-            timestamp: splitArr[0],
-            open: parseFloat(splitArr[1]),
-            close: parseFloat(splitArr[2]),
-            high: parseFloat(splitArr[3]),
-            low: parseFloat(splitArr[4]),
-            volume: parseFloat(splitArr[5]),
-            turnover: formatMoney(splitArr[6]),
-          };
+            return {
+              timestamp: splitArr[0],
+              open: parseFloat(splitArr[1]),
+              close: parseFloat(splitArr[2]),
+              high: parseFloat(splitArr[3]),
+              low: parseFloat(splitArr[4]),
+              volume: parseFloat(splitArr[5]),
+              turnover: formatMoney(splitArr[6]),
+            };
+          });
+          this.$refs["k-line-chart"].refresh(chartData);
+        })
+        .finally(() => {
+          this.loading = false;
         });
-        this.$refs["k-line-chart"].refreshData(chartData);
-      });
     },
-    getFundDetail() {
-      
-    }
   },
 };
 </script>

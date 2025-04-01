@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       options: {
         search: () => import("./components/search.vue"),
         columns: [
@@ -36,11 +35,6 @@ export default {
             label: "名称",
             minWidth: "100px",
             showOverflowTooltip: true,
-            cellStyle: (row) => {
-              return {
-                color: "blue",
-              };
-            },
             fixed: "left",
           },
           {

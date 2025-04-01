@@ -55,3 +55,19 @@ export const getFundList = (params) => {
 export const getFundOne = (params) => {
   return httpRequest.post("/getFundOne", params);
 };
+
+export const getRegionOne = (params)=>{
+  return httpRequest.post("/getRegionOne", params);
+}
+
+export const getIndustryOne = (params)=>{
+  return httpRequest.post("/getIndustryOne", params);
+}
+
+export const getStockOne = (params)=>{
+  return httpRequest.post("/getStockOne", params);
+}
+
+export const getConceptOne = (params)=>{
+  return httpRequest.post("/getConceptOne", params);
+}

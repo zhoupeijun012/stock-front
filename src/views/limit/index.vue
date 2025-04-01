@@ -6,19 +6,16 @@
       ref="ft-table"
     ></ft-table
     >
-    <base-detail ref="base-detail"></base-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getLimitList } from "@/api/index";
-import BaseDetail from "@/views/components/base-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
-    BaseDetail,
   },
   data() {
     return {

@@ -11,7 +11,7 @@
         ></component>
       </div>
       <div class="search-btn-warp">
-        <el-button type="text" @click="foldChange">{{
+        <el-button type="text" @click="foldChange" >{{
           fold ? "展开" : "收起"
         }}</el-button>
         <el-button type="plain" @click="onReset">重置</el-button>
@@ -35,7 +35,31 @@
         @cell-click="cellClick"
         :header-cell-class-name="handleHeadercellStyle"
       >
-        <el-table-column label="序号" width="80" align="center" fixed="left">
+        <el-table-column
+          type="expand"
+          fixed="left"
+          width="40px"
+          v-if="
+            Array.isArray(options.foldColums) && options.foldColums.length > 0
+          "
+        >
+          <template slot-scope="props">
+            <column-fold
+              :row="props.row"
+              :colums="options.foldColums"
+            ></column-fold>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label="序号"
+          width="60"
+          align="center"
+          :fixed="
+            Array.isArray(options.foldColums) && options.foldColums.length > 0
+              ? false
+              : 'left'
+          "
+        >
           <template scope="scope">
             {{ scope.$index + 1 + baseIndex }}
           </template>
@@ -83,8 +107,9 @@
 <script>
 import fullIcon from "@/components/full-icon";
 import captureIcon from "@/components/capture-icon";
+import ColumnFold from "./column-fold.vue";
 export default {
-  components: { fullIcon, captureIcon },
+  components: { fullIcon, captureIcon, ColumnFold },
   props: {
     requestFunction: {
       type: Function,
@@ -112,12 +137,12 @@ export default {
       return (this.pageNum - 1) * this.pageSize;
     },
     tableHeight() {
-      if(this.autoHeight) {
+      if (this.autoHeight) {
         return this.maxHeight;
       } else {
-        return null
+        return null;
       }
-    }
+    },
   },
   data() {
     return {
