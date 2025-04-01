@@ -339,7 +339,7 @@ export default {
       });
     },
     requestFunction(params) {
-      params["matchKey"] = this.options.columns.map((item) => item.prop);
+      params["matchKey"] = [...this.options.columns,...this.options.foldColums].map((item) => item.prop);
 
       if (params.where["f40006_ext"]) {
         params.where["f40006"] = params.where["f40006_ext"];

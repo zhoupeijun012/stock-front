@@ -7,10 +7,10 @@
       v-bind="$attrs"
     >
     </ft-table>
+    <stock-detail ref="stock-detail" @gotoDetail="gotoDetail"></stock-detail>
     <region-detail ref="region-detail"></region-detail>
     <concept-detail ref="concept-detail"></concept-detail>
     <industry-detail ref="industry-detail"></industry-detail>
-    <stock-detail ref="stock-detail"></stock-detail>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
               };
             },
             click: (row) => {
-              this.toDetail(row);
+              this.toStockDetail(row);
             },
           },
           {
@@ -177,19 +177,19 @@ export default {
             prop: "f103",
             label: "概念",
             span: 4,
-            component: 'concepts',
+            component: "concepts",
+            foldStyle: {
+              height: "128px",
+            },
             click: (row) => {
-              this.$refs["concept-detail"].show({
-                title: row.f14,
-                ...row,
-              });
+              this.toConceptDetail(row);
             },
           },
           {
             prop: "f62",
             label: "主力净流入",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return valueStyle(row.f62);
             },
@@ -201,7 +201,7 @@ export default {
             prop: "f21",
             label: "流通市值",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatMoney(row.f21);
             },
@@ -210,7 +210,7 @@ export default {
             prop: "f24",
             label: "60日涨幅",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return valueStyle(row.f24);
             },
@@ -222,13 +222,13 @@ export default {
             prop: "f12",
             label: "股票代码",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
           },
           {
             prop: "f20",
             label: "总市值",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatMoney(row.f20);
             },
@@ -237,7 +237,7 @@ export default {
             prop: "f4",
             label: "涨跌额",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return valueStyle(row.f4);
             },
@@ -249,7 +249,7 @@ export default {
             prop: "f2",
             label: "最新价",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatPrec(row.f2);
             },
@@ -258,7 +258,7 @@ export default {
             prop: "f12",
             label: "成交量(手)",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatMoney(row.f12);
             },
@@ -267,7 +267,7 @@ export default {
             prop: "f6",
             label: "成交额",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatMoney(row.f6);
             },
@@ -276,7 +276,7 @@ export default {
             prop: "f7",
             label: "振幅",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatPrec(row.f7, "%");
             },
@@ -285,7 +285,7 @@ export default {
             prop: "f23",
             label: "市净率",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatPrec(row.f23);
             },
@@ -294,24 +294,18 @@ export default {
             prop: "f100",
             label: "行业",
             span: 5,
-            component: 'cell-item',
+            component: "cell-item",
             click: (row) => {
-              this.$refs["industry-detail"].show({
-                title: row.f14,
-                ...row,
-              });
+              this.toIndustryDetail(row);
             },
           },
           {
             prop: "f102",
             label: "地区板块",
             span: 5,
-            component: 'cell-item',
+            component: "cell-item",
             click: (row) => {
-              this.$refs["region-detail"].show({
-                title: row.f14,
-                ...row,
-              });
+              this.toRegionDetail(row);
             },
           },
 
@@ -319,7 +313,7 @@ export default {
             prop: "f10",
             label: "量比",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return valueStyle(row.f10);
             },
@@ -331,7 +325,7 @@ export default {
             prop: "f8",
             label: "换手率",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -345,7 +339,7 @@ export default {
             prop: "f9",
             label: "市盈率",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             formatter: (row) => {
               return formatPrec(row.f9);
             },
@@ -354,7 +348,7 @@ export default {
             prop: "f11",
             label: "5分涨跌",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
             cellStyle: (row) => {
               return valueStyle(row.f11);
             },
@@ -366,27 +360,57 @@ export default {
             prop: "f40003",
             label: "历史最高价",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
           },
           {
             prop: "f40004",
             label: "历史最低价",
             span: 5,
-            component: 'text-cell',
+            component: "text-cell",
           },
         ],
       },
     };
   },
   methods: {
-    toDetail(row) {
+    toStockDetail(row) {
       this.$refs["stock-detail"].show({
         title: row.f14,
         ...row,
       });
     },
+    toConceptDetail(row) {
+      this.$refs["concept-detail"].show({
+        title: row.f14,
+        ...row,
+      });
+    },
+    toIndustryDetail(row) {
+      this.$refs["industry-detail"].show({
+        title: row.f14,
+        ...row,
+      });
+    },
+    toRegionDetail(row) {
+      this.$refs["region-detail"].show({
+        title: row.f14,
+        ...row,
+      });
+    },
+    gotoDetail(type, row) {
+      if (type == "concept-detail") {
+        this.toConceptDetail(row);
+      } else if (type == "industry-detail") {
+        this.toIndustryDetail(row);
+      } else if (type == "region-detail") {
+        this.toRegionDetail(row);
+      }
+    },
     requestFunction(params) {
-      params["matchKey"] = this.options.columns.map((item) => item.prop);
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
       if (params.where["f6666_ext"]) {
         params.where["f6666"] = params.where["f6666_ext"];
         delete params.where["f6666_ext"];

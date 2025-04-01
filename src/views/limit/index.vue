@@ -4,18 +4,20 @@
       :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
-    ></ft-table
-    >
+    ></ft-table>
+    <stock-detail ref="stock-detail"></stock-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getLimitList } from "@/api/index";
+import StockDetail from "@/views/stock/components/stock-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
+    StockDetail,
   },
   data() {
     return {
@@ -36,7 +38,10 @@ export default {
             },
             fixed: "left",
             click: (row) => {
-              this.toDetail(row);
+              this.$refs["stock-detail"].show({
+                title: row.f14,
+                ...row,
+              });
             },
           },
           {
@@ -186,12 +191,6 @@ export default {
     };
   },
   methods: {
-    toDetail(row) {
-            this.$refs["base-detail"].show({
-        title: row.f14,
-        ...row
-      });
-    },
     requestFunction(params) {
       params["matchKey"] = this.options.columns
         .map((item) => item.prop)

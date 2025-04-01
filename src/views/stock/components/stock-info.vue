@@ -2,7 +2,7 @@
   <column-fold
     :row="stockInfo"
     :colums="foldColums"
-    style="padding: 10px 0"
+    style="padding: 10px 0 10px 20px"
   ></column-fold>
 </template>
 
@@ -24,7 +24,14 @@ export default {
           prop: "f103",
           label: "概念",
           span: 4,
+          foldStyle: {
+            height: "200px",
+          },
           component: "concepts",
+          click: (row) => {
+            this.$listeners.gotoDetail &&
+              this.$listeners.gotoDetail("concept-detail", row);
+          },
         },
         {
           prop: "f14",
@@ -258,10 +265,8 @@ export default {
           span: 5,
           component: "cell-item",
           click: (row) => {
-            this.$refs["industry-detail"].show({
-              title: row.f14,
-              ...row,
-            });
+            this.$listeners.gotoDetail &&
+              this.$listeners.gotoDetail("industry-detail", row);
           },
         },
         {
@@ -270,10 +275,8 @@ export default {
           span: 5,
           component: "cell-item",
           click: (row) => {
-            this.$refs["region-detail"].show({
-              title: row.f14,
-              ...row,
-            });
+            this.$listeners.gotoDetail &&
+              this.$listeners.gotoDetail("region-detail", row);
           },
         },
 

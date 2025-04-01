@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar class="scroll-warp">
+  <el-scrollbar class="scroll-warp" :style="column.foldStyle || {}">
     <div
       class="cell-item"
       v-for="(cellItem, index) in list"
@@ -52,7 +52,6 @@ export default {
 
 <style lang="less" scoped>
 .scroll-warp {
-  height: 128px;
   /deep/.is-horizontal {
     display: none;
   }

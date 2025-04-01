@@ -1,5 +1,5 @@
 <template>
-  <div class="text-cell">
+  <div class="text-cell" :style="column.foldStyle || {}">
     <div class="text-left">{{ column.label }}</div>
     <div class="text-right">
       <div class="cell-item" @click="onClick">
