@@ -91,17 +91,31 @@ export const GET_LAST_DATE = (count) => {
 };
 
 export const formatMoney = (value) => {
-  if(isNaN(value)) {
-    return '-'
+  if (isNaN(value)) {
+    return "-";
   }
-  return value > 100000000 || value < -100000000
-    ? parseInt((value / 100000000) * 100) / 100 + "亿"
-    : parseInt((value / 10000) * 100) / 100 + "万";
+  const wy = 1000000000000;
+  if (value > wy || value < -wy) {
+    return parseInt((value / wy) * 100) / 100 + "万亿";
+  }
+
+  const y = 100000000;
+  if (value > y || value < -y) {
+    return parseInt((value / y) * 100) / 100 + "亿";
+  }
+
+  const w = 10000;
+  if (value > w || value < -w) {
+    return parseInt((value / w) * 100) / 100 + "万";
+  }
+
+  return value;
 };
 
 export const valueStyle = (value) => {
   return {
-    color: parseFloat(value) > 0 ? "red" : parseFloat(value) == 0 ? "gray" : "green",
+    color:
+      parseFloat(value) > 0 ? "red" : parseFloat(value) == 0 ? "gray" : "green",
   };
 };
 
