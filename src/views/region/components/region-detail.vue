@@ -1,16 +1,20 @@
 <template>
   <drawer ref="drawer" :title="title">
-    <base-detail ref="base-detail"></base-detail>
+    <base-detail ref="base-detail">
+      <stock-info ref="stock-info"></stock-info>
+    </base-detail>
   </drawer>
 </template>
 
 <script>
 import drawer from "@/components/drawer";
-import BaseDetail from '@/views/components/base-detail.vue';
+import BaseDetail from "@/views/components/base-detail.vue";
+import StockInfo from "./region-info.vue";
 export default {
   components: {
     drawer,
-    BaseDetail
+    BaseDetail,
+    StockInfo,
   },
   data() {
     return {
@@ -28,7 +32,8 @@ export default {
       this.routerConfig = row;
       this.$refs["drawer"].show();
       this.$nextTick(() => {
-        this.$refs['base-detail'].getDetail(row);
+        this.$refs["base-detail"].getDetail(row);
+        this.$refs["stock-info"].getDetail(row);
       });
     },
   },

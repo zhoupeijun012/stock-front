@@ -1,11 +1,14 @@
 <template>
-  <div style="padding: 8px" v-loading="loading">
+  <div  v-loading="loading">
     <slot></slot>
     <k-line-chart
       ref="k-line-chart"
-      style="height: 60vh; "
+      style="height: 60vh; border-top: 8px solid rgb(250, 250, 250);padding: 0 8px;"
     ></k-line-chart>
-    <fund-table ref="fund-table"></fund-table>
+    <fund-table
+      ref="fund-table"
+      style="border-top: 8px solid rgb(250, 250, 250);"
+    ></fund-table>
   </div>
 </template>
 

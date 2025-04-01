@@ -74,6 +74,7 @@ export default {
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
+  font-size: 14px;
   &:hover {
     background: #ecf5ff;
   }

@@ -49,6 +49,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   line-height: 24px;
+  font-size: 14px;
 }
 .text-left {
   width: 100px;
