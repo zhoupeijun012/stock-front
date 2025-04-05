@@ -11,7 +11,7 @@
         ></component>
       </div>
       <div class="search-btn-warp">
-        <el-button type="text" @click="foldChange" >{{
+        <el-button type="text" @click="foldChange">{{
           fold ? "展开" : "收起"
         }}</el-button>
         <el-button type="plain" @click="onReset">重置</el-button>
@@ -31,6 +31,8 @@
         style="width: 100%"
         :height="tableHeight"
         ref="table"
+        :row-key="rowKey"
+        :expand-row-keys="expandRowKeys"
         @sort-change="sortChange"
         @cell-click="cellClick"
         :header-cell-class-name="handleHeadercellStyle"
@@ -43,6 +45,13 @@
             Array.isArray(options.foldColums) && options.foldColums.length > 0
           "
         >
+          <template #header>
+            <i
+              class="el-icon el-icon-arrow-right table-expand"
+              :class="{ open: tableExpend }"
+              @click="changeExpand(false)"
+            ></i>
+          </template>
           <template slot-scope="props">
             <column-fold
               :row="props.row"
@@ -131,6 +140,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    rowKey: {
+      type: String,
+      default: "uuid",
+    },
   },
   computed: {
     baseIndex() {
@@ -156,6 +169,8 @@ export default {
       maxHeight: "1000px",
       orderArray: [],
       searchRow: {},
+      tableExpend: false,
+      expandRowKeys: [],
     };
   },
   methods: {
@@ -219,6 +234,7 @@ export default {
           this.pageSize = pageSize;
           this.total = total;
           this.tableData = list || [];
+          this.changeExpand(true);
         })
         .catch(() => {})
         .finally(() => {
@@ -269,6 +285,16 @@ export default {
       const findObj = columns.find((item) => item.prop == column.property);
       findObj && findObj.click && findObj.click(row);
     },
+    changeExpand(fromInit = false) {
+      if (!fromInit) {
+        this.tableExpend = !this.tableExpend;
+      }
+      if (this.tableExpend) {
+        this.expandRowKeys = this.tableData.map((item) => item[this.rowKey]);
+      } else {
+        this.expandRowKeys = [];
+      }
+    },
   },
 };
 </script>
@@ -295,6 +321,12 @@ export default {
   background: #fff;
   box-sizing: border-box;
   border-top: 1px solid #e3e4e5;
+}
+.table-expand {
+  cursor: pointer;
+  &.open {
+    transform: rotate(90deg);
+  }
 }
 .search-bar {
   display: flex;
