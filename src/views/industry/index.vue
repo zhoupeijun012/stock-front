@@ -11,23 +11,17 @@
         </template>
       </el-table-column></ft-table
     >
-    <industry-drilling ref="industry-drilling"></industry-drilling>
-    <industry-detail ref="industry-detail"></industry-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getIndustryList } from "@/api/index";
-import IndustryDrilling from "./components/industry-drilling.vue";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import IndustryDetail from "@/views/industry/components/industry-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
-    IndustryDrilling,
-    IndustryDetail,
   },
   data() {
     return {
@@ -47,7 +41,7 @@ export default {
               };
             },
             click: (row) => {
-              this.$refs["industry-drilling"].show({
+              this.$industryDrilling({
                 title: row.f14,
                 ...row,
               });
@@ -423,7 +417,7 @@ export default {
   },
   methods: {
     toDetail(row) {
-      this.$industryDetail({
+      this.$industryDrilling({
         title: row.f14,
         ...row,
       });

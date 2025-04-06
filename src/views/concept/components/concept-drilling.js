@@ -12,15 +12,15 @@ export default {
       let instance = new ComponentStructor().$mount(dom);
 
       const destroyDialog = () => {
+        rootDom.removeChild(instance.$el);
         instance.$destroy();
         instance = null;
-        dom.parentNode && dom.parentNode.removeChild(dom);
       };
 
       if (instance && instance.show) {
-        Vue.nextTick(() => {
+        setTimeout(() => {
           instance.show(propsData);
-        });
+        }, 0);
       }
 
       return new Promise((resolve, reject) => {

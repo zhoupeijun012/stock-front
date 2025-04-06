@@ -4,7 +4,7 @@ export default {
   install(Vue) {
     const ComponentStructor = Vue.extend(StockDetail);
 
-    const openDialog = function (porpsData) {
+    const openDialog = function (propsData) {
       const dom = document.createElement("div");
       const rootDom = document.querySelector('#router-view-content');
       rootDom.appendChild(dom);
@@ -12,15 +12,15 @@ export default {
       let instance = new ComponentStructor().$mount(dom);
 
       const destroyDialog = () => {
+        rootDom.removeChild(instance.$el);
         instance.$destroy();
         instance = null;
-        dom.parentNode && dom.parentNode.removeChild(dom);
       };
 
       if (instance && instance.show) {
-        Vue.nextTick(()=>{
-          instance.show(porpsData);
-        })
+        setTimeout(()=>{
+          instance.show(propsData);
+        },0)
       }
 
       return new Promise((resolve, reject) => {

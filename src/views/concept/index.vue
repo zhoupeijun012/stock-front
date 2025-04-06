@@ -11,23 +11,17 @@
         </template>
       </el-table-column></ft-table
     >
-    <concept-drilling ref="concept-drilling"></concept-drilling>
-    <concept-detail ref="concept-detail"></concept-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getConceptList } from "@/api/index";
-import ConceptDrilling from "./components/concept-drilling.vue";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import ConceptDetail from "@/views/concept/components/concept-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
-    ConceptDrilling,
-    ConceptDetail,
   },
   data() {
     return {
@@ -47,7 +41,7 @@ export default {
               };
             },
             click: (row) => {
-              this.$refs["concept-drilling"].show({
+              this.$conceptDrilling({
                 title: row.f14,
                 ...row,
               });

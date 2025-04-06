@@ -10,16 +10,12 @@
         </template>
       </el-table-column></ft-table
     >
-    <region-drilling ref="region-drilling"></region-drilling>
-    <region-detail ref="region-detail"></region-detail>
   </div>
 </template>
 
 <script>
 import FtTable from "@/components/ft-table";
 import { getRegionList } from "@/api/index";
-import RegionDrilling from "./components/region-drilling.vue";
-import RegionDetail from "./components/region-detail.vue";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
 export default {
   name: "home",
@@ -47,7 +43,7 @@ export default {
               };
             },
             click: (row) => {
-              this.$refs["region-drilling"].show({
+              this.$regionDrilling({
                 title: row.f14,
                 ...row,
               });
