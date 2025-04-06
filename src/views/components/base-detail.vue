@@ -1,13 +1,17 @@
 <template>
-  <div  v-loading="loading">
+  <div v-loading="loading">
     <slot></slot>
     <k-line-chart
       ref="k-line-chart"
-      style="height: 60vh; border-top: 8px solid rgb(250, 250, 250);padding: 0 8px;"
+      style="
+        height: 60vh;
+        border-top: 8px solid rgb(250, 250, 250);
+        padding: 0 8px;
+      "
     ></k-line-chart>
     <fund-table
       ref="fund-table"
-      style="border-top: 8px solid rgb(250, 250, 250);"
+      style="border-top: 8px solid rgb(250, 250, 250)"
     ></fund-table>
   </div>
 </template>
@@ -48,6 +52,7 @@ export default {
         where: [
           {
             f12: this.routerConfig.f12,
+            f14: this.routerConfig.f14,
           },
         ],
       };
@@ -68,12 +73,14 @@ export default {
           f3: arr[12],
         };
       });
-      this.$refs["fund-table"].refresh(f50003.reverse());
+      this.$refs["fund-table"] &&
+        this.$refs["fund-table"].refresh(f50003.reverse());
 
       const stockKlineParams = {
         where: [
           {
             f12: this.routerConfig.f12,
+            f14: this.routerConfig.f14,
             f40001: "day",
           },
         ],

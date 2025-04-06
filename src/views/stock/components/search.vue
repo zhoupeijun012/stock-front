@@ -402,6 +402,9 @@ export default {
       if (otherSearchRow.f102) {
         this.$set(this.row, "f102", otherSearchRow.f102);
       }
+      if (otherSearchRow.f14_ext) {
+        this.$set(this.row, "f14", otherSearchRow.f14_ext);
+      }
     },
   },
 };

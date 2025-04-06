@@ -59,7 +59,7 @@ export default {
               f3: arr[12],
             };
           });
-          this.$refs["fund-table"].refresh(f50003.reverse());
+          this.$refs["fund-table"] && this.$refs["fund-table"].refresh(f50003.reverse());
         })
         .finally(() => {
           this.loading = false;

@@ -74,6 +74,7 @@ export default {
   cursor: pointer;
   user-select: none;
   font-size: 14px;
+  color: #606266;
   &:hover {
     background: #ecf5ff;
   }

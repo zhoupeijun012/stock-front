@@ -26,7 +26,9 @@ export default {
   methods: {
     show(row) {
       this.routerConfig = row;
-      this.$set(this.otherSearchRow,'f103',[row.f14]);
+      if(row.f14) {
+        this.$set(this.otherSearchRow,'f103',[row.f14]);
+      }
       this.$nextTick(() => {
         this.$refs["drawer"].show();
       });

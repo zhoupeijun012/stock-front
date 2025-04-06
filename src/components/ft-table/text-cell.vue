@@ -4,6 +4,7 @@
     <div
       class="text-right"
       :style="column.cellStyle ? column.cellStyle(row) : {}"
+      @click="onClick(row)"
     >
       {{ column.formatter ? column.formatter(row) : row[column.prop] }}
     </div>
@@ -20,6 +21,11 @@ export default {
     row: {
       type: Object,
       default: () => {},
+    },
+  },
+  methods: {
+    onClick(cellItem) {
+      this.column.click && this.column.click(cellItem);
     },
   },
 };

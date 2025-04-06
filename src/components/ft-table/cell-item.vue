@@ -50,6 +50,7 @@ export default {
   justify-content: flex-start;
   line-height: 24px;
   font-size: 14px;
+  color: #606266;
 }
 .text-left {
   width: 100px;

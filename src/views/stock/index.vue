@@ -7,10 +7,6 @@
       v-bind="$attrs"
     >
     </ft-table>
-    <stock-detail ref="stock-detail" @gotoDetail="gotoDetail"></stock-detail>
-    <region-detail ref="region-detail"></region-detail>
-    <concept-detail ref="concept-detail"></concept-detail>
-    <industry-detail ref="industry-detail"></industry-detail>
   </div>
 </template>
 
@@ -18,18 +14,10 @@
 import FtTable from "@/components/ft-table";
 import { getStockList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import RegionDetail from "@/views/region/components/region-detail.vue";
-import ConceptDetail from "@/views/concept/components/concept-detail.vue";
-import IndustryDetail from "@/views/industry/components/industry-detail.vue";
-import StockDetail from "@/views/stock/components/stock-detail.vue";
 export default {
   name: "home",
   components: {
     FtTable,
-    RegionDetail,
-    ConceptDetail,
-    IndustryDetail,
-    StockDetail,
   },
   data() {
     return {
@@ -48,7 +36,10 @@ export default {
               };
             },
             click: (row) => {
-              this.toStockDetail(row);
+              this.$stockDetail({
+                title: row.f14,
+                ...row,
+              });
             },
           },
           {
@@ -179,43 +170,13 @@ export default {
             span: 4,
             component: "concepts",
             foldStyle: {
-              height: "128px",
+              height: "152px",
             },
             click: (row) => {
-              this.toConceptDetail(row);
-            },
-          },
-          {
-            prop: "f62",
-            label: "主力净流入",
-            span: 5,
-            component: "text-cell",
-            cellStyle: (row) => {
-              return valueStyle(row.f62);
-            },
-            formatter: (row) => {
-              return formatMoney(row.f62);
-            },
-          },
-          {
-            prop: "f21",
-            label: "流通市值",
-            span: 5,
-            component: "text-cell",
-            formatter: (row) => {
-              return formatMoney(row.f21);
-            },
-          },
-          {
-            prop: "f24",
-            label: "60日涨幅",
-            span: 5,
-            component: "text-cell",
-            cellStyle: (row) => {
-              return valueStyle(row.f24);
-            },
-            formatter: (row) => {
-              return formatPrec(row.f24, "%");
+              this.$conceptDetail({
+                title: row.f14,
+                ...row,
+              });
             },
           },
           {
@@ -223,7 +184,27 @@ export default {
             label: "股票代码",
             span: 5,
             component: "text-cell",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
           },
+          {
+            prop: "f21",
+            label: "流通市值",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            formatter: (row) => {
+              return formatMoney(row.f21);
+            },
+          },
+
           {
             prop: "f20",
             label: "总市值",
@@ -233,23 +214,17 @@ export default {
               return formatMoney(row.f20);
             },
           },
-          {
-            prop: "f4",
-            label: "涨跌额",
-            span: 5,
-            component: "text-cell",
-            cellStyle: (row) => {
-              return valueStyle(row.f4);
-            },
-            formatter: (row) => {
-              return formatPrec(row.f4);
-            },
-          },
+
           {
             prop: "f2",
             label: "最新价",
             span: 5,
             component: "text-cell",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
             formatter: (row) => {
               return formatPrec(row.f2);
             },
@@ -268,6 +243,11 @@ export default {
             label: "成交额",
             span: 5,
             component: "text-cell",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
             formatter: (row) => {
               return formatMoney(row.f6);
             },
@@ -296,7 +276,10 @@ export default {
             span: 5,
             component: "cell-item",
             click: (row) => {
-              this.toIndustryDetail(row);
+              this.$industryDetail({
+                title: row.f14,
+                ...row,
+              });
             },
           },
           {
@@ -305,7 +288,10 @@ export default {
             span: 5,
             component: "cell-item",
             click: (row) => {
-              this.toRegionDetail(row);
+              this.$regionDetail({
+                title: row.f14,
+                ...row,
+              });
             },
           },
 
@@ -368,44 +354,74 @@ export default {
             span: 5,
             component: "text-cell",
           },
+          {
+            prop: "f24",
+            label: "60日涨幅",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return valueStyle(row.f24);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f24, "%");
+            },
+          },
+          {
+            prop: "f62",
+            label: "主力净流入",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return valueStyle(row.f62);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f62);
+            },
+          },
+          {
+            prop: "f267",
+            label: "3日净流入",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return valueStyle(row.f267);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f267);
+            },
+          },
+
+          {
+            prop: "f164",
+            label: "5日净流入",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return valueStyle(row.f164);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f164);
+            },
+          },
+          {
+            prop: "f63",
+            label: "集合竞价",
+            span: 5,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            formatter: (row) => {
+              return formatMoney(row.f63);
+            },
+          },
         ],
       },
     };
   },
   methods: {
-    toStockDetail(row) {
-      this.$refs["stock-detail"].show({
-        title: row.f14,
-        ...row,
-      });
-    },
-    toConceptDetail(row) {
-      this.$refs["concept-detail"].show({
-        title: row.f14,
-        ...row,
-      });
-    },
-    toIndustryDetail(row) {
-      this.$refs["industry-detail"].show({
-        title: row.f14,
-        ...row,
-      });
-    },
-    toRegionDetail(row) {
-      this.$refs["region-detail"].show({
-        title: row.f14,
-        ...row,
-      });
-    },
-    gotoDetail(type, row) {
-      if (type == "concept-detail") {
-        this.toConceptDetail(row);
-      } else if (type == "industry-detail") {
-        this.toIndustryDetail(row);
-      } else if (type == "region-detail") {
-        this.toRegionDetail(row);
-      }
-    },
     requestFunction(params) {
       params["matchKey"] = [
         ...this.options.columns,

@@ -1,7 +1,11 @@
 <template>
   <drawer ref="drawer" :title="title">
     <base-detail ref="base-detail">
-      <stock-info ref="stock-info" v-on="$listeners" v-bind="$attrs"></stock-info>
+      <stock-info
+        ref="stock-info"
+        v-on="$listeners"
+        v-bind="$attrs"
+      ></stock-info>
     </base-detail>
   </drawer>
 </template>

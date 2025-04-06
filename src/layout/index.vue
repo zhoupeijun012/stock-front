@@ -35,7 +35,7 @@
       </div>
       <div class="app-content" ref="root" id="app-content">
         <div class="scroll-content">
-          <router-view></router-view>
+          <router-view id="router-view-content"></router-view>
         </div>
       </div>
     </div>
