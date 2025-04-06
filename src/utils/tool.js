@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
-import calendar from "chinese-calendar";
+import dayjs from'dayjs';
+
 const getCount = (time) => {
   const sec = parseInt(time.slice(4, 6));
   const min = parseInt(time.slice(2, 4));
@@ -65,28 +65,21 @@ export const deepMerge = (target, ...sources) => {
 };
 
 export const IS_OPEN_DAY = (date) => {
-  return !calendar.isHoliday(date);
+  const day = dayjs(date).day();
+  return !window.chineseDays.isHoliday(date) && !(day == 0 || day == 6);
 };
 
-export const GET_LAST_OPENDAY = (count) => {
-  let i = 1;
-  let j = 0;
-  let date = "";
-  do {
-    date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
-    if (IS_OPEN_DAY(date)) {
-      j++;
-    }
-    i++;
-  } while (j < count);
-  return date.replaceAll("-", "");
-};
 
 export const GET_LAST_DATE = (count) => {
   const arr = [];
-  for (let i = 1; i <= count; i++) {
-    arr.push(GET_LAST_OPENDAY(i));
-  }
+  let i = 0;
+  do {
+    const date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
+    if(IS_OPEN_DAY(date)) {
+      arr.push(date);
+    }
+    i++;
+  } while( arr.length < count )
   return arr;
 };
 

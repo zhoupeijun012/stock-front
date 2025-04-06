@@ -29,7 +29,7 @@
         v-model.trim="row.date"
         placeholder="请选择"
         clearable
-        value-format="yyyyMMdd"
+        value-format="yyyy-MM-dd"
         style="width: 100%"
         :picker-options="pickerOptions"
         @change="change"
@@ -44,7 +44,7 @@ import { GET_LAST_DATE } from "@/utils/tool";
 const model = {
   f14: "",
   f12: "",
-  date: dayjs().format("YYYYMMDD"),
+  date: dayjs().format("YYYY-MM-DD"),
 };
 export default {
   props: {
@@ -53,13 +53,12 @@ export default {
     },
   },
   data() {
-    const last20Days = GET_LAST_DATE(20);
+    const last10Days = GET_LAST_DATE(10);
     return {
-      last20Days,
+      last10Days,
       pickerOptions: {
         disabledDate(val) {
-          return false
-          return !last20Days.includes(dayjs(val).format("YYYYMMDD"));
+          return !last10Days.includes(dayjs(val).format("YYYY-MM-DD"));
         },
       },
     };
@@ -75,7 +74,7 @@ export default {
       Object.keys(model).forEach((key) => {
         this.$set(this.row, key, model[key]);
       });
-      this.$set(this.row,'date',this.last20Days[0]);
+      this.$set(this.row,'date',this.last10Days[0]);
     },
     change() {
       this.$parent.onSubmit();

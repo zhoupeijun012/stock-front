@@ -13,6 +13,7 @@
 import FtTable from "@/components/ft-table";
 import { getLimitList } from "@/api/index";
 import StockDetail from "@/views/stock/components/stock-detail.vue";
+import dayjs from "dayjs";
 export default {
   name: "home",
   components: {
@@ -195,6 +196,9 @@ export default {
       params["matchKey"] = this.options.columns
         .map((item) => item.prop)
         .concat(["f10007", "date"]);
+      if(params['where']['date']) {
+        params['where']['date'] = dayjs(params['where']['date']).format('YYYYMMDD');
+      }
       return getLimitList(params);
     },
   },
