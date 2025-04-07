@@ -204,7 +204,6 @@ export default {
               return formatMoney(row.f21);
             },
           },
-
           {
             prop: "f20",
             label: "总市值",
@@ -214,7 +213,6 @@ export default {
               return formatMoney(row.f20);
             },
           },
-
           {
             prop: "f2",
             label: "最新价",
@@ -294,7 +292,6 @@ export default {
               });
             },
           },
-
           {
             prop: "f10",
             label: "量比",
@@ -390,7 +387,6 @@ export default {
               return formatMoney(row.f267);
             },
           },
-
           {
             prop: "f164",
             label: "5日净流入",
