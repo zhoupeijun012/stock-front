@@ -29,7 +29,6 @@ export default {
             prop: "f14",
             label: "名称",
             width: "120x",
-            fixed: "left",
             "show-overflow-tooltip": true,
           },
           {
@@ -37,7 +36,6 @@ export default {
             label: "涨跌幅",
             minWidth: "90px",
             sortable: "custom",
-            fixed: "left",
             cellStyle: (row) => {
               return valueStyle(row.f3);
             },
@@ -50,7 +48,6 @@ export default {
             label: "60涨跌幅",
             minWidth: "110px",
             sortable: "custom",
-            fixed: "left",
             cellStyle: (row) => {
               return valueStyle(row.f24);
             },
@@ -61,7 +58,7 @@ export default {
           {
             prop: "f12",
             label: "股票代码",
-            width: "80px",
+            width: "90px",
             cellStyle: (row) => {
               return {};
             },
@@ -74,18 +71,11 @@ export default {
             cellStyle: (row) => {
               return valueStyle(row.f21);
             },
-            formatter: (row)=>{
-              return formatMoney(row.f21);
-            }
-          },
-          {
-            prop: "c1",
-            label: "交易类型",
-            minWidth: "100px",
             formatter: (row) => {
-              return row.c1 == "0" ? "T+0" : "T+1";
+              return formatMoney(row.f21);
             },
           },
+
           {
             prop: "f2",
             label: "最新价",
@@ -97,27 +87,6 @@ export default {
           },
 
           {
-            prop: "f4",
-            label: "涨跌额",
-            minWidth: "120px",
-            sortable: "custom",
-            cellStyle: (row) => {
-              return valueStyle(row.f4);
-            },
-            formatter: (row) => {
-              return formatPrec(row.f4);
-            },
-          },
-          {
-            prop: "f12",
-            label: "成交量(手)",
-            minWidth: "120px",
-            sortable: "custom",
-            formatter: (row) => {
-              return formatMoney(row.f12);
-            },
-          },
-          {
             prop: "f6",
             label: "成交额",
             minWidth: "120px",
@@ -126,6 +95,7 @@ export default {
               return formatMoney(row.f6);
             },
           },
+
           {
             prop: "f7",
             label: "振幅",
@@ -140,7 +110,6 @@ export default {
             label: "量比",
             minWidth: "80px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return valueStyle(row.f10);
             },
@@ -153,7 +122,6 @@ export default {
             label: "换手率",
             minWidth: "90px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return {
                 color: "#f00",
@@ -168,12 +136,43 @@ export default {
             label: "5分涨跌",
             minWidth: "100px",
             sortable: "custom",
-            fixed: "right",
             cellStyle: (row) => {
               return valueStyle(row.f11);
             },
             formatter: (row) => {
               return formatPrec(row.f11, "%");
+            },
+          },
+        ],
+        foldColums: [
+          {
+            prop: "c1",
+            label: "交易类型",
+            span: 4,
+            component: "text-cell",
+            formatter: (row) => {
+              return row.c1 == "0" ? "T+0" : "T+1";
+            },
+          },
+          {
+            prop: "f4",
+            label: "涨跌额",
+            span: 4,
+            component: "text-cell",
+            cellStyle: (row) => {
+              return valueStyle(row.f4);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f4);
+            },
+          },
+          {
+            prop: "f12",
+            label: "成交量(手)",
+            span: 4,
+            component: "text-cell",
+            formatter: (row) => {
+              return formatMoney(row.f12);
             },
           },
         ],
@@ -189,7 +188,10 @@ export default {
     },
     requestFunction(params) {
       params["where"]["c1"] = 0;
-      params["matchKey"] = this.options.columns.map((item) => item.prop);
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
       return getEtfList(params);
     },
   },
