@@ -18,16 +18,18 @@ export default {
       };
 
       if (instance && instance.show) {
-        setTimeout(()=>{
+        setTimeout(() => {
           instance.show(propsData);
-        },0)
+        }, 0);
       }
 
       return new Promise((resolve, reject) => {
         instance.$children[0].$watch("open", (val) => {
           if (!val) {
-            resolve();
-            destroyDialog();
+            setTimeout(() => {
+              resolve();
+              destroyDialog();
+            }, 200);
           }
         });
       });

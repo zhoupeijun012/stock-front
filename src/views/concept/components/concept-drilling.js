@@ -27,7 +27,10 @@ export default {
         instance.$children[0].$watch("open", (val) => {
           if (!val) {
             resolve();
-            destroyDialog();
+            setTimeout(() => {
+              resolve();
+              destroyDialog();
+            }, 200);
           }
         });
       });
