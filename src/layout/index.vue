@@ -162,9 +162,9 @@ export default {
   /deep/.el-menu-item {
     padding: 0 10px !important;
   }
-  // /deep/.el-tooltip {
-  //   padding-left: 12px !important;
-  // }
+  /deep/.el-tooltip {
+    padding-left: 12px !important;
+  }
   /deep/.el-menu-item.is-active {
     background: #fafafa;
   }
@@ -172,12 +172,12 @@ export default {
 
 .app-collapse {
   .app-left {
-    width: 64px;
+    width: 54px;
     overflow: hidden;
   }
 
   .app-right {
-    margin-left: 64px;
+    margin-left: 54px;
   }
 }
 </style>
