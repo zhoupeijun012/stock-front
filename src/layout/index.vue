@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper" :class="{ 'app-collapse': isCollapse }">
     <div class="app-left">
-      <el-scrollbar class="scroll-warp">
+      <!-- <el-scrollbar class="scroll-warp"> -->
         <el-menu
           :default-active="defaultActive"
           text-color="#bfcbd9"
@@ -20,7 +20,7 @@
             <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
           </el-menu-item>
         </el-menu>
-      </el-scrollbar>
+      <!-- </el-scrollbar> -->
     </div>
     <div class="app-right">
       <div class="app-header">
@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     toggleSideBar() {
+      return ''
       this.isCollapse = !this.isCollapse;
     },
   },
@@ -161,9 +162,9 @@ export default {
   /deep/.el-menu-item {
     padding: 0 10px !important;
   }
-  /deep/.el-tooltip {
-    padding-left: 12px !important;
-  }
+  // /deep/.el-tooltip {
+  //   padding-left: 12px !important;
+  // }
   /deep/.el-menu-item.is-active {
     background: #fafafa;
   }
@@ -171,11 +172,12 @@ export default {
 
 .app-collapse {
   .app-left {
-    width: 54px;
+    width: 64px;
+    overflow: hidden;
   }
 
   .app-right {
-    margin-left: 54px;
+    margin-left: 64px;
   }
 }
 </style>
