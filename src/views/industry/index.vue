@@ -417,7 +417,7 @@ export default {
   },
   methods: {
     toDetail(row) {
-      this.$industryDrilling({
+      this.$industryDetail({
         title: row.f14,
         ...row,
       });

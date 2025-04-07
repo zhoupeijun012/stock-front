@@ -36,6 +36,17 @@ export default {
           },
         },
         {
+          prop: "f14",
+          label: "股票名称",
+          span: 5,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "red",
+            };
+          },
+        },
+        {
           prop: "f12",
           label: "股票代码",
           span: 5,

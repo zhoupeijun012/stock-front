@@ -21,6 +21,17 @@ export default {
       stockInfo: {},
       foldColums: [
         {
+          prop: "f14",
+          label: "股票名称",
+          span: 4,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "red",
+            };
+          },
+        },
+        {
           prop: "f12",
           label: "股票代码",
           span: 4,

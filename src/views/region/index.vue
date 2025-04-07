@@ -21,12 +21,9 @@ export default {
   name: "home",
   components: {
     FtTable,
-    RegionDrilling,
-    RegionDetail,
   },
   data() {
     return {
-      getRegionList,
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
