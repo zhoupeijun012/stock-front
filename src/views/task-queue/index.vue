@@ -7,7 +7,7 @@
     >
       <el-table-column label="操作" width="80" align="center" fixed="right">
         <template scope="scope">
-          <el-button type="text" @click="handleRetry(scope.row)"
+          <el-button type="text" @click="handleRetry(scope.row)" v-if="scope.row.retryCount >= 3"
             >重试</el-button
           >
         </template>
@@ -65,7 +65,7 @@ export default {
           },
           {
             prop: "retryCount",
-            label: "重试次数",
+            label: "调用次数",
             align: "center",
             showOverflowTooltip: true,
           },
