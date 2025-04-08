@@ -3,7 +3,7 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table"
+      ref="ft-table" 
     >
       <el-table-column label="操作" width="100" align="center" fixed="right">
         <template scope="scope">

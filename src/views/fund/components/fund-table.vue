@@ -1,7 +1,7 @@
 <template>
   <ft-table
     :options="options"
-    ref="ft-table"
+    ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
     :show-pager="false"
     :auto-height="false"
   >

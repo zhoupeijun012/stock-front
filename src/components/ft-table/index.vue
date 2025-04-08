@@ -1,5 +1,5 @@
 <template>
-  <div class="ft-table" v-loading="loading" ref="ft-table">
+  <div class="ft-table" v-loading="loading" ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }">
     <div class="search-bar" v-if="options.search">
       <div class="search-filter-warp" :class="{ close: fold }">
         <component
@@ -37,6 +37,7 @@
         @sort-change="sortChange"
         @cell-click="cellClick"
         :header-cell-class-name="handleHeadercellStyle"
+        :default-sort="defaultSort"
       >
         <el-table-column
           type="expand"
@@ -146,6 +147,10 @@ export default {
       type: String,
       default: "uuid",
     },
+    defaultSort: {
+      type: Object,
+      default: null
+    }
   },
   computed: {
     baseIndex() {
@@ -186,6 +191,12 @@ export default {
   },
   mounted() {
     this.pageSize = this.calculatePageSize();
+    if(this.defaultSort) {
+      this.orderArray.push({
+        prop: this.defaultSort.prop,
+        order: this.defaultSort.order,
+      });
+    }
   },
   methods: {
     calculatePageSize() {

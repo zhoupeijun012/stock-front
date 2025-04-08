@@ -3,7 +3,7 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table"
+      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
     >
       <el-table-column label="操作" width="80" align="center">
         <template scope="scope">

@@ -4,6 +4,7 @@
       :requestFunction="requestFunction"
       :options="options"
       ref="ft-table"
+      :default-sort="{ prop: 'taskLevel', order: 'ascending' }"
     >
       <el-table-column label="操作" width="80" align="center" fixed="right">
         <template scope="scope">

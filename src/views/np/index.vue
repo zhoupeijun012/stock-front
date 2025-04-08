@@ -3,7 +3,7 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table"
+      ref="ft-table" 
     ></ft-table>
   </div>
 </template>

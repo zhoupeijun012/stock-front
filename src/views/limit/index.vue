@@ -3,7 +3,7 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table"
+      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
     ></ft-table>
   </div>
 </template>
