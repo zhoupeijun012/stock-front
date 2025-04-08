@@ -41,7 +41,7 @@ export default {
               };
             },
             click: (row) => {
-              this.$stockDetail({
+              this.$conceptDrilling({
                 title: row.f14,
                 ...row,
               });

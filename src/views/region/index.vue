@@ -40,7 +40,7 @@ export default {
               };
             },
             click: (row) => {
-              this.$stockDetail({
+              this.$regionDrilling({
                 title: row.f14,
                 ...row,
               });
