@@ -5,6 +5,7 @@
       ref="k-line-chart"
       style="
         height: 55vh;
+        min-height: 420px;
         border-top: 8px solid rgb(250, 250, 250);
         padding: 0 8px;
       "
@@ -101,6 +102,7 @@ export default {
           low: parseFloat(splitArr[4]),
           volume: parseFloat(splitArr[5]),
           turnover: formatMoney(splitArr[6]),
+          change: formatMoney(splitArr[8]),
         };
       });
       this.$refs["k-line-chart"].refresh(chartData);

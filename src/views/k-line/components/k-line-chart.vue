@@ -2,7 +2,18 @@
   <div ref="chart" />
 </template>
 <script>
-import { init, dispose } from "klinecharts";
+import { init, dispose, registerLocale } from "klinecharts";
+
+registerLocale("zh-cn", {
+  time: "時間：",
+  open: "開：",
+  high: "高：",
+  low: "低：",
+  close: "收：",
+  volume: "成交量：",
+  turnover: "成交額：",
+  change: "漲幅：",
+});
 import { formatMoney } from "@/utils/tool";
 export default {
   data() {
@@ -15,11 +26,11 @@ export default {
         locale: "zh-CN",
         zoom: {
           // 初始缩放比例设置为 0.8
-          defaultScale: 0.5, 
+          defaultScale: 0.5,
           step: 0.1, // 每次缩放的步长，可根据需要调整
           enabled: true, // 是否启用缩放功能
           minScale: 0.2, // 最小缩放比例
-          maxScale: 2.0 // 最大缩放比例
+          maxScale: 2.0, // 最大缩放比例
         },
         layout: [
           {
@@ -76,8 +87,8 @@ export default {
               // follow_cross是指图表失焦时不展示顶部文案
               showRule: "always", // 'always' | 'follow_cross' | 'none'
               // rect是指顶部文案垂直排列
-              showType: "standard", // 'standard' | 'rect'
-              labels: ["时间", "开", "收", "高", "低", "成交量"],
+              showType: "rect", // 'standard' | 'rect'
+              // labels: ["时间", "开", "收", "高", "低", "成交量",'涨幅'],
               values: null,
               defaultValue: "-",
               custom: [
@@ -86,8 +97,8 @@ export default {
                 { title: "high", value: "{high}" },
                 { title: "low", value: "{low}" },
                 { title: "close", value: "{close}" },
-                { title: "volume", value: "{volume}手" },
                 { title: "turnover", value: "{turnover}" },
+                { title: "change", value: "{change}" },
               ],
               text: {
                 size: 14,
@@ -111,11 +122,12 @@ export default {
                 textSize: 14,
               },
               last: {
-                text: {
-                  show: true,
-                  textMargin: 5,
-                  size: 14,
-                },
+                show: true,
+                upColor: "#f00",
+                downColor: "#2DC08E",
+                noChangeColor: "#888888",
+                textMargin: 5,
+                size: 14,
               },
             },
           },
@@ -140,6 +152,7 @@ export default {
           indicator: {
             tooltip: {
               defaultValue: "-",
+              showRule: "always",
               text: {
                 size: 14,
               },
