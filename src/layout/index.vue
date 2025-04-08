@@ -26,7 +26,7 @@
       <!-- </el-scrollbar> -->
     </div>
     <div class="app-right">
-      <div class="app-header">
+      <!-- <div class="app-header">
         <div class="header-left">
           <hamger
             :is-active="!isCollapse"
@@ -35,7 +35,7 @@
           <div class="header-title" @click="toggleSideBar">{{ title }}</div>
         </div>
         <div class="header-right"></div>
-      </div>
+      </div> -->
       <div class="app-content" ref="root" id="app-content">
         <div class="scroll-content">
           <router-view id="router-view-content"></router-view>
@@ -137,7 +137,7 @@ export default {
   }
 
   .app-content {
-    height: calc(100% - 50px);
+    height: 100%;
     position: relative;
     padding: 10px;
     background: #fafafa;
