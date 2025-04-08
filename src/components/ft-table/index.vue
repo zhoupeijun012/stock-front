@@ -20,6 +20,7 @@
         <full-icon
           style="margin-left: 10px; width: 40px; height: 40px"
           full-dom="#app-content"
+          v-if="!inContainer"
         ></full-icon>
       </div>
     </div>
@@ -105,7 +106,7 @@
         @current-change="handleCurrentChange"
         :current-page="pageNum"
         background
-        :page-sizes="[10, 20, 30, 40, 50]"
+        :page-sizes="pageOptions"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -161,6 +162,11 @@ export default {
       return "pagination-" + parseInt(Math.random() * 1000);
     },
   },
+  inject: {
+    inContainer: {
+      default: false,
+    },
+  },
   data() {
     return {
       tableData: [],
@@ -175,9 +181,22 @@ export default {
       searchRow: {},
       tableExpend: false,
       expandRowKeys: [],
+      pageOptions: [10, 20, 30, 40, 50],
     };
   },
+  mounted() {
+    this.pageSize = this.calculatePageSize();
+  },
   methods: {
+    calculatePageSize() {
+      const height = this.$refs["ft-table"].clientHeight - 100;
+      const pageHeight = 480;
+      const pageIndex =
+        Math.ceil(height / pageHeight) > 0
+          ? Math.ceil(height / pageHeight) - 1
+          : 0;
+      return this.pageOptions[pageIndex];
+    },
     heightChange(height) {
       this.maxHeight = height;
     },
@@ -299,7 +318,7 @@ export default {
         this.expandRowKeys = [];
       }
     },
-  }
+  },
 };
 </script>
 

@@ -189,7 +189,15 @@ export default {
 
 .full-screen {
   .app-left {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    transform: translateX(-90%);
+    transition: all .4s;
+    &:hover {
+      transform: translateX(0);
+    }
   }
   .app-right {
     margin-left: 0;

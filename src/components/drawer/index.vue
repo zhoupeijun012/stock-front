@@ -29,6 +29,11 @@ import fullIcon from "@/components/full-icon";
 import captureIcon from "@/components/capture-icon";
 export default {
   components: { fullIcon, captureIcon },
+  provide() {
+    return {
+      inContainer: true
+    }
+  },
   props:{
     title: {
       type: String,
@@ -102,7 +107,12 @@ export default {
 .drawer-content {
   height: calc(100% - 48px);
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: overlay;
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    width: 0; /* Chrome/Safari */
+    background: transparent;
+  }
 }
 .slide-icon {
   position: absolute;
