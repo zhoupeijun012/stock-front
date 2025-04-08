@@ -3,7 +3,8 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
+      ref="ft-table"
+      :default-sort="{ prop: 'f3', order: 'descending' }"
     ></ft-table>
   </div>
 </template>
@@ -27,7 +28,7 @@ export default {
           {
             prop: "f14",
             label: "名称",
-            minWidth: "100px",
+            minWidth: "90px",
             cellStyle: (row) => {
               return {
                 cursor: "pointer",
@@ -56,7 +57,7 @@ export default {
           {
             prop: "f40005",
             label: "暴跌倍数",
-            minWidth: "100px",
+            minWidth: "80px",
             align: "center",
 
             formatter: (row) => {
@@ -66,7 +67,7 @@ export default {
           {
             prop: "f40006",
             label: "924倍数",
-            minWidth: "100px",
+            minWidth: "80px",
             align: "center",
 
             cellStyle: (row) => {
@@ -80,9 +81,8 @@ export default {
           {
             prop: "f40007",
             label: "205倍数",
-            minWidth: "100px",
+            minWidth: "80px",
             align: "center",
-
             cellStyle: (row) => {
               return valueStyle(row.f40007);
             },
@@ -94,34 +94,31 @@ export default {
           {
             prop: "f40008",
             label: "排列天数",
-            minWidth: "80px",
+            minWidth: "70px",
             cellStyle: (row) => {
               return valueStyle(row.f40008);
             },
-
             align: "center",
           },
           {
             prop: "f40009",
             label: "排列涨幅",
-            minWidth: "100px",
+            minWidth: "90px",
             cellStyle: (row) => {
               return valueStyle(row.f40009);
             },
             formatter: (row) => {
               return formatPrec(row.f40009, "%");
             },
-
             align: "center",
           },
           {
             prop: "f40010",
             label: "60线天数",
-            minWidth: "110px",
+            minWidth: "80px",
             cellStyle: (row) => {
               return valueStyle(row.f40010);
             },
-
             align: "center",
           },
           {
@@ -134,7 +131,6 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40011, "%");
             },
-
             align: "center",
           },
           {
@@ -144,13 +140,12 @@ export default {
             cellStyle: (row) => {
               return valueStyle(row.f50004);
             },
-
             align: "center",
           },
           {
             prop: "f50005",
             label: "流入金额",
-            minWidth: "100px",
+            minWidth: "90px",
             cellStyle: (row) => {
               return valueStyle(row.f50005);
             },
@@ -162,7 +157,7 @@ export default {
           {
             prop: "f10005",
             label: "连板数",
-            minWidth: "100px",
+            minWidth: "80px",
             align: "center",
             cellStyle: (row) => {
               return {
@@ -176,11 +171,35 @@ export default {
           {
             prop: "f10006",
             label: "涨停统计",
-            minWidth: "100px",
+            minWidth: "80px",
             formatter: (row) => {
               return `${row.f10007}/${row.f10006}`;
             },
             align: "center",
+          },
+          {
+            prop: "f10",
+            label: "量比",
+            minWidth: "80px",
+            cellStyle: (row) => {
+              return valueStyle(row.f10);
+            },
+            formatter: (row) => {
+              return isNaN(row.f10) ? "-" : row.f10 / 100;
+            },
+            align: "center",
+          },
+          {
+            prop: "f6",
+            label: "成交额",
+            minWidth: "70px",
+            cellStyle: (row) => {
+              return valueStyle(row.f6);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f6);
+            },
+            align: "left",
           },
         ],
         foldColums: [
