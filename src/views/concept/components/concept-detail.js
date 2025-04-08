@@ -1,5 +1,5 @@
 import StockDetail from "./concept-detail.vue";
-
+import store  from '@/store/index';
 export default {
   install(Vue) {
     const ComponentStructor = Vue.extend(StockDetail);
@@ -9,7 +9,7 @@ export default {
       const rootDom = document.querySelector("#router-view-content");
       rootDom.appendChild(dom);
 
-      let instance = new ComponentStructor().$mount(dom);
+      let instance = new ComponentStructor({store}).$mount(dom);
 
       const destroyDialog = () => {
         rootDom.removeChild(instance.$el);

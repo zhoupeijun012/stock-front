@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart"  />
+  <div ref="chart" />
 </template>
 <script>
 import { init, dispose } from "klinecharts";
@@ -7,8 +7,7 @@ import { formatMoney } from "@/utils/tool";
 export default {
   data() {
     this.chart = null;
-    return {
-    };
+    return {};
   },
   computed: {
     chartConfig() {
@@ -162,9 +161,21 @@ export default {
     refresh(data) {
       this.chart.applyNewData(data);
     },
+    reDraw() {
+      setTimeout(() => {
+        this.chart && this.chart.resize();
+      }, 300);
+    },
   },
   beforeDestroy() {
     dispose(this.chart);
+  },
+  watch: {
+    "$store.state.fullScreen": {
+      handler(newVal) {
+        this.reDraw();
+      },
+    },
   },
 };
 </script>

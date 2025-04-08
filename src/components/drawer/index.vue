@@ -28,7 +28,7 @@
 import fullIcon from "@/components/full-icon";
 import captureIcon from "@/components/capture-icon";
 export default {
-    components: { fullIcon, captureIcon },
+  components: { fullIcon, captureIcon },
   props:{
     title: {
       type: String,

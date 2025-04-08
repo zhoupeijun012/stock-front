@@ -1,5 +1,5 @@
 <template>
-  <el-select
+  <el-select :popper-append-to-body="false" 
     v-model="$attrs.value"
     v-bind="$attrs"
     v-on="$listeners"

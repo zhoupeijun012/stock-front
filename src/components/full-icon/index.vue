@@ -11,19 +11,23 @@
 </template>
 <script>
 import switchIcon from "@/components/switch-icon";
+import * as StoreTypes from "@/store/store_types";
 export default {
   components: { switchIcon },
   props: {
-    fullDom: String
+    fullDom: String,
   },
   data() {
-    return {
-      fullScreen: false,
-    };
+    return {};
+  },
+  computed: {
+    fullScreen() {
+      return this.$store.state.fullScreen;
+    },
   },
   methods: {
     requestFullScreen() {
-      this.fullScreen = true;
+      this.$store.commit(StoreTypes.UPDATE_FULL_SCREEN, true);
       // 获取要全屏显示的元素
       var element = document.querySelector(this.fullDom);
       // 请求全屏
@@ -38,7 +42,7 @@ export default {
     },
     //退出全屏 判断浏览器种类
     exitFull() {
-      this.fullScreen = false;
+      this.$store.commit(StoreTypes.UPDATE_FULL_SCREEN, false);
       document
         .exitFullscreen()
         .then(function () {

@@ -1,5 +1,5 @@
 <template>
-  <div class="ft-table" v-loading="loading">
+  <div class="ft-table" v-loading="loading" ref="ft-table">
     <div class="search-bar" v-if="options.search">
       <div class="search-filter-warp" :class="{ close: fold }">
         <component
@@ -39,7 +39,6 @@
       >
         <el-table-column
           type="expand"
-          fixed="left"
           width="40px"
           v-if="
             Array.isArray(options.foldColums) && options.foldColums.length > 0
@@ -100,6 +99,9 @@
     </div>
     <div class="ft-pagination" v-if="showPager">
       <el-pagination
+        :popper-append-to-body="false"
+        append-to-body="false"
+        :popper-class="popperClass"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
@@ -155,6 +157,9 @@ export default {
       } else {
         return null;
       }
+    },
+    popperClass() {
+      return "pagination-" + parseInt(Math.random() * 1000);
     },
   },
   data() {
@@ -295,7 +300,7 @@ export default {
         this.expandRowKeys = [];
       }
     },
-  },
+  }
 };
 </script>
 
