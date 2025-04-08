@@ -19,8 +19,8 @@
           :key="`menu-item-` + index"
           :route="menuItem"
         >
-          <i :class="menuItem.meta && menuItem.meta.icon"></i>
-          <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
+          <i style="font-style:normal;">{{menuItem.meta && menuItem.meta.icon}}</i>
+          <!-- <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span> -->
         </el-menu-item>
       </el-menu>
       <!-- </el-scrollbar> -->
