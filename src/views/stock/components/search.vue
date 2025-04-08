@@ -140,7 +140,7 @@
       >
     </el-form-item>
     <el-form-item label="924涨幅">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40006"
         @change="optionChange('f40006', gainOptions)"
         clearable
@@ -154,7 +154,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="205涨幅">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40007"
         @change="optionChange('f40007', gainOptions)"
         clearable
@@ -168,7 +168,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="多头排列">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40008"
         @change="optionChange('f40008', dayOptions)"
         clearable
@@ -182,7 +182,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="排列涨幅">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40009"
         @change="optionChange('f40009', gainOptions)"
         clearable
@@ -196,7 +196,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="60日均线">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40010"
         @change="optionChange('f40010', dayOptions)"
         clearable
@@ -210,7 +210,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="均线涨幅">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f40011"
         @change="optionChange('f40011', gainOptions)"
         clearable
@@ -224,7 +224,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="流入天数">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f50004"
         @change="optionChange('f50004', dayOptions)"
         clearable
@@ -238,7 +238,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="流通市值">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f21"
         @change="optionChange('f21', f21Options)"
         clearable
@@ -252,7 +252,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="是否亏损">
-      <el-select :popper-append-to-body="false"  v-model="row.f9" @change="change" clearable>
+      <el-select v-model="row.f9" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"
           :key="'type-item-' + index"
@@ -262,7 +262,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="是否破净">
-      <el-select :popper-append-to-body="false"  v-model="row.f23" @change="change" clearable>
+      <el-select v-model="row.f23" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"
           :key="'type-item-' + index"
@@ -272,7 +272,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="上市地区">
-      <el-select :popper-append-to-body="false" 
+      <el-select
         v-model="row.f6666"
         @change="optionChange('f6666', f6666Options)"
         clearable

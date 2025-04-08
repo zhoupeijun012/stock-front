@@ -99,7 +99,6 @@
     </div>
     <div class="ft-pagination" v-if="showPager">
       <el-pagination
-        :popper-append-to-body="false"
         append-to-body="false"
         :popper-class="popperClass"
         @size-change="handleSizeChange"

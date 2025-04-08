@@ -29,7 +29,7 @@ export default {
     requestFullScreen() {
       this.$store.commit(StoreTypes.UPDATE_FULL_SCREEN, true);
       // 获取要全屏显示的元素
-      var element = document.querySelector(this.fullDom);
+      var element = document.body;
       // 请求全屏
       element
         .requestFullscreen()

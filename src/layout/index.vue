@@ -1,25 +1,28 @@
 <template>
-  <div class="app-wrapper" :class="{ 'app-collapse': isCollapse }">
+  <div
+    class="app-wrapper"
+    :class="{ 'app-collapse': isCollapse, 'full-screen': fullScreen }"
+  >
     <div class="app-left">
       <!-- <el-scrollbar class="scroll-warp"> -->
-        <el-menu
-          :default-active="defaultActive"
-          text-color="#bfcbd9"
-          active-text-color="#409eff"
-          router
-          class="el-menu-vertical-demo"
-          :collapse="isCollapse"
+      <el-menu
+        :default-active="defaultActive"
+        text-color="#bfcbd9"
+        active-text-color="#409eff"
+        router
+        class="el-menu-vertical-demo"
+        :collapse="isCollapse"
+      >
+        <el-menu-item
+          :index="index + ''"
+          v-for="(menuItem, index) in menuList"
+          :key="`menu-item-` + index"
+          :route="menuItem"
         >
-          <el-menu-item
-            :index="index + ''"
-            v-for="(menuItem, index) in menuList"
-            :key="`menu-item-` + index"
-            :route="menuItem"
-          >
-            <i :class="menuItem.meta && menuItem.meta.icon"></i>
-            <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
-          </el-menu-item>
-        </el-menu>
+          <i :class="menuItem.meta && menuItem.meta.icon"></i>
+          <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span>
+        </el-menu-item>
+      </el-menu>
       <!-- </el-scrollbar> -->
     </div>
     <div class="app-right">
@@ -29,7 +32,7 @@
             :is-active="!isCollapse"
             @toggleClick="toggleSideBar"
           ></hamger>
-          <div class="header-title" @click="toggleSideBar">{{title}}</div>
+          <div class="header-title" @click="toggleSideBar">{{ title }}</div>
         </div>
         <div class="header-right"></div>
       </div>
@@ -58,8 +61,11 @@ export default {
       return routes.findIndex((item) => item.path == this.$route.path) + "";
     },
     title() {
-      return this.$route.meta && this.$route.meta.title
-    }
+      return this.$route.meta && this.$route.meta.title;
+    },
+    fullScreen() {
+      return this.$store.state.fullScreen;
+    },
   },
   data() {
     return {
@@ -68,7 +74,7 @@ export default {
   },
   methods: {
     toggleSideBar() {
-      return ''
+      return "";
       this.isCollapse = !this.isCollapse;
     },
   },
@@ -178,6 +184,21 @@ export default {
 
   .app-right {
     margin-left: 54px;
+  }
+}
+
+.full-screen {
+  .app-left {
+    display: none;
+  }
+  .app-right {
+    margin-left: 0;
+  }
+  .app-header {
+    display: none;
+  }
+  .app-content {
+    height: 100%;
   }
 }
 </style>

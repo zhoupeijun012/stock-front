@@ -25,7 +25,7 @@
       />
     </el-form-item>
     <el-form-item label="K线类型">
-      <el-select :popper-append-to-body="false"  v-model="row.f40001" @change="change">
+      <el-select v-model="row.f40001" @change="change">
         <el-option v-for="(typeItem,index) in typeOptions" :key="'type-item-' + index" :value="typeItem.value" :label="typeItem.label"></el-option>
       </el-select>
     </el-form-item>

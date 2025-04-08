@@ -27,13 +27,13 @@ export default {
             },
           },
           { type: "xAxis", options: { order: 9 } },
-          // {
-          //   type: "indicator",
-          //   content: ["MACD"],
-          //   options: {
-          //     order: 10,
-          //   },
-          // },
+          {
+            type: "indicator",
+            content: ["MACD"],
+            options: {
+              order: 10,
+            },
+          },
         ],
         customApi: {
           formatDate(timestamp, _, type) {
