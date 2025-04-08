@@ -13,6 +13,14 @@ export default {
     chartConfig() {
       return {
         locale: "zh-CN",
+        zoom: {
+          // 初始缩放比例设置为 0.8
+          defaultScale: 0.5, 
+          step: 0.1, // 每次缩放的步长，可根据需要调整
+          enabled: true, // 是否启用缩放功能
+          minScale: 0.2, // 最小缩放比例
+          maxScale: 2.0 // 最大缩放比例
+        },
         layout: [
           {
             type: "candle",
