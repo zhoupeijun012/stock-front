@@ -1,5 +1,10 @@
 <template>
-  <div class="ft-table" v-loading="loading" ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }">
+  <div
+    class="ft-table"
+    v-loading="loading"
+    ref="ft-table"
+    :default-sort="{ prop: 'f3', order: 'descending' }"
+  >
     <div class="search-bar" v-if="options.search">
       <div class="search-filter-warp" :class="{ close: fold }">
         <component
@@ -149,8 +154,8 @@ export default {
     },
     defaultSort: {
       type: Object,
-      default: ()=>{}
-    }
+      default: () => {},
+    },
   },
   computed: {
     baseIndex() {
@@ -189,14 +194,16 @@ export default {
       pageOptions: [10, 20, 30, 40, 50],
     };
   },
-  mounted() {
-    this.pageSize = this.calculatePageSize();
-    if(this.defaultSort && Object.keys(this.defaultSort) > 0) {
+  created() {
+    if (this.defaultSort && Object.keys(this.defaultSort).length > 0) {
       this.orderArray.push({
         prop: this.defaultSort.prop,
         order: this.defaultSort.order,
       });
     }
+  },
+  mounted() {
+    this.pageSize = this.calculatePageSize();
   },
   methods: {
     calculatePageSize() {

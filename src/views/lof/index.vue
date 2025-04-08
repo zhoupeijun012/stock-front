@@ -3,7 +3,8 @@
     <ft-table
       :requestFunction="requestFunction"
       :options="options"
-      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
+      ref="ft-table" 
+      :default-sort="{ prop: 'f3', order: 'descending' }"
       max-height="100%"
     ></ft-table>
   </div>
@@ -13,7 +14,6 @@
 import FtTable from "@/components/ft-table";
 import { getLofList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-
 export default {
   components: {
     FtTable,
