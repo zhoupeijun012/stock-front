@@ -119,4 +119,7 @@ export default {
   cursor: pointer;
   background-size: 100% 100%;
 }
+.header-right {
+  font-size: 0;
+}
 </style>
