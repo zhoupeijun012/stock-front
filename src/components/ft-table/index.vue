@@ -149,7 +149,7 @@ export default {
     },
     defaultSort: {
       type: Object,
-      default: null
+      default: ()=>{}
     }
   },
   computed: {
@@ -191,7 +191,7 @@ export default {
   },
   mounted() {
     this.pageSize = this.calculatePageSize();
-    if(this.defaultSort) {
+    if(this.defaultSort && Object.keys(this.defaultSort) > 0) {
       this.orderArray.push({
         prop: this.defaultSort.prop,
         order: this.defaultSort.order,
