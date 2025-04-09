@@ -113,5 +113,5 @@ export const valueStyle = (value) => {
 };
 
 export const formatPrec = (value, subFix = "") => {
-  return isNaN(value) ? "-" : value / 100 + subFix;
+  return isNaN(value) ? "-" : parseInt(value) / 100 + subFix;
 };

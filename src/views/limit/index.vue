@@ -51,7 +51,7 @@ export default {
               return valueStyle(row.f3);
             },
             formatter: (row) => {
-              return formatPrec(row.f3, "%");
+              return formatPrec(row.f3 * 100, "%");
             },
           },
           {
@@ -265,7 +265,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return formatPrec(row.f2);
+              return formatPrec(row.f2 / 10);
             },
           },
           {
@@ -357,7 +357,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return formatPrec(row.f8, "%");
+              return formatPrec(row.f8 * 100, "%");
             },
           },
           {
@@ -461,12 +461,24 @@ export default {
             label: "首次封板",
             span: 5,
             component: "text-cell",
+            formatter: (row) => {
+              let time = row.f10002.length > 5 ? row.f10002 : "0" + row.f10002;
+              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(
+                4
+              )}`;
+            },
           },
           {
             prop: "f10003",
             label: "最后封板",
             span: 5,
             component: "text-cell",
+            formatter: (row) => {
+              let time = row.f10003.length > 5 ? row.f10003 : "0" + row.f10003;
+              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(
+                4
+              )}`;
+            },
           },
           {
             prop: "f10001",
