@@ -57,6 +57,9 @@ export default {
       order: [{ prop: "f3", order: "descending" }],
       where: {},
       matchKey: ["f14", "f3", "f6", "f62", "f11","f12"],
+      whereNot: {
+        "f12": ['BK1051','BK0816','BK1050']
+      }
     };
     if (this.requestFunction) {
       this.requestFunction(params).then((data) => {

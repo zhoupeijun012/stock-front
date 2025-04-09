@@ -463,6 +463,9 @@ export default {
         params.where["f21"] = params.where["f21_ext"];
         delete params.where["f21_ext"];
       }
+      params.whereNot = {
+        f12: ["BK1051", "BK0816","BK1050"],
+      };
       return getConceptList(params);
     },
   },
