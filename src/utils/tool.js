@@ -115,3 +115,9 @@ export const valueStyle = (value) => {
 export const formatPrec = (value, subFix = "") => {
   return isNaN(value) ? "-" : parseInt(value) / 100 + subFix;
 };
+
+export const IN_OPEN_TIME = () => {
+  return (
+    ( dayjs().format("HHmmss") >= "092500" && dayjs().format("HHmmss") <= "113000") || ( dayjs().format("HHmmss") >= "130000" && dayjs().format("HHmmss") <= "150000")
+  );
+};

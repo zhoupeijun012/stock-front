@@ -5,7 +5,7 @@
         v-for="(tableItem, index) in tableData"
         :key="'scroll-row-' + index"
         class="scroll-row"
-        @click.native="$emit('gotoDetail',tableItem)"
+        @click.native="$emit('gotoDetail', tableItem)"
       >
         <el-col :span="6" class="scroll-cell">{{ tableItem.f14 }}</el-col>
         <el-col
@@ -15,9 +15,13 @@
           title="涨幅"
           >{{ formatPrec(tableItem.f3, "%") }}</el-col
         >
-        <el-col :span="5" class="scroll-cell" style="color: red" title="成交额">{{
-          formatMoney(tableItem.f6)
-        }}</el-col>
+        <el-col
+          :span="5"
+          class="scroll-cell"
+          style="color: red"
+          title="成交额"
+          >{{ formatMoney(tableItem.f6) }}</el-col
+        >
         <el-col
           :span="5"
           class="scroll-cell"
@@ -37,7 +41,7 @@
   </el-scrollbar>
 </template>
 <script>
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import { formatMoney, valueStyle, formatPrec,IN_OPEN_TIME } from "@/utils/tool";
 export default {
   props: {
     requestFunction: {
@@ -51,26 +55,37 @@ export default {
     };
   },
   mounted() {
-    const params = {
-      pageNum: 1,
-      pageSize: 10,
-      order: [{ prop: "f3", order: "descending" }],
-      where: {},
-      matchKey: ["f14", "f3", "f6", "f62", "f11","f12"],
-      whereNot: {
-        "f12": ['BK1051','BK0816','BK1050']
+    this.getDetail();
+    this.timer = setInterval(()=>{
+      if(IN_OPEN_TIME()) {
+        this.getDetail();
       }
-    };
-    if (this.requestFunction) {
-      this.requestFunction(params).then((data) => {
-        this.tableData = data?.list || [];
-      });
-    }
+    },60*1000)
   },
   methods: {
     formatMoney,
     valueStyle,
     formatPrec,
+    getDetail() {
+      const params = {
+        pageNum: 1,
+        pageSize: 10,
+        order: [{ prop: "f3", order: "descending" }],
+        where: {},
+        matchKey: ["f14", "f3", "f6", "f62", "f11", "f12"],
+        whereNot: {
+          f12: ["BK1051", "BK0816", "BK1050"],
+        },
+      };
+      if (this.requestFunction) {
+        this.requestFunction(params).then((data) => {
+          this.tableData = data?.list || [];
+        });
+      }
+    },
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>

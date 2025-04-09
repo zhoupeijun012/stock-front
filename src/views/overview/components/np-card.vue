@@ -33,7 +33,7 @@
   </el-scrollbar>
 </template>
 <script>
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import { formatMoney, valueStyle, formatPrec,IN_OPEN_TIME } from "@/utils/tool";
 export default {
   props: {
     requestFunction: {
@@ -47,23 +47,34 @@ export default {
     };
   },
   mounted() {
-    const params = {
-      pageNum: 1,
-      pageSize: 10,
-      order: [],
-      where: {},
-      matchKey: ["f14", "f3", "f6","f2", "f11"],
-    };
-    if (this.requestFunction) {
-      this.requestFunction(params).then((data) => {
-        this.tableData = data?.list || [];
-      });
-    }
+    this.getDetail();
+    this.timer = setInterval(()=>{
+      if(IN_OPEN_TIME()) {
+        this.getDetail();
+      }
+    },60*1000)
   },
   methods: {
     formatMoney,
     valueStyle,
     formatPrec,
+    getDetail() {
+      const params = {
+        pageNum: 1,
+        pageSize: 10,
+        order: [],
+        where: {},
+        matchKey: ["f14", "f3", "f6", "f2", "f11"],
+      };
+      if (this.requestFunction) {
+        this.requestFunction(params).then((data) => {
+          this.tableData = data?.list || [];
+        });
+      }
+    },
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>
