@@ -26,7 +26,7 @@ export default {
           span: 4,
           component: "concepts",
           foldStyle: {
-            height: "210px",
+            height: "180px",
           },
           click: (row) => {
             this.$conceptDetail({
