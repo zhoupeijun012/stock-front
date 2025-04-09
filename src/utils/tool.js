@@ -1,4 +1,4 @@
-import dayjs from'dayjs';
+import dayjs from "dayjs";
 
 const getCount = (time) => {
   const sec = parseInt(time.slice(4, 6));
@@ -69,22 +69,21 @@ export const IS_OPEN_DAY = (date) => {
   return !window.chineseDays.isHoliday(date) && !(day == 0 || day == 6);
 };
 
-
 export const GET_LAST_DATE = (count) => {
   const arr = [];
   let i = 0;
   do {
     const date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
-    if(IS_OPEN_DAY(date)) {
+    if (IS_OPEN_DAY(date)) {
       arr.push(date);
     }
     i++;
-  } while( arr.length < count )
+  } while (arr.length < count);
   return arr;
 };
 
 export const formatMoney = (value) => {
-  if (isNaN(value)) {
+  if (isNaN(value) || value == "" || value == null) {
     return "-";
   }
   const wy = 1000000000000;
@@ -113,11 +112,16 @@ export const valueStyle = (value) => {
 };
 
 export const formatPrec = (value, subFix = "") => {
-  return isNaN(value) || value == '' || value == null ? "-" : parseInt(value) / 100 + subFix;
+  return isNaN(value) || value == "" || value == null
+    ? "-"
+    : parseInt(value) / 100 + subFix;
 };
 
 export const IN_OPEN_TIME = () => {
   return (
-    ( dayjs().format("HHmmss") >= "092500" && dayjs().format("HHmmss") <= "113000") || ( dayjs().format("HHmmss") >= "130000" && dayjs().format("HHmmss") <= "150000")
+    (dayjs().format("HHmmss") >= "092500" &&
+      dayjs().format("HHmmss") <= "113000") ||
+    (dayjs().format("HHmmss") >= "130000" &&
+      dayjs().format("HHmmss") <= "150000")
   );
 };
