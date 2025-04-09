@@ -22,11 +22,11 @@
         <el-button type="plain" @click="onReset">重置</el-button>
         <el-button type="primary" @click="onSubmit">查询</el-button>
         <!-- <capture-icon style="margin-left: 10px; width: 36px; height: 36px" full-dom="#app-content"></capture-icon> -->
-        <full-icon
+        <!-- <full-icon
           style="margin-left: 10px; width: 40px; height: 40px"
           full-dom="#app-content"
           v-if="!inContainer"
-        ></full-icon>
+        ></full-icon> -->
       </div>
     </div>
     <div class="ft-table-warp" v-height-change="heightChange">

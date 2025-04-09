@@ -13,14 +13,20 @@
         class="el-menu-vertical-demo"
         :collapse="isCollapse"
       >
+        <el-menu-item>
+          <div class="full-screen-icon" style="background: #fff">
+            <full-icon style="width: 40px; height: 40px"></full-icon>
+          </div>
+        </el-menu-item>
         <el-menu-item
           :index="index + ''"
           v-for="(menuItem, index) in menuList"
           :key="`menu-item-` + index"
           :route="menuItem"
         >
-          <i style="font-style:normal;">{{menuItem.meta && menuItem.meta.icon}}</i>
-          <!-- <span slot="title">{{ menuItem.meta && menuItem.meta.title }}</span> -->
+          <i style="font-style: normal">{{
+            menuItem.meta && menuItem.meta.icon
+          }}</i>
         </el-menu-item>
       </el-menu>
       <!-- </el-scrollbar> -->
@@ -47,11 +53,13 @@
 
 <script>
 import hamger from "./hamger.vue";
+import fullIcon from "@/components/full-icon";
 import { routes } from "@/router/index";
 export default {
   name: "Layout",
   components: {
     hamger,
+    fullIcon,
   },
   computed: {
     menuList() {
@@ -166,10 +174,12 @@ export default {
 .el-menu-vertical-demo {
   border: none;
   /deep/.el-menu-item {
-    padding: 0 10px !important;
+    padding: 0 !important;
+    text-align: center;
   }
   /deep/.el-tooltip {
     padding-left: 12px !important;
+    text-align: center;
   }
   /deep/.el-menu-item.is-active {
     background: #fafafa;
@@ -194,7 +204,7 @@ export default {
     left: 0;
     z-index: 99999;
     transform: translateX(-90%);
-    transition: all .4s;
+    transition: all 0.4s;
     &:hover {
       transform: translateX(0);
     }

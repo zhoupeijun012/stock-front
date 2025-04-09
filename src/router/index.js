@@ -80,15 +80,20 @@ export const routes = [
     meta: { title: "任务列表", icon: "任务" },
   },
   {
-    path: "*",
-    redirect: "/stock",
+    path: "/overview",
+    name: "overview",
+    component: () => import("@/views/overview/index.vue"),
+    meta: { title: "看板", icon: "看板" },
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
   scrollBehavior: () => ({ x: 0, y: 0 }),
-  routes,
+  routes: routes.concat([{
+    path: "*",
+    redirect: "/stock",
+  }]),
 });
 
 router.beforeEach((to, from, next) => {

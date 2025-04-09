@@ -13,10 +13,6 @@
           style="width: 32px; height: 32px"
           full-dom="#app-content"
         ></capture-icon>
-        <full-icon
-          style="margin-right: 8px; width: 32px; height: 32px"
-          full-dom="#app-content"
-        ></full-icon>
       </div>
     </div>
     <div class="drawer-content" v-if="open">

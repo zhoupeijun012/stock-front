@@ -4,7 +4,7 @@
     :open="fullScreen"
     :open-icon="require('@/assets/全屏.png')"
     close-title="退出全屏"
-    :close-icon="require('@/assets/退出全屏.png')"
+    :close-icon="require('@/assets/全屏.png')"
     @open="requestFullScreen"
     @close="exitFull"
   ></switch-icon>
@@ -12,6 +12,7 @@
 <script>
 import switchIcon from "@/components/switch-icon";
 import * as StoreTypes from "@/store/store_types";
+import store from '@/store/index';
 export default {
   components: { switchIcon },
   props: {
@@ -22,12 +23,12 @@ export default {
   },
   computed: {
     fullScreen() {
-      return this.$store.state.fullScreen;
+      return store.state.fullScreen;
     },
   },
   methods: {
     requestFullScreen() {
-      this.$store.commit(StoreTypes.UPDATE_FULL_SCREEN, true);
+      store.commit(StoreTypes.UPDATE_FULL_SCREEN, true);
       // 获取要全屏显示的元素
       var element = document.body;
       // 请求全屏
@@ -42,7 +43,7 @@ export default {
     },
     //退出全屏 判断浏览器种类
     exitFull() {
-      this.$store.commit(StoreTypes.UPDATE_FULL_SCREEN, false);
+      store.commit(StoreTypes.UPDATE_FULL_SCREEN, false);
       document
         .exitFullscreen()
         .then(function () {
