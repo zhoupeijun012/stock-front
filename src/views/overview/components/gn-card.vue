@@ -12,21 +12,24 @@
           :span="4"
           class="scroll-cell"
           :style="valueStyle(tableItem.f3)"
+          title="涨幅"
           >{{ formatPrec(tableItem.f3, "%") }}</el-col
         >
-        <el-col :span="5" class="scroll-cell" style="color: red">{{
+        <el-col :span="5" class="scroll-cell" style="color: red" title="成交额">{{
           formatMoney(tableItem.f6)
         }}</el-col>
         <el-col
           :span="5"
           class="scroll-cell"
           :style="valueStyle(tableItem.f62)"
+          title="主力净流入"
           >{{ formatMoney(tableItem.f62) }}</el-col
         >
         <el-col
           :span="4"
           class="scroll-cell"
           :style="valueStyle(tableItem.f11)"
+          title="五分钟涨幅"
           >{{ formatPrec(tableItem.f11, "%") }}</el-col
         >
       </el-row>
