@@ -113,7 +113,7 @@ export const valueStyle = (value) => {
 };
 
 export const formatPrec = (value, subFix = "") => {
-  return isNaN(value) ? "-" : parseInt(value) / 100 + subFix;
+  return isNaN(value) || value == '' || value == null ? "-" : parseInt(value) / 100 + subFix;
 };
 
 export const IN_OPEN_TIME = () => {
