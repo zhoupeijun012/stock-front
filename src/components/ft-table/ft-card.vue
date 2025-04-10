@@ -141,4 +141,11 @@ export default {
     display: none;
   }
 }
+.tip-text {
+  line-height: 30px;
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
+  user-select: none;
+}
 </style>
