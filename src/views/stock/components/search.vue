@@ -261,8 +261,8 @@
         ></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="是否破净">
-      <el-select v-model="row.f23" @change="change" clearable>
+    <el-form-item label="止跌巨量">
+      <el-select v-model="row.f40003" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"
           :key="'type-item-' + index"
@@ -297,6 +297,7 @@ const model = {
   f12: "",
   f9: "",
   f6666: "",
+  f40003: "",
   f6666_ext: null,
   f40006: "",
   f40006_ext: null,

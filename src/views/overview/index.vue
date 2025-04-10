@@ -62,26 +62,18 @@
     <div class="overview-item">
       <np-card :requestFunction="$api.getNpList"></np-card>
     </div>
-    <!-- <div class="overview-item">
-      <gn-card
-        :queryParams="defaultQueryParams"
-      ></gn-card>
-    </div>
-    <div class="overview-item">
-      <gn-card :queryParams="defaultQueryParams"></gn-card>
-    </div>
-    <div class="overview-item">
-      <gn-card :queryParams="defaultQueryParams"></gn-card>
-    </div>
-    <div class="overview-item"></div> -->
+    <!-- <div class="overview-item" style="width: 66.66%">
+      <limit-card></limit-card>
+    </div> -->
   </div>
 </template>
 <script>
 import GnCard from "./components/gn-card.vue";
 import EtfCard from "./components/etf-card.vue";
 import NpCard from "./components/np-card.vue";
+import LimitCard from "./components/limit-card.vue";
 export default {
-  components: { GnCard, EtfCard, NpCard },
+  components: { GnCard, EtfCard, NpCard, LimitCard },
   data() {
     return {};
   },
