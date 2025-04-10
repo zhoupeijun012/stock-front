@@ -474,13 +474,13 @@ export default {
       this.getParams(params);
 
       const stockRes = await getStockList(params);
-      const klineList = await getKLineList({
-        pageNum:1,
-        pageSize: params.pageSize,
-        where: {
-          f12: (stockRes.list || []).map((item)=>item.f12)
-        }
-      })
+      // const klineList = await getKLineList({
+      //   pageNum:1,
+      //   pageSize: params.pageSize,
+      //   where: {
+      //     f12: (stockRes.list || []).map((item)=>item.f12)
+      //   }
+      // })
       return stockRes
     },
   },
