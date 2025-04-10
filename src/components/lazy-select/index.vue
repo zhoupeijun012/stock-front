@@ -16,7 +16,7 @@
 export default {
   name: "lazy-select",
   props: {
-    requestFunction: {
+    tableFunction: {
       type: Function,
       default: () => {},
     },
@@ -91,7 +91,7 @@ export default {
         this.codeLoading = true;
       }
       setTimeout(() => {
-        this.requestFunction(obj).then((res) => {
+        this.tableFunction(obj).then((res) => {
           this.codeLoading = false;
           const { pages, list } = res;
           this.pages = pages;

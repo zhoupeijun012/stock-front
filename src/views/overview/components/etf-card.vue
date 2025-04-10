@@ -39,7 +39,7 @@
 import { formatMoney, valueStyle, formatPrec,IN_OPEN_TIME } from "@/utils/tool";
 export default {
   props: {
-    requestFunction: {
+    tableFunction: {
       type: Function,
       default: () => null,
     },
@@ -73,8 +73,8 @@ export default {
         where: this.whereParams || {},
         matchKey: ["f14", "f3", "f12", "f6", "f11"],
       };
-      if (this.requestFunction) {
-        this.requestFunction(params).then((data) => {
+      if (this.tableFunction) {
+        this.tableFunction(params).then((data) => {
           this.tableData = data?.list || [];
         });
       }

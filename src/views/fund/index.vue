@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table" 
     >
@@ -56,7 +56,7 @@ export default {
         ...row,
       });
     },
-    requestFunction(params) {
+    tableFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
       return getFundList(params);
     },

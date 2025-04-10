@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table"
       :default-sort="{ prop: 'f3', order: 'descending' }"
@@ -67,8 +67,8 @@ export default {
           {
             prop: "f40006",
             label: "924倍数",
-            minWidth: "80px",
-            align: "center",
+            minWidth: "95px",
+            align: "left",
 
             cellStyle: (row) => {
               return valueStyle(row.f40006);
@@ -76,7 +76,6 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40006, "%");
             },
-            align: "center",
           },
           {
             prop: "f40007",
@@ -89,7 +88,6 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40007, "%");
             },
-            align: "center",
           },
           {
             prop: "f40008",
@@ -499,7 +497,7 @@ export default {
     };
   },
   methods: {
-    requestFunction(params) {
+    tableFunction(params) {
       params["matchKey"] = [...this.options.columns, ...this.options.foldColums]
         .map((item) => item.prop)
         .concat(["f10007", "date"]);

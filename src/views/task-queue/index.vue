@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table"
       :default-sort="{ prop: 'taskLevel', order: 'ascending' }"
@@ -84,7 +84,7 @@ export default {
     };
   },
   methods: {
-    requestFunction(params) {
+    tableFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
       return getTaskList(params);
     },

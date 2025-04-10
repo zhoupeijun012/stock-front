@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table" 
     ></ft-table>
@@ -118,7 +118,7 @@ export default {
         ...row,
       });
     },
-    requestFunction(params) {
+    tableFunction(params) {
       return getNpList(params);
     },
   },

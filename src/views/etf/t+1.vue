@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
       max-height="100%"
@@ -34,7 +34,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "90px",
+            minWidth: "80px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -186,7 +186,7 @@ export default {
         ...row,
       });
     },
-    requestFunction(params) {
+    tableFunction(params) {
       params["where"]["c1"] = 1;
       params["matchKey"] = [...this.options.columns,...this.options.foldColums].map((item) => item.prop);
       return getEtfList(params);

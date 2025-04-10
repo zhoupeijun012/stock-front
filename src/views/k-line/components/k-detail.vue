@@ -10,7 +10,7 @@
     >
       <k-line-chart
         ref="k-line-chart"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 50vh; min-height: 330px"
       ></k-line-chart>
     </div>
   </drawer>

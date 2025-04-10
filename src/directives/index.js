@@ -15,7 +15,7 @@ Vue.directive("height-change", {
       recordHeight = height;
       binding.value(recordHeight);
       // 之后更新外部容器等操作
-    }, 200);
+    }, 10);
 
     el.__onHeightChange__ = onHeightChange;
 

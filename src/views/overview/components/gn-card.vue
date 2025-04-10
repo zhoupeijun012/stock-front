@@ -44,7 +44,7 @@
 import { formatMoney, valueStyle, formatPrec,IN_OPEN_TIME } from "@/utils/tool";
 export default {
   props: {
-    requestFunction: {
+    tableFunction: {
       type: Function,
       default: () => null,
     },
@@ -77,8 +77,8 @@ export default {
           f12: ["BK1051", "BK0816", "BK1050"],
         },
       };
-      if (this.requestFunction) {
-        this.requestFunction(params).then((data) => {
+      if (this.tableFunction) {
+        this.tableFunction(params).then((data) => {
           this.tableData = data?.list || [];
         });
       }

@@ -2,7 +2,7 @@
   <div class="overview">
     <div class="overview-item">
       <gn-card
-        :requestFunction="$api.getConceptList"
+        :tableFunction="$api.getConceptList"
         @gotoDetail="
           (row) => {
             this.$conceptDetail({
@@ -15,7 +15,7 @@
     </div>
     <div class="overview-item">
       <gn-card
-        :requestFunction="$api.getIndustryList"
+        :tableFunction="$api.getIndustryList"
         @gotoDetail="
           (row) => {
             this.$industryDetail({
@@ -28,7 +28,7 @@
     </div>
     <div class="overview-item">
       <gn-card
-        :requestFunction="$api.getRegionList"
+        :tableFunction="$api.getRegionList"
         @gotoDetail="
           (row) => {
             this.$regionDetail({
@@ -42,7 +42,7 @@
 
     <div class="overview-item">
       <etf-card
-        :requestFunction="$api.getEtfList"
+        :tableFunction="$api.getEtfList"
         :where-params="{
           c1: '0',
         }"
@@ -50,17 +50,17 @@
     </div>
     <div class="overview-item">
       <etf-card
-        :requestFunction="$api.getEtfList"
+        :tableFunction="$api.getEtfList"
         :where-params="{
           c1: '1',
         }"
       ></etf-card>
     </div>
     <div class="overview-item">
-      <etf-card :requestFunction="$api.getLofList"></etf-card>
+      <etf-card :tableFunction="$api.getLofList"></etf-card>
     </div>
     <div class="overview-item">
-      <np-card :requestFunction="$api.getNpList"></np-card>
+      <np-card :tableFunction="$api.getNpList"></np-card>
     </div>
     <!-- <div class="overview-item" style="width: 66.66%">
       <limit-card></limit-card>

@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
+      :cardFunction="cardFunction"
       :options="options"
       ref="ft-table"
       :default-sort="{ prop: 'f3', order: 'descending' }"
@@ -13,8 +14,9 @@
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getStockList } from "@/api/index";
+import { getStockList,getKLineList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import StockCard from './components/stock-card.vue';
 export default {
   name: "home",
   components: {
@@ -46,7 +48,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "90px",
+            minWidth: "80px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -69,8 +71,8 @@ export default {
           {
             prop: "f40006",
             label: "924倍数",
-            minWidth: "80px",
-            align: "center",
+            minWidth: "95px",
+            align: "left",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f40006);
@@ -78,13 +80,12 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40006, "%");
             },
-            align: "center",
           },
           {
             prop: "f40007",
             label: "205倍数",
             minWidth: "95px",
-            align: "center",
+            align: "left",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f40007);
@@ -92,7 +93,6 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40007, "%");
             },
-            align: "center",
           },
           {
             prop: "f40008",
@@ -415,15 +415,12 @@ export default {
             },
           },
         ],
+        cardComponent: StockCard
       },
     };
   },
   methods: {
-    requestFunction(params) {
-      params["matchKey"] = [
-        ...this.options.columns,
-        ...this.options.foldColums,
-      ].map((item) => item.prop);
+    getParams(params) {
       if (params.where["f6666_ext"]) {
         params.where["f6666"] = params.where["f6666_ext"];
         delete params.where["f6666_ext"];
@@ -460,7 +457,31 @@ export default {
         params.where["f21"] = params.where["f21_ext"];
         delete params.where["f21_ext"];
       }
+    },
+    tableFunction(params) {
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
+      this.getParams(params);
       return getStockList(params);
+    },
+    async cardFunction(params) {
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
+      this.getParams(params);
+
+      const stockRes = await getStockList(params);
+      const klineList = await getKLineList({
+        pageNum:1,
+        pageSize: params.pageSize,
+        where: {
+          f12: (stockRes.list || []).map((item)=>item.f12)
+        }
+      })
+      return stockRes
     },
   },
 };

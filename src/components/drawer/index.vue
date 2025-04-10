@@ -9,10 +9,10 @@
         <div class="header-title">{{ title }}</div>
       </div>
       <div class="header-right">
-        <capture-icon
+        <!-- <capture-icon
           style="width: 32px; height: 32px"
           full-dom="#app-content"
-        ></capture-icon>
+        ></capture-icon> -->
       </div>
     </div>
     <div class="drawer-content" v-if="open">

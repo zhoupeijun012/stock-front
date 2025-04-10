@@ -33,7 +33,7 @@
           order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
-        :requestFunction="getIndustryList"
+        :tableFunction="getIndustryList"
         @change="change"
         placeholder="请输入"
         multiple
@@ -74,7 +74,7 @@
           order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
-        :requestFunction="getConceptList"
+        :tableFunction="getConceptList"
         placeholder="请输入"
         multiple
         filterable
@@ -112,7 +112,7 @@
           order: [{ prop: 'f3', order: 'descending' }],
         }"
         matchKey="f14"
-        :requestFunction="getRegionList"
+        :tableFunction="getRegionList"
         placeholder="请输入"
         multiple
         filterable
@@ -261,7 +261,7 @@
         ></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="止跌巨量">
+    <el-form-item label="巨额成交">
       <el-select v-model="row.f40003" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"

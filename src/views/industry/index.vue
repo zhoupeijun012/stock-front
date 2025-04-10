@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
     >
@@ -49,7 +49,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "90px",
+            minWidth: "80px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -72,8 +72,8 @@ export default {
           {
             prop: "f40006",
             label: "924倍数",
-            minWidth: "80px",
-            align: "center",
+            minWidth: "95px",
+            align: "left",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f40006);
@@ -81,13 +81,12 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40006, "%");
             },
-            align: "center",
           },
           {
             prop: "f40007",
             label: "205倍数",
             minWidth: "95px",
-            align: "center",
+            align: "left",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f40007);
@@ -95,7 +94,6 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f40007, "%");
             },
-            align: "center",
           },
           {
             prop: "f40008",
@@ -424,7 +422,7 @@ export default {
         ...row,
       });
     },
-    requestFunction(params) {
+    tableFunction(params) {
       params["matchKey"] = [
         ...this.options.columns,
         ...this.options.foldColums,

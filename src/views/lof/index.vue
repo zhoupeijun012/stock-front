@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <ft-table
-      :requestFunction="requestFunction"
+      :tableFunction="tableFunction"
       :options="options"
       ref="ft-table" 
       :default-sort="{ prop: 'f3', order: 'descending' }"
@@ -33,7 +33,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "90px",
+            minWidth: "80px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -185,7 +185,7 @@ export default {
         ...row,
       });
     },
-    requestFunction(params) {
+    tableFunction(params) {
       params["matchKey"] = [
         ...this.options.columns,
         ...this.options.foldColums,

@@ -62,6 +62,12 @@ export const routes = [
     meta: { title: "指数列表", icon: "指数" },
   },
   {
+    path: "/overview",
+    name: "overview",
+    component: () => import("@/views/overview/index.vue"),
+    meta: { title: "看板", icon: "看板" },
+  },
+  {
     path: "/k-line",
     name: "k-line",
     component: () => import("@/views/k-line/index.vue"),
@@ -78,12 +84,6 @@ export const routes = [
     name: "task-queue",
     component: () => import("@/views/task-queue/index.vue"),
     meta: { title: "任务列表", icon: "任务" },
-  },
-  {
-    path: "/overview",
-    name: "overview",
-    component: () => import("@/views/overview/index.vue"),
-    meta: { title: "看板", icon: "看板" },
   },
 ];
 
