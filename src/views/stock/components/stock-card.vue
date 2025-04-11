@@ -30,12 +30,14 @@
         {{ formatPrec(tableItem.f40007, "%") }}
       </div>
     </div>
+    <k-line-mini :lines="tableItem.f40002" ></k-line-mini>
   </div>
 </template>
 <script>
+import KLineMini from '@/views/k-line/components/k-line-mini.vue';
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-
 export default {
+  components: {KLineMini},
   props: {
     tableItem: {
       type: Object,

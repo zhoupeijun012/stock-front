@@ -14,9 +14,9 @@
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getStockList,getKLineList } from "@/api/index";
+import { getStockList, getKLineList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import StockCard from './components/stock-card.vue';
+import StockCard from "./components/stock-card.vue";
 export default {
   name: "home",
   components: {
@@ -415,7 +415,7 @@ export default {
             },
           },
         ],
-        cardComponent: StockCard
+        cardComponent: StockCard,
       },
     };
   },
@@ -474,14 +474,27 @@ export default {
       this.getParams(params);
 
       const stockRes = await getStockList(params);
-      // const klineList = await getKLineList({
-      //   pageNum:1,
-      //   pageSize: params.pageSize,
-      //   where: {
-      //     f12: (stockRes.list || []).map((item)=>item.f12)
-      //   }
-      // })
-      return stockRes
+      const klineRes = await getKLineList({
+        pageNum: 1,
+        pageSize: params.pageSize,
+        where: {
+          f12: (stockRes.list || []).map((item) => item.f12),
+          f40001: 'day'
+        },
+      });
+      stockRes.list.forEach((stockItem) => {
+        const findObj = (klineRes.list || []).find(
+          (lineItem) => {
+            console.log(lineItem.f12,stockItem.f12);
+            return lineItem.f12 == stockItem.f12
+          }
+        );
+        
+        if (findObj) {
+          stockItem["f40002"] = findObj["f40002"];
+        }
+      });
+      return stockRes;
     },
   },
 };

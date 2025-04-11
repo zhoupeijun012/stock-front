@@ -2,6 +2,7 @@
   <div class="home">
     <ft-table
       :tableFunction="tableFunction"
+      :cardFunction="cardFunction"
       :options="options"
       ref="ft-table"
       :default-sort="{ prop: 'f3', order: 'descending' }"
@@ -11,13 +12,15 @@
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getLimitList } from "@/api/index";
+import { getLimitList, getKLineList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import StockCard from "@/views/stock/components/stock-card.vue";
 import dayjs from "dayjs";
 export default {
   name: "home",
   components: {
     FtTable,
+    StockCard,
   },
   data() {
     return {
@@ -461,9 +464,7 @@ export default {
             component: "text-cell",
             formatter: (row) => {
               let time = row.f10002.length > 5 ? row.f10002 : "0" + row.f10002;
-              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(
-                4
-              )}`;
+              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4)}`;
             },
           },
           {
@@ -473,9 +474,7 @@ export default {
             component: "text-cell",
             formatter: (row) => {
               let time = row.f10003.length > 5 ? row.f10003 : "0" + row.f10003;
-              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(
-                4
-              )}`;
+              return `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4)}`;
             },
           },
           {
@@ -493,11 +492,12 @@ export default {
             },
           },
         ],
+        cardComponent: StockCard,
       },
     };
   },
   methods: {
-    tableFunction(params) {
+    getParams(params) {
       params["matchKey"] = [...this.options.columns, ...this.options.foldColums]
         .map((item) => item.prop)
         .concat(["f10007", "date"]);
@@ -506,7 +506,37 @@ export default {
           "YYYYMMDD"
         );
       }
+    },
+    tableFunction(params) {
+      this.getParams(params);
       return getLimitList(params);
+    },
+    async cardFunction(params) {
+      params["matchKey"] = [...this.options.columns, ...this.options.foldColums]
+        .map((item) => item.prop)
+        .concat(["f10007", "date"]);
+      this.getParams(params);
+
+      const stockRes = await getLimitList(params);
+      const klineRes = await getKLineList({
+        pageNum: 1,
+        pageSize: params.pageSize,
+        where: {
+          f12: (stockRes.list || []).map((item) => item.f12),
+          f40001: "day",
+        },
+      });
+      stockRes.list.forEach((stockItem) => {
+        const findObj = (klineRes.list || []).find((lineItem) => {
+          console.log(lineItem.f12, stockItem.f12);
+          return lineItem.f12 == stockItem.f12;
+        });
+
+        if (findObj) {
+          stockItem["f40002"] = findObj["f40002"];
+        }
+      });
+      return stockRes;
     },
   },
 };

@@ -4,6 +4,7 @@
       class="infinite-list"
       v-infinite-scroll="onLoad"
       :infinite-scroll-disabled="disabled"
+      :infinite-scroll-delay="300"
       :infinite-scroll-immediate="false"
     >
       <el-row :gutter="8">
@@ -12,11 +13,17 @@
           v-for="(tableItem, index) in tableData"
           :key="'card-item-' + index"
         >
-          <component :is="options.cardComponent" :tableItem="tableItem"></component>
+          <component
+            :is="options.cardComponent"
+            :tableItem="tableItem"
+          ></component>
         </el-col>
       </el-row>
       <p v-if="loading" class="tip-text">加载中...</p>
       <p v-if="finished" class="tip-text">没有更多了</p>
+      <p v-if="error" class="tip-text" @click="retry" style="cursor: pointer">
+        网络错误，请点击重试
+      </p>
     </div>
   </el-scrollbar>
 </template>
@@ -28,7 +35,7 @@ export default {
       type: Function,
       default: () => {},
     },
-        options: {
+    options: {
       type: Object,
       default: () => {},
     },
@@ -41,6 +48,7 @@ export default {
     return {
       loading: false,
       finished: false,
+      error: false,
       tableData: [],
       total: 0,
       pageNum: 1,
@@ -67,13 +75,17 @@ export default {
       return this.pageOptions[pageIndex];
     },
     onLoad() {
-      if (this.loading || this.finished) {
+      if (this.loading || this.finished || this.error) {
         return;
       }
       this.doQuery(this.pageNum + 1);
     },
+    retry() {
+      this.doQuery(this.pageNum);
+    },
     doQuery(pageNum = 1) {
       this.loading = true;
+      this.error = false;
       let params = {
         pageNum: pageNum,
         pageSize: this.pageSize,
@@ -106,7 +118,10 @@ export default {
             this.finished = true;
           }
         })
-        .catch(() => {})
+        .catch((error) => {
+          console.log(error);
+          this.error = true;
+        })
         .finally(() => {
           this.loading = false;
         });
