@@ -54,7 +54,7 @@ export default {
               return valueStyle(row.f3);
             },
             formatter: (row) => {
-              return formatPrec(row.f3 * 100, "%");
+              return formatPrec(row.f3, "%");
             },
           },
           {
@@ -266,7 +266,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return formatPrec(row.f2 / 10);
+              return formatPrec(row.f2);
             },
           },
           {
@@ -358,7 +358,7 @@ export default {
               };
             },
             formatter: (row) => {
-              return formatPrec(row.f8 * 100, "%");
+              return formatPrec(row.f8, "%");
             },
           },
           {
