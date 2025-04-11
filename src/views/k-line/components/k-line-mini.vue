@@ -12,8 +12,8 @@
 export default {
   props: {
     lines: {
-      type: String,
-      default: "[]",
+      type: Array,
+      default: () => [],
     },
   },
   data() {
@@ -31,7 +31,7 @@ export default {
       const warpWidth = this.$refs["line-warp"].clientWidth - 6;
 
       const lineCount = parseInt(warpWidth / lineWidth);
-      let listArr = JSON.parse(val);
+      let listArr = val;
       listArr = listArr.slice(-lineCount);
       listArr = listArr.map((item) => {
         // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
@@ -50,17 +50,20 @@ export default {
         parseInt((warpHeight / (maxVal - minVal)) * 1000) / 1000;
 
       const tableList = listArr.map((item, index) => {
-        let height = (Math.max(item.open,item.close) - Math.min(item.open,item.close)) * stepHeight;
-        height = height > 4 ? height: 4;
+        let height =
+          (Math.max(item.open, item.close) - Math.min(item.open, item.close)) *
+          stepHeight;
+        height = height > 4 ? height : 4;
         return {
           left: lineWidth * index + "px",
-          bottom: (Math.min(item.open,item.close) - minVal) * stepHeight + "px",
+          bottom:
+            (Math.min(item.open, item.close) - minVal) * stepHeight + "px",
           width: lineWidth + "px",
           height: height + "px",
           backgroundColor:
-            item.change > 0
+            item.close > item.open && item.change > 0
               ? "#F92855"
-              : item.change == 0
+              : item.close == item.open
               ? "#888888"
               : "#2DC08E",
         };

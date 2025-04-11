@@ -515,6 +515,14 @@ export default {
       params["matchKey"] = [...this.options.columns, ...this.options.foldColums]
         .map((item) => item.prop)
         .concat(["f10007", "date"]);
+      params["matchKey"] = params["matchKey"].concat([
+        "f17",
+        "f2",
+        "f15",
+        "f16",
+        "f5",
+        "f4"
+      ]);
       this.getParams(params);
 
       const stockRes = await getLimitList(params);

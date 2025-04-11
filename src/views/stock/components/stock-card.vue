@@ -30,18 +30,44 @@
         {{ formatPrec(tableItem.f40007, "%") }}
       </div>
     </div>
-    <k-line-mini :lines="tableItem.f40002" ></k-line-mini>
+    <k-line-mini :lines="lines"></k-line-mini>
   </div>
 </template>
 <script>
-import KLineMini from '@/views/k-line/components/k-line-mini.vue';
+import KLineMini from "@/views/k-line/components/k-line-mini.vue";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import dayjs from "dayjs";
 export default {
-  components: {KLineMini},
+  components: { KLineMini },
   props: {
     tableItem: {
       type: Object,
       default: () => {},
+    },
+  },
+  computed: {
+    lines() {
+      const f40002 = JSON.parse(this.tableItem.f40002 || "[]");
+      let firstItem = f40002[f40002.length - 1];
+      if (firstItem && firstItem.split(',')[0] != dayjs().format("YYYY-MM-DD")) {
+        // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+        const { f17, f2, f15, f16, f5, f6, f7, f3, f4, f8 } = this.tableItem;
+        const arr = [
+          dayjs().format("YYYY-MM-DD"),
+          f17/100,
+          f2/100,
+          f15/100,
+          f16/100,
+          f5,
+          f6,
+          f7/100,
+          f3/100,
+          f4/100,
+          f8/100,
+        ];
+        f40002.push(arr.join(","));
+      }
+      return f40002;
     },
   },
   methods: {
