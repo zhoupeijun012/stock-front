@@ -22,11 +22,10 @@ import KLineChart from "@/views/k-line/components/k-line-chart.vue";
 import FundTable from "@/views/fund/components/fund-table.vue";
 import { getKLineOne, getFundOne } from "@/api/index";
 import {
-  formatMoney,
-  valueStyle,
-  formatPrec,
   stockKMap,
   fundKMap,
+  concatKFromDetail,
+  concatFundFromDetail
 } from "@/utils/tool";
 
 export default {
@@ -39,6 +38,7 @@ export default {
       otherSearchRow: {},
       routerConfig: {},
       loading: false,
+      baseDetail: {},
     };
   },
   computed: {
@@ -47,12 +47,15 @@ export default {
     },
   },
   methods: {
-    getDetail(config) {
-      this.routerConfig = config;
+    detailLoaded(row) {
       this.loading = true;
+      this.baseDetail = row;
       this.query().finally(() => {
         this.loading = false;
       });
+    },
+    getDetail(config) {
+      this.routerConfig = config;
     },
     async query() {
       const stockDetailParams = {
@@ -65,21 +68,8 @@ export default {
       };
       let { f14, f50003 = "[]" } =
         (await getFundOne(stockDetailParams)).data || {};
-      f50003 = JSON.parse(f50003);
-      // f50003 = f50003.map((item) => {
-      //   const arr = item.split(",");
-      //   // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
-      //   return {
-      //     f124: arr[0],
-      //     f62: arr[1],
-      //     f84: arr[2],
-      //     f78: arr[3],
-      //     f72: arr[4],
-      //     f66: arr[5],
-      //     f2: arr[11],
-      //     f3: arr[12],
-      //   };
-      // });
+      f50003 = concatFundFromDetail(f50003,this.baseDetail);
+
       this.$refs["fund-table"] &&
         this.$refs["fund-table"].refresh(fundKMap(f50003).reverse());
 
@@ -95,7 +85,7 @@ export default {
 
       let { f40001, f40002 = "[]" } =
         (await getKLineOne(stockKlineParams)).data || {};
-        f40002 = JSON.parse(f40002)
+      f40002 = concatKFromDetail(f40002, this.baseDetail);
       this.$refs["k-line-chart"].refresh(stockKMap(f40002));
     },
   },

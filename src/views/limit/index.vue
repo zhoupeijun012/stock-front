@@ -5,7 +5,6 @@
       :cardFunction="cardFunction"
       :options="options"
       ref="ft-table"
-      :default-sort="{ prop: 'f3', order: 'descending' }"
     ></ft-table>
   </div>
 </template>

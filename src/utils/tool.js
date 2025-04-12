@@ -126,41 +126,7 @@ export const IN_OPEN_TIME = () => {
   );
 };
 
-export const fundKMap = (lines) => {
-  const mapFunc = (item) => {
-    const arr = item.split(",");
-    // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
-    return {
-      // 日期
-      f124: arr[0],
-      // 主力净流入
-      f62: arr[1],
-      // 小单净流入
-      f84: arr[2],
-      // 中单净流入
-      f78: arr[3],
-      // 大单净流入
-      f72: arr[4],
-      // 超大单净流入
-      f66: arr[5],
-      // 收盘价
-      f2: arr[11],
-      // 涨跌幅
-      f3: arr[12],
-    };
-  }
-  let chartData = {};
-  if (Array.isArray(lines)) {
-    chartData = lines.map((item) => {
-      return mapFunc(item);
-    });
-  } else {
-    chartData = mapFunc(lines);
-  }
-  return chartData;
-};
-
-export const stockKMap = (lines) => {
+export const stockKMap = (lines = []) => {
   const mapFunc = (item) => {
     const splitArr = item.split(",");
     //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
@@ -187,4 +153,99 @@ export const stockKMap = (lines) => {
     chartData = mapFunc(lines);
   }
   return chartData;
+};
+
+export const stockKMapFromDetail = (detail) => {
+  // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+  const { f17, f2, f15, f16, f5, f6, f7, f3, f4, f8 } = detail;
+  const arr = [
+    GET_LAST_DATE(1)[0],
+    f17 / 100,
+    f2 / 100,
+    f15 / 100,
+    f16 / 100,
+    f5,
+    f6,
+    f7 / 100,
+    f3 / 100,
+    f4 / 100,
+    f8 / 100,
+  ];
+  return arr.join(",");
+};
+
+export const concatKFromDetail = (lines = "", detail) => {
+  lines = JSON.parse(lines || "[]");
+  let firstItem = lines[lines.length - 1];
+  const lastDate = GET_LAST_DATE(1)[0];
+  if (firstItem && lastDate != firstItem.split(",")[0]) {
+    lines.push(stockKMapFromDetail(detail));
+  }
+  return lines;
+};
+
+export const fundKMap = (lines) => {
+  const mapFunc = (item) => {
+    const arr = item.split(",");
+    // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
+    return {
+      // 日期
+      f124: arr[0],
+      // 主力净流入
+      f62: arr[1],
+      // 小单净流入
+      f84: arr[2],
+      // 中单净流入
+      f78: arr[3],
+      // 大单净流入
+      f72: arr[4],
+      // 超大单净流入
+      f66: arr[5],
+      // 收盘价
+      f2: arr[11],
+      // 涨跌幅
+      f3: arr[12],
+    };
+  };
+  let chartData = {};
+  if (Array.isArray(lines)) {
+    chartData = lines.map((item) => {
+      return mapFunc(item);
+    });
+  } else {
+    chartData = mapFunc(lines);
+  }
+  return chartData;
+};
+
+export const fundMapFromDetail = (detail) => {
+  // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
+  const { f62, f84, f78, f72, f66, f184, f87, f81, f75, f69, f2, f3 } = detail;
+
+  const arr = [
+    GET_LAST_DATE(1)[0],
+    f62,
+    f84,
+    f78,
+    f72,
+    f66,
+    f184,
+    f87,
+    f81,
+    f75,
+    f69,
+    f2,
+    f3,
+  ];
+  return arr.join(",");
+};
+
+export const concatFundFromDetail = (lines = "", detail) => {
+  lines = JSON.parse(lines || "[]");
+  let firstItem = lines[lines.length - 1];
+  const lastDate = GET_LAST_DATE(1)[0];
+  if (firstItem && lastDate != firstItem.split(",")[0]) {
+    lines.push(fundMapFromDetail(detail));
+  }
+  return lines;
 };

@@ -45,154 +45,149 @@ export default {
               });
             },
           },
-          // {
-          //   prop: "f3",
-          //   label: "涨跌幅",
-          //   minWidth: "80px",
-          //   sortable: "custom",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f3);
-          //   },
-          //   formatter: (row) => {
-          //     return formatPrec(row.f3, "%");
-          //   },
-          // },
-
-          // {
-          //   prop: "f40005",
-          //   label: "暴跌倍数",
-          //   minWidth: "90px",
-          //   align: "left",
-          //   sortable: "custom",
-          //   formatter: (row) => {
-          //     return row.f40005 <= 1 ? "历史新高" : row.f40005;
-          //   },
-          // },
-          // {
-          //   prop: "f40006",
-          //   label: "924倍数",
-          //   minWidth: "95px",
-          //   align: "left",
-          //   sortable: "custom",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40006);
-          //   },
-          //   formatter: (row) => {
-          //     return formatPrec(row.f40006, "%");
-          //   },
-          // },
-          // {
-          //   prop: "f40007",
-          //   label: "205倍数",
-          //   minWidth: "95px",
-          //   align: "left",
-          //   sortable: "custom",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40007);
-          //   },
-          //   formatter: (row) => {
-          //     return formatPrec(row.f40007, "%");
-          //   },
-          // },
-          // {
-          //   prop: "f40008",
-          //   label: "排列天数",
-          //   minWidth: "90px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40008);
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f40009",
-          //   label: "排列涨幅",
-          //   minWidth: "90px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40009);
-          //   },
-          //   formatter: (row) => {
-          //     return formatPrec(row.f40009, "%");
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f40010",
-          //   label: "60线天数",
-          //   minWidth: "100px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40010);
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f40011",
-          //   label: "60线涨幅",
-          //   minWidth: "100px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40011);
-          //   },
-          //   formatter: (row) => {
-          //     return formatPrec(row.f40011, "%");
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f50004",
-          //   label: "流入天数",
-          //   minWidth: "90px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f50004);
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f50005",
-          //   label: "流入金额",
-          //   minWidth: "90px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f50005);
-          //   },
-          //   formatter: (row) => {
-          //     return formatMoney(row.f50005);
-          //   },
-          //   sortable: "custom",
-          //   align: "left",
-          // },
-          // {
-          //   prop: "f10",
-          //   label: "量比",
-          //   minWidth: "80px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f10);
-          //   },
-          //   formatter: (row) => {
-          //     return isNaN(row.f10) ? "-" : row.f10 / 100;
-          //   },
-          //   sortable: "custom",
-          //   align: "center",
-          // },
-          // {
-          //   prop: "f6",
-          //   label: "成交额",
-          //   minWidth: "80px",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f6);
-          //   },
-          //   formatter: (row) => {
-          //     return formatMoney(row.f6);
-          //   },
-          //   sortable: "custom",
-          //   align: "left",
-          // },
           {
-            prop: "cost",
-            label: "耗时",
+            prop: "f3",
+            label: "涨跌幅",
             minWidth: "80px",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return valueStyle(row.f3);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f3, "%");
+            },
+          },
+
+          {
+            prop: "f40005",
+            label: "暴跌倍数",
+            minWidth: "90px",
+            align: "left",
+            sortable: "custom",
+            formatter: (row) => {
+              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+            },
+          },
+          {
+            prop: "f40006",
+            label: "924倍数",
+            minWidth: "95px",
+            align: "left",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return valueStyle(row.f40006);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40006, "%");
+            },
+          },
+          {
+            prop: "f40007",
+            label: "205倍数",
+            minWidth: "95px",
+            align: "left",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return valueStyle(row.f40007);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40007, "%");
+            },
+          },
+          {
+            prop: "f40008",
+            label: "排列天数",
+            minWidth: "90px",
+            cellStyle: (row) => {
+              return valueStyle(row.f40008);
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f40009",
+            label: "排列涨幅",
+            minWidth: "90px",
+            cellStyle: (row) => {
+              return valueStyle(row.f40009);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40009, "%");
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f40010",
+            label: "60线天数",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return valueStyle(row.f40010);
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f40011",
+            label: "60线涨幅",
+            minWidth: "100px",
+            cellStyle: (row) => {
+              return valueStyle(row.f40011);
+            },
+            formatter: (row) => {
+              return formatPrec(row.f40011, "%");
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f50004",
+            label: "流入天数",
+            minWidth: "90px",
+            cellStyle: (row) => {
+              return valueStyle(row.f50004);
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f50005",
+            label: "流入金额",
+            minWidth: "90px",
+            cellStyle: (row) => {
+              return valueStyle(row.f50005);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f50005);
+            },
+            sortable: "custom",
+            align: "left",
+          },
+          {
+            prop: "f10",
+            label: "量比",
+            minWidth: "80px",
+            cellStyle: (row) => {
+              return valueStyle(row.f10);
+            },
+            formatter: (row) => {
+              return isNaN(row.f10) ? "-" : row.f10 / 100;
+            },
+            sortable: "custom",
+            align: "center",
+          },
+          {
+            prop: "f6",
+            label: "成交额",
+            minWidth: "80px",
+            cellStyle: (row) => {
+              return valueStyle(row.f6);
+            },
+            formatter: (row) => {
+              return formatMoney(row.f6);
+            },
+            sortable: "custom",
+            align: "left",
           },
         ],
         foldColums: [

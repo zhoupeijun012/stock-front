@@ -35,13 +35,14 @@
 </template>
 <script>
 import KLineMini from "@/views/k-line/components/k-line-mini.vue";
-import { GET_LAST_DATE } from "@/utils/tool";
+import { concatKFromDetail } from "@/utils/tool";
 import {
   formatMoney,
   valueStyle,
   formatPrec,
   stockKMap,
   fundKMap,
+  stockKMapFromDetail
 } from "@/utils/tool";
 import dayjs from 'dayjs';
 // import dayjs from "dayjs";
@@ -55,29 +56,7 @@ export default {
   },
   computed: {
     lines() {
-      const f40002 = JSON.parse(this.tableItem.f40002 || "[]");
-      const { f124 } = this.tableItem;
-      let firstItem = f40002[f40002.length - 1];
-      const lastDate = GET_LAST_DATE(1)[0];
-      if (firstItem && lastDate != firstItem.split(',')[0]) {
-        // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-        const { f17, f2, f15, f16, f5, f6, f7, f3, f4, f8 } = this.tableItem;
-        const arr = [
-          dayjs().format("YYYY-MM-DD"),
-          f17/100,
-          f2/100,
-          f15/100,
-          f16/100,
-          f5,
-          f6,
-          f7/100,
-          f3/100,
-          f4/100,
-          f8/100,
-        ];
-        f40002.push(arr.join(","));
-      }
-      return f40002;
+      return concatKFromDetail(this.tableItem.f40002,this.tableItem);
     },
     cardCls() {
       const f40002 = JSON.parse(this.tableItem.f40002 || "[]");

@@ -109,7 +109,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs["ft-table"].doQuery();
+    this.$refs["ft-table"].handDoQuery();
   },
   methods: {
     toDetail(row) {

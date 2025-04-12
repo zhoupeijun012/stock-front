@@ -414,6 +414,7 @@ export default {
       };
       getStockOne(stockDetailParams).then((res) => {
         this.stockInfo = res.data;
+        this.$parent.detailLoaded && this.$parent.detailLoaded(this.stockInfo);
       });
     },
   },
