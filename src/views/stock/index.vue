@@ -471,10 +471,14 @@ export default {
         ...this.options.columns,
         ...this.options.foldColums,
       ].map((item) => item.prop);
-      params["matchKey"] = params["matchKey"].concat(
-        ["f17","f2", "f15", "f16", "f5",
-        "f4"]
-      )
+      params["matchKey"] = params["matchKey"].concat([
+        "f17",
+        "f2",
+        "f15",
+        "f16",
+        "f5",
+        "f4",
+      ]);
       this.getParams(params);
 
       const stockRes = await getStockList(params);
@@ -483,17 +487,14 @@ export default {
         pageSize: params.pageSize,
         where: {
           f12: (stockRes.list || []).map((item) => item.f12),
-          f40001: 'day'
+          f40001: "day",
         },
       });
       stockRes.list.forEach((stockItem) => {
-        const findObj = (klineRes.list || []).find(
-          (lineItem) => {
-            console.log(lineItem.f12,stockItem.f12);
-            return lineItem.f12 == stockItem.f12
-          }
-        );
-        
+        const findObj = (klineRes.list || []).find((lineItem) => {
+          return lineItem.f12 == stockItem.f12;
+        });
+
         if (findObj) {
           stockItem["f40002"] = findObj["f40002"];
         }

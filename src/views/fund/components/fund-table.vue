@@ -19,7 +19,7 @@ export default {
       options: {
         columns: [
           {
-            prop: "f221",
+            prop: "f124",
             label: "日期",
             minWidth: "80px",
             showOverflowTooltip: true,

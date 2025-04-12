@@ -37,7 +37,7 @@ export default {
   methods: {
     refresh(tableData) {
       this.chart = echarts.init(this.$refs["chart"]);
-      const xData = tableData.map((item) => item.f221);
+      const xData = tableData.map((item) => item.f124);
       const jData = tableData.map((item) => item.f62);
       const cdData = tableData.map((item) => item.f66);
       const dData = tableData.map((item) => item.f72);

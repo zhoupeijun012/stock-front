@@ -143,6 +143,7 @@ export default {
 <style lang="less" scoped>
 .scrollbar-wrapper {
   height: 100%;
+  // background: #fff;
   /deep/.el-scrollbar__wrap {
     overflow: hidden;
     overflow-y: scroll;

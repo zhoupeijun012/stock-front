@@ -1,5 +1,5 @@
 <template>
-  <div class="ft-card-item" @click="gotoDetail(tableItem)">
+  <div class="ft-card-item" @click="gotoDetail(tableItem)" :class="cardCls">
     <div class="card-name">
       {{ tableItem.f14 }}
       <span :style="valueStyle(tableItem.f3)" class="card-prec">{{
@@ -35,8 +35,14 @@
 </template>
 <script>
 import KLineMini from "@/views/k-line/components/k-line-mini.vue";
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import dayjs from "dayjs";
+import {
+  formatMoney,
+  valueStyle,
+  formatPrec,
+  stockKMap,
+  fundKMap,
+} from "@/utils/tool";
+// import dayjs from "dayjs";
 export default {
   components: { KLineMini },
   props: {
@@ -48,26 +54,47 @@ export default {
   computed: {
     lines() {
       const f40002 = JSON.parse(this.tableItem.f40002 || "[]");
-      let firstItem = f40002[f40002.length - 1];
-      if (firstItem && firstItem.split(',')[0] != dayjs().format("YYYY-MM-DD")) {
-        // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-        const { f17, f2, f15, f16, f5, f6, f7, f3, f4, f8 } = this.tableItem;
-        const arr = [
-          dayjs().format("YYYY-MM-DD"),
-          f17/100,
-          f2/100,
-          f15/100,
-          f16/100,
-          f5,
-          f6,
-          f7/100,
-          f3/100,
-          f4/100,
-          f8/100,
-        ];
-        f40002.push(arr.join(","));
-      }
+      // const { f124 } = this.tableItem;
+      // let firstItem = f40002[f40002.length - 1];
+      // if (firstItem && dayjs(f124).isBefore(firstItem.split(',')[0])) {
+      //   // 时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+      //   const { f17, f2, f15, f16, f5, f6, f7, f3, f4, f8 } = this.tableItem;
+      //   const arr = [
+      //     dayjs().format("YYYY-MM-DD"),
+      //     f17/100,
+      //     f2/100,
+      //     f15/100,
+      //     f16/100,
+      //     f5,
+      //     f6,
+      //     f7/100,
+      //     f3/100,
+      //     f4/100,
+      //     f8/100,
+      //   ];
+      //   f40002.push(arr.join(","));
+      // }
       return f40002;
+    },
+    cardCls() {
+      const f40002 = JSON.parse(this.tableItem.f40002 || "[]");
+      if (f40002.length < 2) {
+        return "";
+      }
+      const lastRow = stockKMap(f40002[f40002.length - 1]);
+      const last2Row = stockKMap(f40002[f40002.length - 2]);
+      if (
+        last2Row.change < 0 &&
+        lastRow.change > 0 &&
+        lastRow.high > lastRow.close &&
+        this.tableItem.f6 * 10 > this.tableItem.f21
+      ) {
+        return "gold";
+      }
+      if (last2Row.change && this.tableItem.f6 * 10 > this.tableItem.f21) {
+        return "silver";
+      }
+      return "";
     },
   },
   methods: {
@@ -96,6 +123,12 @@ export default {
   font-size: 14px;
   cursor: pointer;
   user-select: none;
+  &.gold {
+    background: rgba(255, 215, 0, 0.08);
+  }
+  &.silver {
+    background: rgba(218, 112, 214, 0.08);
+  }
 }
 .card-name {
   color: red;

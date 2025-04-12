@@ -125,3 +125,66 @@ export const IN_OPEN_TIME = () => {
       dayjs().format("HHmmss") <= "150000")
   );
 };
+
+export const fundKMap = (lines) => {
+  const mapFunc = (item) => {
+    const arr = item.split(",");
+    // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
+    return {
+      // 日期
+      f124: arr[0],
+      // 主力净流入
+      f62: arr[1],
+      // 小单净流入
+      f84: arr[2],
+      // 中单净流入
+      f78: arr[3],
+      // 大单净流入
+      f72: arr[4],
+      // 超大单净流入
+      f66: arr[5],
+      // 收盘价
+      f2: arr[11],
+      // 涨跌幅
+      f3: arr[12],
+    };
+  }
+  let chartData = {};
+  if (Array.isArray(lines)) {
+    chartData = lines.map((item) => {
+      return mapFunc(item);
+    });
+  } else {
+    chartData = mapFunc(lines);
+  }
+  return chartData;
+};
+
+export const stockKMap = (lines) => {
+  const mapFunc = (item) => {
+    const splitArr = item.split(",");
+    //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+    return {
+      timestamp: splitArr[0],
+      open: parseFloat(splitArr[1]),
+      close: parseFloat(splitArr[2]),
+      high: parseFloat(splitArr[3]),
+      low: parseFloat(splitArr[4]),
+      // 成交量
+      volume: parseFloat(splitArr[5]),
+      // 成交额
+      turnover: formatMoney(splitArr[6]),
+      // 涨跌额
+      change: formatMoney(splitArr[8]),
+    };
+  };
+  let chartData = {};
+  if (Array.isArray(lines)) {
+    chartData = lines.map((item) => {
+      return mapFunc(item);
+    });
+  } else {
+    chartData = mapFunc(lines);
+  }
+  return chartData;
+};

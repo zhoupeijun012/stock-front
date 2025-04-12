@@ -21,7 +21,13 @@
 import KLineChart from "@/views/k-line/components/k-line-chart.vue";
 import FundTable from "@/views/fund/components/fund-table.vue";
 import { getKLineOne, getFundOne } from "@/api/index";
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import {
+  formatMoney,
+  valueStyle,
+  formatPrec,
+  stockKMap,
+  fundKMap,
+} from "@/utils/tool";
 
 export default {
   components: {
@@ -60,22 +66,22 @@ export default {
       let { f14, f50003 = "[]" } =
         (await getFundOne(stockDetailParams)).data || {};
       f50003 = JSON.parse(f50003);
-      f50003 = f50003.map((item) => {
-        const arr = item.split(",");
-        // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
-        return {
-          f221: arr[0],
-          f62: arr[1],
-          f84: arr[2],
-          f78: arr[3],
-          f72: arr[4],
-          f66: arr[5],
-          f2: arr[11],
-          f3: arr[12],
-        };
-      });
+      // f50003 = f50003.map((item) => {
+      //   const arr = item.split(",");
+      //   // 日期/主力净流入/小单净流入/中单净流入/大单净流入/超大单净流入/主力流入净占比/小单净占比/中单净占比/大单净占比/超大单净占比/收盘价/涨跌幅
+      //   return {
+      //     f124: arr[0],
+      //     f62: arr[1],
+      //     f84: arr[2],
+      //     f78: arr[3],
+      //     f72: arr[4],
+      //     f66: arr[5],
+      //     f2: arr[11],
+      //     f3: arr[12],
+      //   };
+      // });
       this.$refs["fund-table"] &&
-        this.$refs["fund-table"].refresh(f50003.reverse());
+        this.$refs["fund-table"].refresh(fundKMap(f50003).reverse());
 
       const stockKlineParams = {
         where: [
@@ -89,23 +95,8 @@ export default {
 
       let { f40001, f40002 = "[]" } =
         (await getKLineOne(stockKlineParams)).data || {};
-      let chartData = JSON.parse(f40002);
-      //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-      chartData = chartData.map((item) => {
-        const splitArr = item.split(",");
-
-        return {
-          timestamp: splitArr[0],
-          open: parseFloat(splitArr[1]),
-          close: parseFloat(splitArr[2]),
-          high: parseFloat(splitArr[3]),
-          low: parseFloat(splitArr[4]),
-          volume: parseFloat(splitArr[5]),
-          turnover: formatMoney(splitArr[6]),
-          change: formatMoney(splitArr[8]),
-        };
-      });
-      this.$refs["k-line-chart"].refresh(chartData);
+        f40002 = JSON.parse(f40002)
+      this.$refs["k-line-chart"].refresh(stockKMap(f40002));
     },
   },
 };
