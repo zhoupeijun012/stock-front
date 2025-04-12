@@ -54,6 +54,7 @@
           v-bind="column"
           v-for="(column, index) in options.columns"
           :key="'column-' + index"
+          show-overflow-tooltip
         >
           <template scope="scope">
             <div

@@ -19,7 +19,7 @@
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getTaskList, taskRetry } from "@/api/index";
+import { getQueueList, taskRetry } from "@/api/index";
 export default {
   components: {
     FtTable,
@@ -86,7 +86,7 @@ export default {
   methods: {
     tableFunction(params) {
       params["matchKey"] = this.options.columns.map((item) => item.prop);
-      return getTaskList(params);
+      return getQueueList(params);
     },
     handleRetry(row) {
       const { uuid } = row;
