@@ -17,7 +17,7 @@
         <el-button type="plain" @click="onReset">重置</el-button>
         <el-button type="primary" @click="onSubmit">查询</el-button>
         <switch-icon
-        v-if="$attrs.cardFunction"
+          v-if="$attrs.cardFunction"
           open-title="列表"
           :open="showTypeDsc"
           :open-icon="require('@/assets/列表.png')"
@@ -113,6 +113,9 @@ export default {
 
     foldChange() {
       this.fold = !this.fold;
+    },
+    refresh(tableData) {
+      this.$refs["ft-ref"] && (this.$refs["ft-ref"].tableData = tableData);
     },
   },
 };

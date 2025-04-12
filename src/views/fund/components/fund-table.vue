@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     refresh(tableData) {
-        this.$refs['ft-table'] && (this.$refs['ft-table'].tableData = tableData);
+        this.$refs['ft-table'] && (this.$refs['ft-table'].refresh(tableData));
     }
   },
 };
