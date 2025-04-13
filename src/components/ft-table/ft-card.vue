@@ -145,7 +145,7 @@ export default {
       this.doQuery();
     },
     onReset() {
-      this.tableData = [];
+      // this.tableData = [];
       this.$nextTick(() => {
         this.handDoQuery();
       });
