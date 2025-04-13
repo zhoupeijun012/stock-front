@@ -3,7 +3,7 @@
     <ft-table
       :tableFunction="tableFunction"
       :options="options"
-      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
+      ref="ft-table"
       max-height="100%"
     >
     </ft-table>
@@ -24,6 +24,7 @@ export default {
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
+        defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
             prop: "f14",

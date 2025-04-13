@@ -15,6 +15,7 @@
         >
           <component
             :is="options.cardComponent"
+            :cardOptions="options.cardOptions"
             :tableItem="tableItem"
           ></component>
         </el-col>
@@ -54,12 +55,24 @@ export default {
       pageNum: 1,
       pageSize: 10,
       pageOptions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      orderArray: [],
     };
   },
   computed: {
     disabled() {
       return this.loading || this.finished;
     },
+  },
+  created() {
+    if (
+      this.options.defaultSort &&
+      Object.keys(this.options.defaultSort).length > 0
+    ) {
+      this.orderArray.push({
+        prop: this.options.defaultSort.prop,
+        order: this.options.defaultSort.order,
+      });
+    }
   },
   mounted() {
     this.pageSize = this.calculatePageSize();
@@ -89,6 +102,7 @@ export default {
       let params = {
         pageNum: pageNum,
         pageSize: this.pageSize,
+        order: this.orderArray,
         where: this.searchRow,
       };
       const searchParams = this.searchRow;

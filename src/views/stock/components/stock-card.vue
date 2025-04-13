@@ -35,14 +35,12 @@
 </template>
 <script>
 import KLineMini from "@/views/k-line/components/k-line-mini.vue";
-import { concatKFromDetail } from "@/utils/tool";
 import {
   formatMoney,
   valueStyle,
   formatPrec,
   stockKMap,
-  fundKMap,
-  stockKMapFromDetail
+  concatKFromDetail,
 } from "@/utils/tool";
 export default {
   components: { KLineMini },
@@ -51,10 +49,14 @@ export default {
       type: Object,
       default: () => {},
     },
+    cardOptions: {
+      type: Object,
+      default: () => {},
+    },
   },
   computed: {
     lines() {
-      return concatKFromDetail(this.tableItem.f40002,this.tableItem);
+      return concatKFromDetail(this.tableItem.f40002, this.tableItem);
     },
     cardCls() {
       const f40002 = JSON.parse(this.tableItem.f40002 || "[]");
@@ -82,10 +84,9 @@ export default {
     valueStyle,
     formatPrec,
     gotoDetail(row) {
-      this.$stockDetail({
-        title: row.f14,
-        ...row,
-      });
+      this.cardOptions &&
+        this.cardOptions.detailClick &&
+        this.cardOptions.detailClick(row);
     },
   },
 };

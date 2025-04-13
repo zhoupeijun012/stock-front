@@ -13,7 +13,7 @@
         @sort-change="sortChange"
         @cell-click="cellClick"
         :header-cell-class-name="handleHeadercellStyle"
-        :default-sort="defaultSort"
+        :default-sort="options.defaultSort"
       >
         <el-table-column
           type="expand"
@@ -127,10 +127,6 @@ export default {
       type: String,
       default: "uuid",
     },
-    defaultSort: {
-      type: Object,
-      default: () => {},
-    },
     searchRow: {
       type: Object,
       default: () => {},
@@ -152,7 +148,7 @@ export default {
     },
     updateTime() {
         return this.tableData.length > 0 ? dayjs(this.tableData[0].updatedAt).format("YYYY-MM-DD HH:mm:ss"): null
-    }
+    },
   },
   data() {
     return {
@@ -169,10 +165,10 @@ export default {
     };
   },
   created() {
-    if (this.defaultSort && Object.keys(this.defaultSort).length > 0) {
+    if (this.options.defaultSort && Object.keys(this.options.defaultSort).length > 0) {
       this.orderArray.push({
-        prop: this.defaultSort.prop,
-        order: this.defaultSort.order,
+        prop: this.options.defaultSort.prop,
+        order: this.options.defaultSort.order,
       });
     }
   },

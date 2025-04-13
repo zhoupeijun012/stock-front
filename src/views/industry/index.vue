@@ -2,8 +2,9 @@
   <div class="home">
     <ft-table
       :tableFunction="tableFunction"
+      :cardFunction="cardFunction"
       :options="options"
-      ref="ft-table" :default-sort="{ prop: 'f3', order: 'descending' }"
+      ref="ft-table"
     >
       <el-table-column label="操作" width="60" align="center">
         <template scope="scope">
@@ -16,8 +17,10 @@
 
 <script>
 import FtTable from "@/components/ft-table";
-import { getIndustryList } from "@/api/index";
+import { getIndustryList, getKLineList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import StockCard from "@/views/stock/components/stock-card.vue";
+
 export default {
   name: "home",
   components: {
@@ -28,6 +31,7 @@ export default {
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
+        defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
             prop: "f14",
@@ -412,6 +416,15 @@ export default {
             component: "text-cell",
           },
         ],
+        cardComponent: StockCard,
+        cardOptions: {
+          detailClick: (row) => {
+            this.$industryDetail({
+              title: row.f14,
+              ...row,
+            });
+          },
+        },
       },
     };
   },
@@ -422,12 +435,7 @@ export default {
         ...row,
       });
     },
-    tableFunction(params) {
-      params["matchKey"] = [
-        ...this.options.columns,
-        ...this.options.foldColums,
-      ].map((item) => item.prop);
-
+    getParams(params) {
       if (params.where["f40006_ext"]) {
         params.where["f40006"] = params.where["f40006_ext"];
         delete params.where["f40006_ext"];
@@ -460,7 +468,52 @@ export default {
         params.where["f21"] = params.where["f21_ext"];
         delete params.where["f21_ext"];
       }
+    },
+    tableFunction(params) {
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
+      this.getParams(params);
+
       return getIndustryList(params);
+    },
+    async cardFunction(params) {
+      params["matchKey"] = [
+        ...this.options.columns,
+        ...this.options.foldColums,
+      ].map((item) => item.prop);
+
+      params["matchKey"] = params["matchKey"].concat([
+        "f17",
+        "f2",
+        "f15",
+        "f16",
+        "f5",
+        "f4",
+      ]);
+
+      this.getParams(params);
+
+      const stockRes = await getIndustryList(params);
+      const klineRes = await getKLineList({
+        pageNum: 1,
+        pageSize: params.pageSize,
+        where: {
+          f12: (stockRes.list || []).map((item) => item.f12),
+          f40001: "day",
+        },
+      });
+      stockRes.list.forEach((stockItem) => {
+        const findObj = (klineRes.list || []).find((lineItem) => {
+          return lineItem.f12 == stockItem.f12;
+        });
+
+        if (findObj) {
+          stockItem["f40002"] = findObj["f40002"];
+        }
+      });
+      return stockRes;
     },
   },
 };

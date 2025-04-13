@@ -5,7 +5,6 @@
       :cardFunction="cardFunction"
       :options="options"
       ref="ft-table"
-      :default-sort="{ prop: 'f3', order: 'descending' }"
       v-bind="$attrs"
     >
     </ft-table>
@@ -16,7 +15,7 @@
 import FtTable from "@/components/ft-table";
 import { getStockList, getKLineList } from "@/api/index";
 import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
-import StockCard from "./components/stock-card.vue";
+import StockCard from "@/views/stock/components/stock-card.vue";
 export default {
   name: "home",
   components: {
@@ -27,6 +26,7 @@ export default {
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
+        defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
             prop: "f14",
@@ -416,6 +416,14 @@ export default {
           },
         ],
         cardComponent: StockCard,
+        cardOptions: {
+          detailClick: (row) => {
+            this.$stockDetail({
+              title: row.f14,
+              ...row,
+            });
+          },
+        },
       },
     };
   },

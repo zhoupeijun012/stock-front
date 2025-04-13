@@ -1,14 +1,12 @@
 <template>
   <div class="home">
-    <ft-table
-      :tableFunction="tableFunction"
-      :options="options"
-      ref="ft-table"
-      :default-sort="{ prop: 'taskLevel', order: 'ascending' }"
-    >
+    <ft-table :tableFunction="tableFunction" :options="options" ref="ft-table">
       <el-table-column label="操作" width="80" align="center" fixed="right">
         <template scope="scope">
-          <el-button type="text" @click="handleRetry(scope.row)" v-if="scope.row.retryCount >= 3"
+          <el-button
+            type="text"
+            @click="handleRetry(scope.row)"
+            v-if="scope.row.retryCount >= 3"
             >重试</el-button
           >
         </template>
@@ -29,6 +27,7 @@ export default {
       loading: false,
       options: {
         search: () => import("./components/search.vue"),
+        defaultSort: { prop: "taskLevel", order: "ascending" },
         columns: [
           {
             prop: "taskLevel",
