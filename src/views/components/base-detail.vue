@@ -25,7 +25,7 @@ import {
   stockKMap,
   fundKMap,
   concatKFromDetail,
-  concatFundFromDetail
+  concatFundFromDetail,
 } from "@/utils/tool";
 
 export default {
@@ -56,37 +56,37 @@ export default {
     },
     getDetail(config) {
       this.routerConfig = config;
+      this.loading = true;
     },
-    async query() {
-      const stockDetailParams = {
-        where: [
-          {
-            f12: this.routerConfig.f12,
-            f14: this.routerConfig.f14,
-          },
-        ],
-      };
-      let { f14, f50003 = "[]" } =
-        (await getFundOne(stockDetailParams)).data || {};
-      f50003 = concatFundFromDetail(f50003,this.baseDetail);
+    query() {
+      return Promise.all([
+        getFundOne({
+          where: [
+            {
+              f12: this.routerConfig.f12,
+              f14: this.routerConfig.f14,
+            },
+          ],
+        }),
+        getKLineOne({
+          where: [
+            {
+              f12: this.routerConfig.f12,
+              f14: this.routerConfig.f14,
+              f40001: "day",
+            },
+          ],
+        }),
+      ]).then(([fundRes, klineRes]) => {
+        let f50003 = fundRes.data.f50003 || '[]';
+        f50003 = concatFundFromDetail(f50003, this.baseDetail);
+        this.$refs["fund-table"] &&
+          this.$refs["fund-table"].refresh(fundKMap(f50003).reverse());
 
-      this.$refs["fund-table"] &&
-        this.$refs["fund-table"].refresh(fundKMap(f50003).reverse());
-
-      const stockKlineParams = {
-        where: [
-          {
-            f12: this.routerConfig.f12,
-            f14: this.routerConfig.f14,
-            f40001: "day",
-          },
-        ],
-      };
-
-      let { f40001, f40002 = "[]" } =
-        (await getKLineOne(stockKlineParams)).data || {};
-      f40002 = concatKFromDetail(f40002, this.baseDetail);
-      this.$refs["k-line-chart"].refresh(stockKMap(f40002));
+        let f40002 = klineRes.data.f40002 || '[]';
+        f40002 = concatKFromDetail(f40002, this.baseDetail);
+        this.$refs["k-line-chart"].refresh(stockKMap(f40002));
+      });
     },
   },
 };
