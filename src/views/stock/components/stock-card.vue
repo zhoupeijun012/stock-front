@@ -44,8 +44,6 @@ import {
   fundKMap,
   stockKMapFromDetail
 } from "@/utils/tool";
-import dayjs from 'dayjs';
-// import dayjs from "dayjs";
 export default {
   components: { KLineMini },
   props: {

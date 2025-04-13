@@ -82,6 +82,7 @@
       </el-table>
     </div>
     <div class="ft-pagination" v-if="showPager">
+      <div class="page-info" v-if="updateTime">更新时间: {{ updateTime }}</div>
       <el-pagination
         append-to-body="false"
         :popper-class="popperClass"
@@ -102,6 +103,7 @@
 import fullIcon from "@/components/full-icon";
 import captureIcon from "@/components/capture-icon";
 import ColumnFold from "./column-fold.vue";
+import dayjs from 'dayjs';
 export default {
   components: { fullIcon, captureIcon, ColumnFold },
   props: {
@@ -148,6 +150,9 @@ export default {
     popperClass() {
       return "pagination-" + parseInt(Math.random() * 1000);
     },
+    updateTime() {
+        return this.tableData.length > 0 ? dayjs(this.tableData[0].updatedAt).format("YYYY-MM-DD HH:mm:ss"): null
+    }
   },
   data() {
     return {
@@ -308,9 +313,17 @@ export default {
 .el-table-warp {
   height: calc(100% - 48px);
 }
+.page-info {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #606266;
+}
+
 .ft-pagination {
   text-align: right;
-  padding: 8px 0;
+  padding: 8px;
   height: 48px;
   background: #fff;
   box-sizing: border-box;

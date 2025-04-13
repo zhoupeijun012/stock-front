@@ -126,6 +126,12 @@ export const IN_OPEN_TIME = () => {
   );
 };
 
+export const IN_OPEN_RANGE = () => {
+  return (
+    dayjs().format("HHmmss") >= "092500"
+  );
+};
+
 export const stockKMap = (lines = []) => {
   const mapFunc = (item) => {
     const splitArr = item.split(",");
@@ -178,7 +184,7 @@ export const concatKFromDetail = (lines = "", detail) => {
   lines = JSON.parse(lines || "[]");
   let firstItem = lines[lines.length - 1];
   const lastDate = GET_LAST_DATE(1)[0];
-  if (firstItem && lastDate != firstItem.split(",")[0]) {
+  if (firstItem && dayjs(lastDate).isAfter(firstItem.split(",")[0]) && IN_OPEN_RANGE()) {
     lines.push(stockKMapFromDetail(detail));
   }
   return lines;
@@ -244,7 +250,7 @@ export const concatFundFromDetail = (lines = "", detail) => {
   lines = JSON.parse(lines || "[]");
   let firstItem = lines[lines.length - 1];
   const lastDate = GET_LAST_DATE(1)[0];
-  if (firstItem && lastDate != firstItem.split(",")[0]) {
+  if (firstItem && dayjs(lastDate).isAfter(firstItem.split(",")[0]) && IN_OPEN_RANGE()) {
     lines.push(fundMapFromDetail(detail));
   }
   return lines;
