@@ -492,6 +492,14 @@ export default {
           },
         ],
         cardComponent: StockCard,
+        cardOptions: {
+          detailClick: (row) => {
+            this.$stockDetail({
+              title: row.f14,
+              ...row,
+            });
+          },
+        },
       },
     };
   },
@@ -520,7 +528,7 @@ export default {
         "f15",
         "f16",
         "f5",
-        "f4"
+        "f4",
       ]);
       this.getParams(params);
 
