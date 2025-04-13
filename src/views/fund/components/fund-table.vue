@@ -9,7 +9,7 @@
 </template>
 <script>
 import FtTable from "@/components/ft-table";
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import { formatMoney, valueStyle, formatPrec,fundKMap } from "@/utils/tool";
 export default {
   components: {
     FtTable,

@@ -7,7 +7,8 @@
 <script>
 import drawer from "@/components/drawer";
 import FundTable from "./fund-table.vue";
-import { getKLineOne, getFundOne,fundKMap } from "@/api/index";
+import { getKLineOne, getFundOne } from "@/api/index";
+import { fundKMap } from '@/utils/tool';
 export default {
   components: {
     drawer,
