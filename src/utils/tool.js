@@ -240,8 +240,8 @@ export const fundMapFromDetail = (detail) => {
     f81,
     f75,
     f69,
-    f2,
-    f3,
+    f2/100,
+    f3/100,
   ];
   return arr.join(",");
 };
