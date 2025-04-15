@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 确保 Nginx 服务正在运行
-nginx -t && nginx
+# nginx -t && nginx
 
 # 获取或更新证书
 certbot --nginx -d www.chives.asia --non-interactive --agree-tos --email zhoupeijun012@163.com
