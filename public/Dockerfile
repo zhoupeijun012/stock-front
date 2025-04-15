@@ -4,10 +4,10 @@ FROM nginx:alpine
 RUN apk update && apk add --no-cache certbot certbot-nginx
 
 # 复制Nginx配置文件
-COPY default.conf /etc/nginx/conf.d/default.conf
+# COPY default.conf /etc/nginx/conf.d/default.conf
 
 # 复制网站文件
-COPY ./ /usr/share/nginx/www/
+# COPY ./ /usr/share/nginx/www/
 
 # 暴露端口
 EXPOSE 80 443
