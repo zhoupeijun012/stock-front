@@ -10,79 +10,92 @@ export const routes = [
   {
     path: "/stock",
     name: "stock",
-    component: () => import("@/views/stock/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/stock/index.vue"),
     meta: { title: "股票列表", icon: "股票" },
   },
   {
     path: "/concept",
     name: "concept",
-    component: () => import("@/views/concept/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/concept/index.vue"),
     meta: { title: "概念板块", icon: "概念" },
   },
   {
     path: "/industry",
     name: "industry",
-    component: () => import("@/views/industry/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/industry/index.vue"),
     meta: { title: "行业板块", icon: "行业" },
   },
   {
     path: "/region",
     name: "region",
-    component: () => import("@/views/region/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/region/index.vue"),
     meta: { title: "地区板块", icon: "地区" },
   },
   {
     path: "/etf/0",
     name: "T+0",
-    component: () => import("@/views/etf/t+0.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/etf/t+0.vue"),
     meta: { title: "ETF（ T+0 ）", icon: "T+0" },
   },
   {
     path: "/etf/1",
     name: "T+1",
-    component: () => import("@/views/etf/t+1.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/etf/t+1.vue"),
     meta: { title: "ETF（ T+1 ）", icon: "T+1" },
   },
   {
     path: "/lof",
     name: "lof",
-    component: () => import("@/views/lof/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/lof/index.vue"),
     meta: { title: "LOF", icon: "LOF" },
   },
   {
     path: "/limit",
     name: "limit",
-    component: () => import("@/views/limit/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/limit/index.vue"),
     meta: { title: "涨停池", icon: "涨停" },
   },
   {
     path: "/np",
     name: "np",
-    component: () => import("@/views/np/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/np/index.vue"),
     meta: { title: "指数列表", icon: "指数" },
   },
   {
     path: "/overview",
     name: "overview",
-    component: () => import("@/views/overview/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/overview/index.vue"),
     meta: { title: "看板", icon: "看板" },
   },
   {
     path: "/k-line",
     name: "k-line",
-    component: () => import("@/views/k-line/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/k-line/index.vue"),
     meta: { title: "K线列表", icon: "K线" },
   },
   {
     path: "/fund",
     name: "fund",
-    component: () => import("@/views/fund/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/fund/index.vue"),
     meta: { title: "资金流", icon: "资金" },
   },
   {
     path: "/task-queue",
     name: "task-queue",
-    component: () => import("@/views/task-queue/index.vue"),
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/task-queue/index.vue"),
     meta: { title: "任务列表", icon: "任务" },
   },
 ];
@@ -90,10 +103,12 @@ export const routes = [
 const router = new VueRouter({
   mode: "history",
   scrollBehavior: () => ({ x: 0, y: 0 }),
-  routes: routes.concat([{
-    path: "*",
-    redirect: "/stock",
-  }]),
+  routes: routes.concat([
+    {
+      path: "*",
+      redirect: "/stock",
+    },
+  ]),
 });
 
 router.beforeEach((to, from, next) => {
