@@ -92,7 +92,7 @@ export default {
 <style lang="less" scoped>
 .app-wrapper {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: relative;
 
   .app-left {
