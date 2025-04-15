@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # 更新包索引并安装Certbot和相关插件
-RUN apk update && apk add --no-cache certbot python3-certbot-nginx
+RUN apk update && apk add --no-cache certbot certbot-nginx
 
 # 复制Nginx配置文件
 COPY default.conf /etc/nginx/conf.d/default.conf
