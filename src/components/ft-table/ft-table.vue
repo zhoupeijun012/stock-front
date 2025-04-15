@@ -101,11 +101,11 @@
 </template>
 <script>
 import fullIcon from "@/components/full-icon";
-import captureIcon from "@/components/capture-icon";
+// import captureIcon from "@/components/capture-icon";
 import ColumnFold from "./column-fold.vue";
 import dayjs from 'dayjs';
 export default {
-  components: { fullIcon, captureIcon, ColumnFold },
+  components: { fullIcon, ColumnFold },
   props: {
     tableFunction: {
       type: Function,

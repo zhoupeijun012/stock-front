@@ -22,9 +22,9 @@
 </template>
 <script lang="js">
 import fullIcon from "@/components/full-icon";
-import captureIcon from "@/components/capture-icon";
+// import captureIcon from "@/components/capture-icon";
 export default {
-  components: { fullIcon, captureIcon },
+  components: { fullIcon },
   provide() {
     return {
       inContainer: true
