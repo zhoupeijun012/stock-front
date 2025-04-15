@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       options: {
-        search: () => import("./components/search.vue"),
+        search: () => import(/* webpackChunkName:"stock" */"./components/search.vue"),
         columns: [
           {
             prop: "f14",

@@ -25,7 +25,7 @@ export default {
     return {
       loading: false,
       options: {
-        search: () => import("./components/search.vue"),
+        search: () => import(/* webpackChunkName:"stock" */"./components/search.vue"),
         defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
