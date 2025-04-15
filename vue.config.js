@@ -5,7 +5,7 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     // proxy: 'http://localhost:12345',
-    proxy: "https://www.amdyes.asia",
+    proxy: "https://www.chives.asia",
     client: {
       overlay: false,
     },
