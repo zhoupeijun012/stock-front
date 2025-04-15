@@ -4,7 +4,7 @@
 nginx -t && nginx
 
 # 获取或更新证书
-certbot --nginx -d www.chives.asia --non-interactive --agree-tos --email zhoupeijun012@163.com
+certbot certonly --webroot -w /usr/share/nginx/www -d www.chives.asia 
 
 # 启动一个定时任务来定期更新证书
 while true; do
