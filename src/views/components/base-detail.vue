@@ -4,8 +4,7 @@
     <k-line-chart
       ref="k-line-chart"
       style="
-        height: 330px;
-        min-height: 330px;
+        height: 350px;
         border-top: 8px solid rgb(250, 250, 250);
         padding: 0 8px;
       "

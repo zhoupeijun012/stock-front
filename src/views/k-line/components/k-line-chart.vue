@@ -2,18 +2,59 @@
   <div ref="chart" />
 </template>
 <script>
-import { init, dispose, registerLocale } from "klinecharts";
+import { init, dispose, registerLocale, registerIndicator } from "klinecharts";
 
-registerLocale("zh-cn", {
-  time: "時間：",
-  open: "開：",
+registerLocale("zh-CN", {
+  time: "时间：",
+  open: "开：",
   high: "高：",
   low: "低：",
   close: "收：",
   volume: "成交量：",
-  turnover: "成交額：",
-  change: "漲幅：",
+  turnover: "成交额：",
+  change: "涨幅：",
+  distance: "距今涨幅：",
 });
+
+registerIndicator({
+  name: "distance",
+  shortName: "",
+  visible: true,
+  shouldOhlc: false,
+  isStack: true,
+  calc: (kLineDataList) => {
+    let lastVal = 0;
+    const result = [];
+    kLineDataList.forEach((item, index) => {
+      if (index == 0) {
+        lastVal = item["close"];
+      }
+      result.push({
+        distance: parseInt(((item["close"] - lastVal) / lastVal) * 10000) / 100,
+      });
+    });
+    return result;
+  },
+  createTooltipDataSource: ({ crosshair: { kLineData } }) => {
+    return {
+      legends: [
+        {
+          title: "距今涨幅: ",
+          value: {
+            text: kLineData.distance + "%",
+            color:
+              kLineData.distance > 0
+                ? "#f00"
+                : kLineData.distance == 0
+                ? "#888888"
+                : "#2DC08E",
+          },
+        },
+      ],
+    };
+  },
+});
+
 import { formatMoney } from "@/utils/tool";
 export default {
   data() {
@@ -88,7 +129,6 @@ export default {
               showRule: "always", // 'always' | 'follow_cross' | 'none'
               // rect是指顶部文案垂直排列
               showType: "rect", // 'standard' | 'rect'
-              // labels: ["时间", "开", "收", "高", "低", "成交量",'涨幅'],
               values: null,
               defaultValue: "-",
               custom: [
@@ -153,6 +193,8 @@ export default {
             tooltip: {
               defaultValue: "-",
               showRule: "always",
+              // rect是指顶部文案垂直排列
+              showType: "rect", // 'standard' | 'rect'
               text: {
                 size: 14,
               },
@@ -176,10 +218,19 @@ export default {
   },
   mounted() {
     const chart = init(this.$refs.chart, this.chartConfig);
+    chart.setOffsetRightDistance(28);
+    chart.createIndicator("distance", false, { id: "candle_pane" });
     this.chart = chart;
   },
   methods: {
     refresh(data) {
+      let lastVal = data[data.length - 1].close;
+      data = data.map((item, index) => {
+        return {
+          distance: Math.ceil((lastVal -item.close ) / item.close * 10000) / 100,
+          ...item,
+        };
+      });
       this.chart.applyNewData(data);
     },
     reDraw() {
