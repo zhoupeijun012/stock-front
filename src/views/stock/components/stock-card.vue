@@ -1,6 +1,6 @@
 <template>
   <div class="ft-card-item" @click="gotoDetail(tableItem)" :class="cardCls">
-    <div class="card-name">
+    <div class="card-name" :style="cardTitle">
       {{ tableItem.f14 }}
       <span :style="valueStyle(tableItem.f3)" class="card-prec">{{
         formatPrec(tableItem.f3, "%")
@@ -77,6 +77,15 @@ export default {
         return "silver";
       }
       return "";
+    },
+    cardTitle() {
+      if (this.tableItem.f40006 && this.tableItem.f40006 <= 6000) {
+        return {
+          cursor: "pointer",
+          color: "gold",
+          fontWeight: 'bold'
+        };
+      }
     },
   },
   methods: {

@@ -25,7 +25,8 @@ export default {
     return {
       loading: false,
       options: {
-        search: () => import(/* webpackChunkName:"stock" */"./components/search.vue"),
+        search: () =>
+          import(/* webpackChunkName:"stock" */ "./components/search.vue"),
         defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
@@ -33,6 +34,12 @@ export default {
             label: "名称",
             width: "90px",
             cellStyle: (row) => {
+              if (row.f40006 && row.f40006 <= 6000) {
+                return {
+                  cursor: "pointer",
+                  color: "gold",
+                };
+              }
               return {
                 cursor: "pointer",
                 color: "blue",
