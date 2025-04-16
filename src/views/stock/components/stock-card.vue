@@ -30,6 +30,18 @@
         {{ formatPrec(tableItem.f40007, "%") }}
       </div>
     </div>
+    <div class="card-col">
+      <div class="card-title">均线多头：</div>
+      <div class="card-text">
+        <span style="color:#f00">{{ tableItem.f40008 }}</span>天<span :style="valueStyle(tableItem.f40009)">{{ formatPrec(tableItem.f40009, "%")}}</span>
+      </div>
+    </div>
+    <div class="card-col">
+      <div class="card-title">60日线：</div>
+      <div class="card-text">
+        <span style="color:#f00">{{ tableItem.f40010 }}</span>天<span :style="valueStyle(tableItem.f40011)">{{ formatPrec(tableItem.f40011, "%") }}</span>
+      </div>
+    </div>
     <k-line-mini :lines="lines"></k-line-mini>
   </div>
 </template>
@@ -83,7 +95,7 @@ export default {
         return {
           cursor: "pointer",
           color: "gold",
-          fontWeight: 'bold'
+          fontWeight: "bold",
         };
       }
     },
@@ -113,6 +125,7 @@ export default {
   font-size: 14px;
   cursor: pointer;
   user-select: none;
+  overflow: hidden;
   &.gold {
     background: rgba(255, 215, 0, 0.08);
   }
@@ -134,7 +147,7 @@ export default {
   display: flex;
 }
 .card-title {
-  width: 80px;
+  width: 70px;
   text-align-last: justify;
   color: #606266;
 }

@@ -21,7 +21,8 @@ registerIndicator({
   shortName: "",
   visible: true,
   shouldOhlc: false,
-  isStack: true,
+  isStack: false,
+  zLevel: -1,
   calc: (kLineDataList) => {
     let lastVal = 0;
     const result = [];
@@ -219,7 +220,7 @@ export default {
   mounted() {
     const chart = init(this.$refs.chart, this.chartConfig);
     chart.setOffsetRightDistance(28);
-    chart.createIndicator("distance", false, { id: "candle_pane" });
+    chart.createIndicator("distance", true, { id: "candle_pane" });
     this.chart = chart;
   },
   methods: {
