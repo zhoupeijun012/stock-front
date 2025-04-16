@@ -151,4 +151,7 @@ export default {
   text-align-last: justify;
   color: #606266;
 }
+.card-text {
+  color: #606266;
+}
 </style>
