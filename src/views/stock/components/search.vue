@@ -212,11 +212,11 @@
     <el-form-item label="趋势天数">
       <el-select
         v-model="row.f40012"
-        @change="optionChange('f40012', gainOptions)"
+        @change="optionChange('f40012', dayOptions)"
         clearable
       >
         <el-option
-          v-for="(typeItem, index) in gainOptions"
+          v-for="(typeItem, index) in dayOptions"
           :key="'type-item-' + index"
           :value="typeItem.value"
           :label="typeItem.label"
