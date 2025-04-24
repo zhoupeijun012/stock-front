@@ -71,3 +71,7 @@ export const getStockOne = (params)=>{
 export const getConceptOne = (params)=>{
   return httpRequest.post("/getConceptOne", params);
 }
+
+export const getAi = (params)=>{
+  return httpRequest.post("/getAi", params);
+}
