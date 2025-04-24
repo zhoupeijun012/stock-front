@@ -153,20 +153,6 @@
         ></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="205涨幅">
-      <el-select
-        v-model="row.f40007"
-        @change="optionChange('f40007', gainOptions)"
-        clearable
-      >
-        <el-option
-          v-for="(typeItem, index) in gainOptions"
-          :key="'type-item-' + index"
-          :value="typeItem.value"
-          :label="typeItem.label"
-        ></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item label="多头排列">
       <el-select
         v-model="row.f40008"
@@ -213,6 +199,20 @@
       <el-select
         v-model="row.f40011"
         @change="optionChange('f40011', gainOptions)"
+        clearable
+      >
+        <el-option
+          v-for="(typeItem, index) in gainOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="趋势天数">
+      <el-select
+        v-model="row.f40012"
+        @change="optionChange('f40012', gainOptions)"
         clearable
       >
         <el-option
@@ -311,6 +311,8 @@ const model = {
   f40010_ext: null,
   f40011: "",
   f40011_ext: null,
+  f40012: "",
+  f40012_ext: null,
   f50004: "",
   f50004_ext: null,
   f21: "",
