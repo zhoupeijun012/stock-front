@@ -487,6 +487,10 @@ export default {
         params.where["f40011"] = params.where["f40011_ext"];
         delete params.where["f40011_ext"];
       }
+      if (params.where["f40012_ext"]) {
+        params.where["f40012"] = params.where["f40012_ext"];
+        delete params.where["f40012_ext"];
+      }
       if (params.where["f50004_ext"]) {
         params.where["f50004"] = params.where["f50004_ext"];
         delete params.where["f50004_ext"];
