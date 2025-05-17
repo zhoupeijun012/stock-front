@@ -407,7 +407,7 @@ export default {
       crossOptions: [
         { label: "1天", value: "1", range: [0, 1] },
         { label: "2天", value: "2", range: [1, 2] },
-        { label: "3-4天", value: "3", range: [3, 4] },
+        { label: "3-4天", value: "3", range: [2, 4] },
         { label: "小于5天", value: "4", range: [0, 5] },
         { label: "5-10天", value: "5", range: [5, 10] },
       ],
