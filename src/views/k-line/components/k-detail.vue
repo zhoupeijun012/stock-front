@@ -10,7 +10,7 @@
     >
       <k-line-chart
         ref="k-line-chart"
-        style="width: 100%; height: 400px; min-height: 330px"
+        style="width: 100%; height: 500px; min-height: 330px"
       ></k-line-chart>
     </div>
   </drawer>
@@ -20,7 +20,7 @@
 import drawer from "@/components/drawer";
 import KLineChart from "./k-line-chart.vue";
 import { getKLineOne, getFundOne } from "@/api/index";
-import { formatMoney, valueStyle, formatPrec } from "@/utils/tool";
+import { formatMoney, valueStyle, formatPrec,stockKMap } from "@/utils/tool";
 export default {
   components: {
     drawer,
@@ -60,20 +60,8 @@ export default {
         .then((res) => {
           let { f40001, f40002 = "[]" } = res.data || {};
           let chartData = JSON.parse(f40002);
-          //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
-          chartData = chartData.map((item) => {
-            const splitArr = item.split(",");
-
-            return {
-              timestamp: splitArr[0],
-              open: parseFloat(splitArr[1]),
-              close: parseFloat(splitArr[2]),
-              high: parseFloat(splitArr[3]),
-              low: parseFloat(splitArr[4]),
-              volume: parseFloat(splitArr[5]),
-              turnover: formatMoney(splitArr[6]),
-            };
-          });
+          //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率/流通股本
+          chartData = stockKMap(chartData);
           this.$refs["k-line-chart"].refresh(chartData);
         })
         .finally(() => {

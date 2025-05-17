@@ -52,7 +52,6 @@ import {
   valueStyle,
   formatPrec,
   stockKMap,
-  concatKFromDetail,
 } from "@/utils/tool";
 export default {
   components: { KLineMini },
@@ -68,7 +67,7 @@ export default {
   },
   computed: {
     lines() {
-      return concatKFromDetail(this.tableItem.f40002, this.tableItem);
+      return JSON.parse(this.tableItem.f40002);
     },
     cardCls() {
       const f40002 = JSON.parse(this.tableItem.f40002 || "[]");

@@ -4,7 +4,7 @@
     <k-line-chart
       ref="k-line-chart"
       style="
-        height: 420px;
+        height: 550px;
         border-top: 8px solid rgb(250, 250, 250);
         padding: 0 8px;
       "
@@ -23,8 +23,6 @@ import { getKLineOne, getFundOne } from "@/api/index";
 import {
   stockKMap,
   fundKMap,
-  concatKFromDetail,
-  concatFundFromDetail,
 } from "@/utils/tool";
 
 export default {
@@ -77,13 +75,13 @@ export default {
           ],
         }),
       ]).then(([fundRes, klineRes]) => {
-        let f50003 = fundRes.data.f50003 || '[]';
-        f50003 = concatFundFromDetail(f50003, this.baseDetail);
+        let f50003 = fundRes.data && (fundRes.data.f50003 || "[]");
+        f50003 = JSON.parse(f50003);
         this.$refs["fund-table"] &&
           this.$refs["fund-table"].refresh(fundKMap(f50003).reverse());
 
-        let f40002 = klineRes.data.f40002 || '[]';
-        f40002 = concatKFromDetail(f40002, this.baseDetail);
+        let f40002 = klineRes.data && (klineRes.data.f40002 || "[]");
+        f40002 = JSON.parse(f40002);
         this.$refs["k-line-chart"].refresh(stockKMap(f40002));
       });
     },

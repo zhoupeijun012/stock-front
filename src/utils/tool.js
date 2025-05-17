@@ -127,15 +127,13 @@ export const IN_OPEN_TIME = () => {
 };
 
 export const IN_OPEN_RANGE = () => {
-  return (
-    dayjs().format("HHmmss") >= "092500"
-  );
+  return dayjs().format("HHmmss") >= "092500";
 };
 
 export const stockKMap = (lines = []) => {
   const mapFunc = (item) => {
     const splitArr = item.split(",");
-    //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率
+    //  时间/开/收/最高/最低/成交量/成交额/震幅/涨跌幅/涨跌额/换手率/流通股本
     return {
       timestamp: splitArr[0],
       open: parseFloat(splitArr[1]),
@@ -145,9 +143,10 @@ export const stockKMap = (lines = []) => {
       // 成交量
       volume: parseFloat(splitArr[5]),
       // 成交额
-      turnover: formatMoney(splitArr[6]),
+      turnover: parseFloat(splitArr[6]),
       // 涨跌额
       change: formatMoney(splitArr[8]),
+      capital: parseFloat(splitArr[11]),
     };
   };
   let chartData = {};
@@ -156,7 +155,7 @@ export const stockKMap = (lines = []) => {
       return mapFunc(item);
     });
   } else {
-    chartData = mapFunc(lines);
+    chartData = lines ? mapFunc(lines) : [];
   }
   return chartData;
 };
@@ -184,7 +183,11 @@ export const concatKFromDetail = (lines = "", detail) => {
   lines = JSON.parse(lines || "[]");
   let firstItem = lines[lines.length - 1];
   const lastDate = GET_LAST_DATE(1)[0];
-  if (firstItem && dayjs(lastDate).isAfter(firstItem.split(",")[0]) && IN_OPEN_RANGE()) {
+  if (
+    firstItem &&
+    dayjs(lastDate).isAfter(firstItem.split(",")[0]) &&
+    IN_OPEN_RANGE()
+  ) {
     lines.push(stockKMapFromDetail(detail));
   }
   return lines;
@@ -219,7 +222,7 @@ export const fundKMap = (lines) => {
       return mapFunc(item);
     });
   } else {
-    chartData = mapFunc(lines);
+    chartData = lines ? mapFunc(lines) : [];
   }
   return chartData;
 };
@@ -240,8 +243,8 @@ export const fundMapFromDetail = (detail) => {
     f81,
     f75,
     f69,
-    f2/100,
-    f3/100,
+    f2 / 100,
+    f3 / 100,
   ];
   return arr.join(",");
 };
@@ -250,7 +253,11 @@ export const concatFundFromDetail = (lines = "", detail) => {
   lines = JSON.parse(lines || "[]");
   let firstItem = lines[lines.length - 1];
   const lastDate = GET_LAST_DATE(1)[0];
-  if (firstItem && dayjs(lastDate).isAfter(firstItem.split(",")[0]) && IN_OPEN_RANGE()) {
+  if (
+    firstItem &&
+    dayjs(lastDate).isAfter(firstItem.split(",")[0]) &&
+    IN_OPEN_RANGE()
+  ) {
     lines.push(fundMapFromDetail(detail));
   }
   return lines;

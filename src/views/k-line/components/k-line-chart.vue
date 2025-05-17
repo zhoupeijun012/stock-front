@@ -1,66 +1,111 @@
 <template>
-  <div ref="chart" />
+  <div class="k-line-chart-warp">
+    <div class="line-chart-warp-top">
+      <el-checkbox-group
+        v-model="showIndicators"
+        size="small"
+        @change="indicatorChange"
+      >
+        <el-checkbox-button
+          v-for="indicator in indicatorOptions"
+          :label="indicator.name"
+          :key="indicator.name"
+          :disabled="indicator.disabled ? true : false"
+          >{{ indicator.label }}</el-checkbox-button
+        >
+      </el-checkbox-group>
+    </div>
+    <div class="line-chart-warp-right">
+      <div ref="chart" style="height: 100%; width: 100%" />
+    </div>
+  </div>
 </template>
 <script>
 import { init, dispose, registerLocale, registerIndicator } from "klinecharts";
 
-registerLocale("zh-CN", {
-  time: "时间：",
-  open: "开：",
-  high: "高：",
-  low: "低：",
-  close: "收：",
-  volume: "成交量：",
-  turnover: "成交额：",
-  change: "涨幅：",
-  distance: "距今涨幅：",
-});
+import trendLine from "./plugins/trend-line.js";
+registerIndicator(trendLine);
 
-registerIndicator({
-  name: "distance",
-  shortName: "",
-  visible: true,
-  shouldOhlc: false,
-  isStack: false,
-  zLevel: -1,
-  calc: (kLineDataList) => {
-    let lastVal = 0;
-    const result = [];
-    kLineDataList.forEach((item, index) => {
-      if (index == 0) {
-        lastVal = item["close"];
-      }
-      result.push({
-        distance: parseInt(((item["close"] - lastVal) / lastVal) * 10000) / 100,
-      });
-    });
-    return result;
-  },
-  createTooltipDataSource: ({ crosshair: { kLineData } }) => {
-    return {
-      legends: [
-        {
-          title: "距今涨幅: ",
-          value: {
-            text: kLineData.distance + "%",
-            color:
-              kLineData.distance > 0
-                ? "#f00"
-                : kLineData.distance == 0
-                ? "#888888"
-                : "#2DC08E",
-          },
-        },
-      ],
-    };
-  },
-});
+import moveAverage from "./plugins/move-average.js";
+registerIndicator(moveAverage);
+
+import distanceIndicator from "./plugins/distance.js";
+registerIndicator(distanceIndicator);
+
+import controlDegree from "./plugins/control-degree.js";
+registerIndicator(controlDegree);
+
+import fundFlow from "./plugins/fund-flow.js";
+registerIndicator(fundFlow);
+
+// 主力趋势
+import majorTrend from "./plugins/major-trend.js";
+registerIndicator(majorTrend);
 
 import { formatMoney } from "@/utils/tool";
 export default {
   data() {
     this.chart = null;
-    return {};
+    return {
+      indicatorOptions: [
+        {
+          label: "距今涨幅",
+          name: "distance",
+          id: "candle_pane",
+          order: 2,
+        },
+        {
+          label: "股价趋势",
+          name: "trend-line",
+          order: 4,
+          id: "candle_pane",
+        },
+        {
+          label: "主力趋势",
+          name: "major-trend",
+          order: 5,
+          id: "major-trend",
+        },
+        {
+          label: "主力控盘",
+          name: "control-degree",
+          order: 6,
+          id: "control-degree",
+        },
+        {
+          label: "资金流向",
+          name: "fund-flow",
+          order: 7,
+          id: "fund-flow",
+        },
+        {
+          label: "均线",
+          name: "move-average",
+          order: 8,
+          id: "candle_pane",
+        },
+        {
+          label: "成交量",
+          name: "VOL",
+          order: 9,
+          id: "VOL"
+        },
+        {
+          label: "MACD",
+          name: "MACD",
+          order: 10,
+          id: "MACD"
+        },
+      ],
+      showIndicators: [
+        "distance",
+        "trend-line",
+        "major-trend",
+        "control-degree",
+        // "fund-flow",
+      ],
+      preIndicators: [],
+    };
   },
   computed: {
     chartConfig() {
@@ -68,33 +113,14 @@ export default {
         locale: "zh-CN",
         zoom: {
           // 初始缩放比例设置为 0.8
-          defaultScale: 0.5,
+          defaultScale: 1,
           step: 0.1, // 每次缩放的步长，可根据需要调整
-          enabled: true, // 是否启用缩放功能
+          enabled: false, // 是否启用缩放功能
           minScale: 0.2, // 最小缩放比例
           maxScale: 2.0, // 最大缩放比例
         },
         layout: [
-          {
-            type: "candle",
-            content: ["MA"],
-            options: { order: Number.MIN_SAFE_INTEGER },
-          },
-          {
-            type: "indicator",
-            content: ["VOL"],
-            options: {
-              order: 8,
-            },
-          },
-          { type: "xAxis", options: { order: 9 } },
-          // {
-          //   type: "indicator",
-          //   content: ["MACD"],
-          //   options: {
-          //     order: 10,
-          //   },
-          // },
+          { type: "xAxis", options: { order: 3 } },
         ],
         customApi: {
           formatDate(timestamp, _, type) {
@@ -220,18 +246,11 @@ export default {
   mounted() {
     const chart = init(this.$refs.chart, this.chartConfig);
     chart.setOffsetRightDistance(28);
-    chart.createIndicator("distance", true, { id: "candle_pane" });
     this.chart = chart;
+    this.initIndicator();
   },
   methods: {
     refresh(data) {
-      let lastVal = data[data.length - 1].close;
-      data = data.map((item, index) => {
-        return {
-          distance: Math.ceil((lastVal -item.close ) / item.close * 10000) / 100,
-          ...item,
-        };
-      });
       this.chart.applyNewData(data);
     },
     reDraw() {
@@ -239,6 +258,28 @@ export default {
         this.chart && this.chart.resize();
       }, 300);
     },
+    indicatorChange() {
+      this.initIndicator();
+      this.preIndicators = JSON.parse(JSON.stringify(this.showIndicators));
+    },
+    initIndicator() {
+      const addArr = this.showIndicators.filter((item)=>!this.preIndicators.includes(item));
+      const removeArr = this.preIndicators.filter((item)=>!this.showIndicators.includes(item));
+
+      addArr.forEach((indicatorName)=>{
+        const findItem = this.indicatorOptions.find((item)=>item.name == indicatorName);
+        this.chart.createIndicator(findItem.name, true, {
+          id: findItem.id,
+          order: findItem.order,
+        });
+      })
+      removeArr.forEach((indicatorName)=>{
+        const findItem = this.indicatorOptions.find((item)=>item.name == indicatorName);
+        this.chart.removeIndicator({
+          name: findItem.name
+        });
+      })
+    }
   },
   beforeDestroy() {
     dispose(this.chart);
@@ -252,3 +293,19 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.k-line-chart-warp {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .line-chart-warp-top {
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .line-chart-warp-right {
+    height: calc(100% - 40px);
+    padding: 12px;
+    box-sizing: border-box;
+  }
+}
+</style>
