@@ -52,7 +52,7 @@ export default {
           label: "距今涨幅",
           name: "distance",
           id: "candle_pane",
-          order: 2,
+          order: 3,
         },
         {
           label: "股价趋势",
@@ -120,7 +120,7 @@ export default {
           maxScale: 2.0, // 最大缩放比例
         },
         layout: [
-          { type: "xAxis", options: { order: 3 } },
+          { type: "xAxis", options: { order: 2 } },
         ],
         customApi: {
           formatDate(timestamp, _, type) {
