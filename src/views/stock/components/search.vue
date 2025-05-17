@@ -251,7 +251,7 @@
         ></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="是否亏损">
+    <!-- <el-form-item label="是否亏损">
       <el-select v-model="row.f9" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"
@@ -260,11 +260,39 @@
           :label="typeItem.label"
         ></el-option>
       </el-select>
-    </el-form-item>
-    <el-form-item label="巨额成交">
+    </el-form-item> -->
+    <!-- <el-form-item label="巨额成交">
       <el-select v-model="row.f40003" @change="change" clearable>
         <el-option
           v-for="(typeItem, index) in switchOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item> -->
+    <el-form-item label="金叉天数">
+      <el-select
+        v-model="row.f40014"
+        @change="optionChange('f40014', crossOptions)"
+        clearable
+      >
+        <el-option
+          v-for="(typeItem, index) in crossOptions"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="当日涨幅">
+      <el-select
+        v-model="row.f3"
+        @change="optionChange('f3', f3Options)"
+        clearable
+      >
+        <el-option
+          v-for="(typeItem, index) in f3Options"
           :key="'type-item-' + index"
           :value="typeItem.value"
           :label="typeItem.label"
@@ -315,6 +343,13 @@ const model = {
   f40012_ext: null,
   f50004: "",
   f50004_ext: null,
+
+  f40014: "",
+  f40014_ext: null,
+  
+  f3: "",
+  f3_ext: null,
+
   f21: "",
   f21_ext: null,
   f23: "",
@@ -368,6 +403,21 @@ export default {
         { label: "40%-60%", value: "6", range: [4000, 6000] },
         { label: "60%-100%", value: "7", range: [6000, 10000] },
         { label: "大于100%", value: "8", range: [10000] },
+      ],
+      crossOptions: [
+        { label: "1天", value: "1", range: [0, 1] },
+        { label: "2天", value: "2", range: [1, 2] },
+        { label: "3-4天", value: "3", range: [3, 4] },
+        { label: "小于5天", value: "4", range: [0, 5] },
+        { label: "5-10天", value: "5", range: [5, 10] },
+      ],
+      f3Options: [
+        { label: "小于2%", value: "1", range: [0, 200] },
+        { label: "2-4%", value: "2", range: [200, 400] },
+        { label: "小于4%", value: "3", range: [0, 400] },
+        { label: "4-6%", value: "4", range: [400, 600] },
+        { label: "小于6%", value: "5", range: [400, 600] },
+        { label: "大于6%", value: "6", range: [600] },
       ],
     };
   },

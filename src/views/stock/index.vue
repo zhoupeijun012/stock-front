@@ -64,43 +64,42 @@ export default {
               return formatPrec(row.f3, "%");
             },
           },
-
           {
-            prop: "f40005",
-            label: "暴跌倍数",
-            minWidth: "90px",
-            align: "left",
+            prop: "f40014",
+            label: "金叉天数",
+            minWidth: "95px",
+            align: "center",
             sortable: "custom",
-            formatter: (row) => {
-              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
             },
           },
           // {
-          //   prop: "f40006",
-          //   label: "924倍数",
-          //   minWidth: "95px",
+          //   prop: "f40005",
+          //   label: "暴跌倍数",
+          //   minWidth: "90px",
           //   align: "left",
           //   sortable: "custom",
-          //   cellStyle: (row) => {
-          //     return valueStyle(row.f40006);
-          //   },
           //   formatter: (row) => {
-          //     return formatPrec(row.f40006, "%");
+          //     return row.f40005 <= 1 ? "历史新高" : row.f40005;
           //   },
           // },
           {
-            prop: "f40007",
-            label: "205倍数",
+            prop: "f40006",
+            label: "924倍数",
             minWidth: "95px",
             align: "left",
             sortable: "custom",
             cellStyle: (row) => {
-              return valueStyle(row.f40007);
+              return valueStyle(row.f40006);
             },
             formatter: (row) => {
-              return formatPrec(row.f40007, "%");
+              return formatPrec(row.f40006, "%");
             },
           },
+
           {
             prop: "f40008",
             label: "排列天数",
@@ -498,6 +497,14 @@ export default {
       if (params.where["f21_ext"]) {
         params.where["f21"] = params.where["f21_ext"];
         delete params.where["f21_ext"];
+      }
+      if (params.where["f40014_ext"]) {
+        params.where["f40014"] = params.where["f40014_ext"];
+        delete params.where["f40014_ext"];
+      }
+      if (params.where["f3_ext"]) {
+        params.where["f3"] = params.where["f3_ext"];
+        delete params.where["f3_ext"];
       }
     },
     tableFunction(params) {

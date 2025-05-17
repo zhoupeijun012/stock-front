@@ -30,7 +30,8 @@ export default {
     return {
       loading: false,
       options: {
-        search: () => import(/* webpackChunkName:"stock" */"./components/search.vue"),
+        search: () =>
+          import(/* webpackChunkName:"stock" */ "./components/search.vue"),
         defaultSort: { prop: "f3", order: "descending" },
         columns: [
           {
@@ -62,7 +63,18 @@ export default {
               return formatPrec(row.f3, "%");
             },
           },
-
+          {
+            prop: "f40014",
+            label: "金叉天数",
+            minWidth: "95px",
+            align: "center",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
+            },
+          },
           {
             prop: "f40005",
             label: "暴跌倍数",
@@ -86,19 +98,20 @@ export default {
               return formatPrec(row.f40006, "%");
             },
           },
-          {
-            prop: "f40007",
-            label: "205倍数",
-            minWidth: "95px",
-            align: "left",
-            sortable: "custom",
-            cellStyle: (row) => {
-              return valueStyle(row.f40007);
-            },
-            formatter: (row) => {
-              return formatPrec(row.f40007, "%");
-            },
-          },
+          // {
+          //   prop: "f40007",
+          //   label: "205倍数",
+          //   minWidth: "95px",
+          //   align: "left",
+          //   sortable: "custom",
+          //   cellStyle: (row) => {
+          //     return valueStyle(row.f40007);
+          //   },
+          //   formatter: (row) => {
+          //     return formatPrec(row.f40007, "%");
+          //   },
+          // },
+
           {
             prop: "f40008",
             label: "排列天数",
