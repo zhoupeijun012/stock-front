@@ -55,7 +55,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "80px",
+            minWidth: "75px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -66,8 +66,8 @@ export default {
           },
           {
             prop: "f40014",
-            label: "金叉天数",
-            minWidth: "95px",
+            label: "金叉",
+            minWidth: "70px",
             align: "center",
             sortable: "custom",
             cellStyle: (row) => {
@@ -191,6 +191,18 @@ export default {
             },
             sortable: "custom",
             align: "left",
+          },
+          {
+            prop: "f40015",
+            label: "连阳",
+            minWidth: "70px",
+            cellStyle: (row) => {
+              return {
+                color: "red",
+              };
+            },
+            sortable: "custom",
+            align: "center",
           },
           // {
           //   prop: "f10",

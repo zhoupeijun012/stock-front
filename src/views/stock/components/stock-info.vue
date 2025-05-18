@@ -26,7 +26,7 @@ export default {
           span: 4,
           component: "concepts",
           foldStyle: {
-            height: "200px",
+            height: "230px",
           },
           click: (row) => {
             this.$conceptDetail({
@@ -391,6 +391,28 @@ export default {
           },
           formatter: (row) => {
             return formatMoney(row.f50005);
+          },
+        },
+        {
+          prop: "f40014",
+          label: "金叉天数",
+          span: 5,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
+          },
+        },
+        {
+          prop: "f40015",
+          label: "连涨天数",
+          span: 5,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
           },
         },
       ],

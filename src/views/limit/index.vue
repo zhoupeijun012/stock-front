@@ -25,7 +25,8 @@ export default {
     return {
       loading: false,
       options: {
-        search: () => import(/* webpackChunkName:"stock" */"./components/search.vue"),
+        search: () =>
+          import(/* webpackChunkName:"stock" */ "./components/search.vue"),
         columns: [
           {
             prop: "f14",
@@ -47,7 +48,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "80px",
+            minWidth: "75px",
             align: "center",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -57,15 +58,18 @@ export default {
             },
           },
           {
-            prop: "f40005",
-            label: "暴跌倍数",
-            minWidth: "80px",
+            prop: "f40014",
+            label: "金叉",
+            minWidth: "70px",
             align: "center",
-
-            formatter: (row) => {
-              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+            // sortable: "custom",
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
             },
           },
+
           {
             prop: "f40006",
             label: "924倍数",
@@ -229,6 +233,7 @@ export default {
               };
             },
           },
+
           {
             prop: "f21",
             label: "流通市值",

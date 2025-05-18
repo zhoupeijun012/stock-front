@@ -143,7 +143,8 @@ export const stockKMap = (lines = []) => {
       // 成交量
       volume: parseFloat(splitArr[5]),
       // 成交额
-      turnover: parseFloat(splitArr[6]),
+      amount: parseFloat(splitArr[6]),
+      turnover: formatMoney(parseFloat(splitArr[6])),
       // 涨跌额
       change: formatMoney(splitArr[8]),
       capital: parseFloat(splitArr[11]),

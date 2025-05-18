@@ -386,6 +386,50 @@ export default {
             return formatMoney(row.f50005);
           },
         },
+                {
+          prop: "f40014",
+          label: "金叉天数",
+          span: 4,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
+          },
+        },
+        {
+          prop: "goldenCrossCount",
+          label: "金叉数量",
+          span: 4,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
+          },
+        },
+        {
+          prop: "deathCrossCount",
+          label: "死叉数量",
+          span: 4,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
+          },
+        },
+        {
+          prop: "f40015",
+          label: "连涨天数",
+          span: 4,
+          component: "text-cell",
+          cellStyle: (row) => {
+            return {
+              color: "#f00",
+            };
+          },
+        },
       ],
     };
   },

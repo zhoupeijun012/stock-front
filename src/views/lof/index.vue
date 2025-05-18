@@ -33,7 +33,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "80px",
+            minWidth: "75px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);

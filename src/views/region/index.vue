@@ -52,7 +52,7 @@ export default {
           {
             prop: "f3",
             label: "涨跌幅",
-            minWidth: "80px",
+            minWidth: "75px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f3);
@@ -63,8 +63,8 @@ export default {
           },
           {
             prop: "f40014",
-            label: "金叉天数",
-            minWidth: "95px",
+            label: "金叉",
+            minWidth: "70px",
             align: "center",
             sortable: "custom",
             cellStyle: (row) => {
@@ -74,28 +74,42 @@ export default {
             },
           },
           {
-            prop: "f40005",
-            label: "暴跌倍数",
-            minWidth: "90px",
-            align: "left",
+            prop: "goldenCrossCount",
+            label: "金叉数",
+            minWidth: "80px",
+            align: "center",
             sortable: "custom",
-            formatter: (row) => {
-              return row.f40005 <= 1 ? "历史新高" : row.f40005;
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
             },
           },
           {
-            prop: "f40006",
-            label: "924倍数",
-            minWidth: "95px",
-            align: "left",
+            prop: "deathCrossCount",
+            label: "死叉数",
+            minWidth: "80px",
+            align: "center",
             sortable: "custom",
             cellStyle: (row) => {
-              return valueStyle(row.f40006);
-            },
-            formatter: (row) => {
-              return formatPrec(row.f40006, "%");
+              return {
+                color: "#f00",
+              };
             },
           },
+          // {
+          //   prop: "f40006",
+          //   label: "924倍数",
+          //   minWidth: "95px",
+          //   align: "left",
+          //   sortable: "custom",
+          //   cellStyle: (row) => {
+          //     return valueStyle(row.f40006);
+          //   },
+          //   formatter: (row) => {
+          //     return formatPrec(row.f40006, "%");
+          //   },
+          // },
           // {
           //   prop: "f40007",
           //   label: "205倍数",
@@ -180,14 +194,13 @@ export default {
             align: "left",
           },
           {
-            prop: "f10",
-            label: "量比",
-            minWidth: "80px",
+            prop: "f40015",
+            label: "连阳",
+            minWidth: "70px",
             cellStyle: (row) => {
-              return valueStyle(row.f10);
-            },
-            formatter: (row) => {
-              return isNaN(row.f10) ? "-" : row.f10 / 100;
+              return {
+                color: 'red'
+              }
             },
             sortable: "custom",
             align: "center",
@@ -485,6 +498,7 @@ export default {
         ...this.options.columns,
         ...this.options.foldColums,
       ].map((item) => item.prop);
+      params["matchKey"] = params["matchKey"].filter((item)=>!['goldenCrossCount','deathCrossCount'].includes(item));
 
       this.getParams(params);
       return getRegionList(params);
@@ -494,6 +508,10 @@ export default {
         ...this.options.columns,
         ...this.options.foldColums,
       ].map((item) => item.prop);
+      params["matchKey"] = params["matchKey"].filter(
+        (item) => !["goldenCrossCount", "deathCrossCount"].includes(item)
+      );
+
       params["matchKey"] = params["matchKey"].concat([
         "f17",
         "f2",

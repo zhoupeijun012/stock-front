@@ -246,7 +246,7 @@ export class TrendIndicators {
 export class MajorIndicator {
   /**
    * 计算WY系列及XYS系列指标
-   * @param {Array} data - K线数据数组，每个元素需包含 open, high, low, close, volume, turnover, capital 字段
+   * @param {Array} data - K线数据数组，每个元素需包含 open, high, low, close, volume, amount, capital 字段
    * @returns {Array} - 包含所有指标的对象数组（每个元素为一个周期的指标）
    */
   static result(data) {
@@ -261,7 +261,7 @@ export class MajorIndicator {
 
     // 遍历计算每个周期
     for (let i = 0; i < data.length; i++) {
-      const { open, high, low, close, volume, turnover, capital } = data[i];
+      const { open, high, low, close, volume, amount, capital } = data[i];
       const WY1001 = close;
       
       // 计算WY系列EMA
@@ -282,7 +282,7 @@ export class MajorIndicator {
         : 0; // 防止除以0
 
       // 计算PJGJ（平均价格）
-      const PJGJ = volume === 0 ? 0 : turnover / volume / 100;
+      const PJGJ = volume === 0 ? 0 : amount / volume / 100;
 
       // 计算SSRYDJX（PJGJ的13日MA）
       const SSRYDJX = this.calculateMA(
@@ -297,8 +297,8 @@ export class MajorIndicator {
         : this.calculateEMA(result[i - 1]?.SSRCJL || volume, volume, 13);
       
       const SSRCJE = i === 0 
-        ? turnover 
-        : this.calculateEMA(result[i - 1]?.SSRCJE || turnover, turnover, 13);
+        ? amount 
+        : this.calculateEMA(result[i - 1]?.SSRCJE || amount, amount, 13);
 
       // 计算SSRCBJX（资金流向指标，添加防除零处理）
       const SSRCBJX = SSRCJL === 0 
@@ -311,10 +311,10 @@ export class MajorIndicator {
         : 0;
 
       // 计算XYSHSL（换手率的13日EMA）
-      const turnoverRate = capital === 0 ? 0 : (volume / capital) * 100;
+      const amountRate = capital === 0 ? 0 : (volume / capital) * 100;
       const XYSHSL = i === 0 
-        ? turnoverRate 
-        : this.calculateEMA(result[i - 1]?.XYSHSL || turnoverRate, turnoverRate, 13);
+        ? amountRate 
+        : this.calculateEMA(result[i - 1]?.XYSHSL || amountRate, amountRate, 13);
 
       // 计算XYS1/XYS2（XYS0的MA）
       const XYS0Values = result.map((item) => item.XYS0);
@@ -416,16 +416,16 @@ export class MajorIndicator {
 export class FlowIndicator {
   /**
    * 计算资金流向指标
-   * @param {Array} data - K线数据数组，每个元素需包含turnover字段
+   * @param {Array} data - K线数据数组，每个元素需包含amount字段
    * @returns {Array} - 包含资金流向指标的对象数组
    */
-  // { turnover: 123456789 }
+  // { amount: 123456789 }
   static result(data) {
     const result = [];
 
-    // 计算SMA(turnover,10,1)/10000 (VAR1和VAR3逻辑相同)
+    // 计算SMA(amount,10,1)/10000 (VAR1和VAR3逻辑相同)
     const var1Values = this.calculateSMA(
-      data.map((item) => item.turnover),
+      data.map((item) => item.amount),
       10,
       1
     ).map((value) => value / 10000);

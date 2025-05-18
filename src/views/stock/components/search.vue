@@ -405,6 +405,7 @@ export default {
         { label: "大于100%", value: "8", range: [10000] },
       ],
       crossOptions: [
+        { label: "大于1天", value: "-1", range: [0] },
         { label: "1天", value: "1", range: [0, 1] },
         { label: "2天", value: "2", range: [1, 2] },
         { label: "3-4天", value: "3", range: [2, 4] },
