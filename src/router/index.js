@@ -57,6 +57,13 @@ export const routes = [
     meta: { title: "LOF", icon: "LOF" },
   },
   {
+    path: "/focus",
+    name: "focus",
+    component: () =>
+      import(/* webpackChunkName:"stock" */ "@/views/focus/index.vue"),
+    meta: { title: "关注", icon: "关注" },
+  },
+  {
     path: "/limit",
     name: "limit",
     component: () =>
