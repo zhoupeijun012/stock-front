@@ -247,7 +247,7 @@ export default {
     const chart = init(this.$refs.chart, this.chartConfig);
     chart.setOffsetRightDistance(28);
     this.chart = chart;
-    this.initIndicator();
+    this.indicatorChange();
   },
   methods: {
     refresh(data) {
