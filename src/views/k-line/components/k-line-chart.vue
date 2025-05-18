@@ -88,13 +88,19 @@ export default {
           label: "成交量",
           name: "VOL",
           order: 9,
-          id: "VOL"
+          id: "VOL",
         },
         {
           label: "MACD",
           name: "MACD",
           order: 10,
-          id: "MACD"
+          id: "MACD",
+        },
+        {
+          label: "KDJ",
+          name: "KDJ",
+          order: 11,
+          id: "KDJ",
         },
       ],
       showIndicators: [
@@ -119,9 +125,7 @@ export default {
           minScale: 0.2, // 最小缩放比例
           maxScale: 2.0, // 最大缩放比例
         },
-        layout: [
-          { type: "xAxis", options: { order: 2 } },
-        ],
+        layout: [{ type: "xAxis", options: { order: 2 } }],
         customApi: {
           formatDate(timestamp, _, type) {
             return timestamp;
@@ -263,23 +267,31 @@ export default {
       this.preIndicators = JSON.parse(JSON.stringify(this.showIndicators));
     },
     initIndicator() {
-      const addArr = this.showIndicators.filter((item)=>!this.preIndicators.includes(item));
-      const removeArr = this.preIndicators.filter((item)=>!this.showIndicators.includes(item));
+      const addArr = this.showIndicators.filter(
+        (item) => !this.preIndicators.includes(item)
+      );
+      const removeArr = this.preIndicators.filter(
+        (item) => !this.showIndicators.includes(item)
+      );
 
-      addArr.forEach((indicatorName)=>{
-        const findItem = this.indicatorOptions.find((item)=>item.name == indicatorName);
+      addArr.forEach((indicatorName) => {
+        const findItem = this.indicatorOptions.find(
+          (item) => item.name == indicatorName
+        );
         this.chart.createIndicator(findItem.name, true, {
           id: findItem.id,
           order: findItem.order,
         });
-      })
-      removeArr.forEach((indicatorName)=>{
-        const findItem = this.indicatorOptions.find((item)=>item.name == indicatorName);
+      });
+      removeArr.forEach((indicatorName) => {
+        const findItem = this.indicatorOptions.find(
+          (item) => item.name == indicatorName
+        );
         this.chart.removeIndicator({
-          name: findItem.name
+          name: findItem.name,
         });
-      })
-    }
+      });
+    },
   },
   beforeDestroy() {
     dispose(this.chart);
