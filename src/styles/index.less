@@ -3,6 +3,7 @@
     padding: 0;
     overscroll-behavior-y: none;
     overscroll-behavior-x: none;
+    touch-action: manipulation;
 }
 
 /* 强制页面横屏显示（旋转内容适应屏幕方向） */
@@ -18,6 +19,11 @@
       left: 0;
     }
   }
+.el-scrollbar {
+    > .el-scrollbar__bar {
+        opacity: 1 !important;
+    }
+}
 
 .el-table .cell {
     padding: 0;
