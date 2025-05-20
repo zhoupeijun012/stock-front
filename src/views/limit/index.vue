@@ -171,6 +171,7 @@ export default {
             formatter: (row) => {
               return row.f10005 + "连板";
             },
+            fixed: 'right'
           },
           {
             prop: "f10006",
@@ -180,6 +181,7 @@ export default {
               return `${row.f10007}/${row.f10006}`;
             },
             align: "center",
+            fixed: 'right'
           },
           {
             prop: "f10",
@@ -192,6 +194,7 @@ export default {
               return isNaN(row.f10) ? "-" : row.f10 / 100;
             },
             align: "center",
+            fixed: 'right'
           },
           {
             prop: "f6",
@@ -203,6 +206,7 @@ export default {
             formatter: (row) => {
               return formatMoney(row.f6);
             },
+            fixed: 'right',
             align: "left",
           },
         ],

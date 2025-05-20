@@ -23,7 +23,8 @@ export default {
         {
           prop: "f14",
           label: "股票名称",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -34,7 +35,8 @@ export default {
         {
           prop: "f12",
           label: "股票代码",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -45,7 +47,8 @@ export default {
         {
           prop: "f3",
           label: "涨跌幅",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f3);
@@ -57,7 +60,8 @@ export default {
         {
           prop: "f21",
           label: "流通市值",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -72,7 +76,8 @@ export default {
         {
           prop: "f20",
           label: "总市值",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           formatter: (row) => {
             return formatMoney(row.f20);
@@ -82,7 +87,8 @@ export default {
         {
           prop: "f2",
           label: "最新价",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -96,7 +102,8 @@ export default {
         {
           prop: "f6",
           label: "成交额",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -110,7 +117,8 @@ export default {
         {
           prop: "f7",
           label: "振幅",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           formatter: (row) => {
             return formatPrec(row.f7, "%");
@@ -119,7 +127,8 @@ export default {
         {
           prop: "f10",
           label: "量比",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f10);
@@ -131,7 +140,8 @@ export default {
         {
           prop: "f8",
           label: "换手率",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -145,7 +155,8 @@ export default {
         {
           prop: "f9",
           label: "市盈率",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           formatter: (row) => {
             return formatPrec(row.f9);
@@ -154,7 +165,8 @@ export default {
         {
           prop: "f11",
           label: "5分涨跌",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f11);
@@ -166,19 +178,22 @@ export default {
         {
           prop: "f40003",
           label: "历史最高价",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
         },
         {
           prop: "f40004",
           label: "历史最低价",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
         },
         {
           prop: "f24",
           label: "60日涨幅",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f24);
@@ -190,7 +205,8 @@ export default {
         {
           prop: "f62",
           label: "主力净流入",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f62);
@@ -202,7 +218,8 @@ export default {
         {
           prop: "f267",
           label: "3日净流入",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f267);
@@ -215,7 +232,8 @@ export default {
         {
           prop: "f164",
           label: "5日净流入",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f164);
@@ -227,7 +245,8 @@ export default {
         {
           prop: "f63",
           label: "集合竞价",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -241,7 +260,8 @@ export default {
         {
           prop: "f104",
           label: "上涨家数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -252,7 +272,8 @@ export default {
         {
           prop: "f105",
           label: "下跌家数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -263,13 +284,15 @@ export default {
         {
           prop: "f106",
           label: "平家家数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
         },
         {
           prop: "f128",
           label: "板块领涨股",
-          span: 4,
+          span: 6,
+          lg: 4,
           cellStyle: (row) => {
             return {
               border: "1px solid #dcdfe6",
@@ -292,7 +315,8 @@ export default {
         {
           prop: "f40005",
           label: "暴跌倍数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           formatter: (row) => {
             return row.f40005 <= 1 ? "历史新高" : row.f40005;
@@ -301,7 +325,8 @@ export default {
         {
           prop: "f40006",
           label: "924倍数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40006);
@@ -313,7 +338,8 @@ export default {
         {
           prop: "f40007",
           label: "205倍数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40007);
@@ -325,7 +351,8 @@ export default {
         {
           prop: "f40008",
           label: "排列天数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40008);
@@ -335,7 +362,8 @@ export default {
         {
           prop: "f40009",
           label: "排列涨幅",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40009);
@@ -347,7 +375,8 @@ export default {
         {
           prop: "f40010",
           label: "60线天数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40010);
@@ -356,7 +385,8 @@ export default {
         {
           prop: "f40011",
           label: "60线涨幅",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f40011);
@@ -368,7 +398,8 @@ export default {
         {
           prop: "f50004",
           label: "流入天数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f50004);
@@ -377,7 +408,8 @@ export default {
         {
           prop: "f50005",
           label: "流入金额",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return valueStyle(row.f50005);
@@ -389,7 +421,8 @@ export default {
         {
           prop: "f40014",
           label: "金叉天数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -400,7 +433,8 @@ export default {
         {
           prop: "goldenCrossCount",
           label: "金叉数量",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -411,7 +445,8 @@ export default {
         {
           prop: "deathCrossCount",
           label: "死叉数量",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {
@@ -422,7 +457,8 @@ export default {
         {
           prop: "f40015",
           label: "连涨天数",
-          span: 4,
+          span: 6,
+          lg: 4,
           component: "text-cell",
           cellStyle: (row) => {
             return {

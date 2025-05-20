@@ -178,11 +178,12 @@ export default {
             },
             sortable: "custom",
             align: "center",
+            fixed:'right'
           },
           {
             prop: "f50005",
             label: "流入金额",
-            minWidth: "90px",
+            minWidth: "100px",
             cellStyle: (row) => {
               return valueStyle(row.f50005);
             },
@@ -191,6 +192,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
+            fixed:'right'
           },
           {
             prop: "f40015",
@@ -203,6 +205,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
+            fixed:'right'
           },
           // {
           //   prop: "f10",
@@ -229,6 +232,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
+            fixed:'right'
           },
         ],
         foldColums: [
@@ -407,7 +411,7 @@ export default {
           },
           {
             prop: "f62",
-            label: "主力净流入",
+            label:  "净流入",
             span: 5,
             component: "text-cell",
             cellStyle: (row) => {

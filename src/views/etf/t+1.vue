@@ -109,7 +109,7 @@ export default {
           {
             prop: "f10",
             label: "量比",
-            minWidth: "80px",
+            minWidth: "90px",
             sortable: "custom",
             cellStyle: (row) => {
               return valueStyle(row.f10);
@@ -117,6 +117,7 @@ export default {
             formatter: (row) => {
               return isNaN(row.f10) ? "-" : row.f10 / 100;
             },
+            fixed:'center'
           },
           {
             prop: "f8",
@@ -131,6 +132,8 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f8, "%");
             },
+            align:'center',
+            fixed:'right'
           },
           {
             prop: "f11",
@@ -143,6 +146,8 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f11, "%");
             },
+            align:'center',
+            fixed:'right'
           },
         ],
         foldColums: [

@@ -9,7 +9,8 @@
     >
       <el-row :gutter="8">
         <el-col
-          :span="6"
+          :span="8"
+          :lg="6"
           v-for="(tableItem, index) in tableData"
           :key="'card-item-' + index"
         >

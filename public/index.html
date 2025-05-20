@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>巴韭特</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, orientation=landscape"
+    />
+    <link rel="manifest" href="./manifest.json" />
   </head>
   <body>
     <script src="./chinese-days.js"></script>
+    <script>
+      let deferredPrompt; // 存储触发安装的事件
+      window.addEventListener("beforeinstallprompt", function (e) {
+        // 阻止 Chrome 67 及更早版本自动显示安装提示
+        e.preventDefault();
+        // 保存事件用于后续触发安装
+        window.pwaInstaller = e;
+      });
+
+      // 注册 Service Worker
+      // if ("serviceWorker" in navigator) {
+      //   window.addEventListener("load", () => {
+      //     navigator.serviceWorker
+      //       .register("./sw.js")
+      //       .then((registration) => {
+      //         console.log("Service Worker 注册成功:", registration);
+      //       })
+      //       .catch((error) => {
+      //         console.error("Service Worker 注册失败:", error);
+      //       });
+      //   });
+      // }
+    </script>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

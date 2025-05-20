@@ -25,9 +25,11 @@
         :tableFunction="tableFunction"
         :options="options"
         ref="ft-table"
+        :autoHeight="false"
+        :showPager="false"
         class="ft-table"
       >
-        <el-table-column label="操作" width="60" align="center">
+        <el-table-column label="操作" width="60" align="center" fixed="right">
           <template scope="scope">
             <el-button type="text" @click="deleteRow(scope.row)"
               >删除</el-button
@@ -267,6 +269,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
+            fixed: 'right'
           },
           // {
           //   prop: "f10",
@@ -293,6 +296,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
+            fixed: 'right'
           },
         ],
         foldColums: [

@@ -164,6 +164,13 @@ export default {
     flex-wrap: wrap;
   }
 }
+@media screen and (max-width: 1200px) {
+    .search-bar {
+      /deep/.el-form-item {
+        width: 33.3%;
+      }
+    }
+}
 .search-btn-warp {
   display: flex;
   align-items: flex-start;

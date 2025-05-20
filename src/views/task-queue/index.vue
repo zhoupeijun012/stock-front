@@ -77,6 +77,7 @@ export default {
               return row.needRetry == "1" ? "是" : "否";
             },
             showOverflowTooltip: true,
+            fixed: 'right'
           },
         ],
       },

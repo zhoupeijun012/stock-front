@@ -263,3 +263,22 @@ export const concatFundFromDetail = (lines = "", detail) => {
   }
   return lines;
 };
+
+export function detectPwaMode() {
+  // 1. 标准 display-mode 检测
+  const displayMode = window.matchMedia('(display-mode: standalone)').matches;
+  
+  // 2. iOS Safari 检测
+  const iOS = /iphone|ipod|ipad/i.test(navigator.userAgent);
+  const iOSStandalone = iOS && window.navigator.standalone === true;
+  
+  // 3. Chrome/Edge 安装检测
+  const chromeInstalled = window.matchMedia('(display-mode: minimal-ui)').matches ||
+                          window.matchMedia('(display-mode: fullscreen)').matches;
+  
+  // 4. 其他浏览器特征检测
+  const hasLauncherIcon = window.matchMedia('(display-mode: standalone)').matches ||
+                         document.referrer.includes('android-app://');
+  
+  return displayMode || iOSStandalone || chromeInstalled || hasLauncherIcon;
+}

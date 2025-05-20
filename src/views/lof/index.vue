@@ -115,6 +115,8 @@ export default {
             formatter: (row) => {
               return isNaN(row.f10) ? "-" : row.f10 / 100;
             },
+            align:'center',
+            fixed:'right'
           },
           {
             prop: "f8",
@@ -129,6 +131,7 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f8, "%");
             },
+            fixed:'right'
           },
           {
             prop: "f11",
@@ -141,6 +144,7 @@ export default {
             formatter: (row) => {
               return formatPrec(row.f11, "%");
             },
+            fixed:'right'
           },
         ],
         foldColums: [

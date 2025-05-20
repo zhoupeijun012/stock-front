@@ -3,6 +3,7 @@
     <el-row>
       <el-col
         :span="column.span"
+        :lg="column.lg || column.span"
         v-for="(column, index) in colums"
         :key="'column' + index"
       >

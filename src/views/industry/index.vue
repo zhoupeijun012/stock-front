@@ -6,7 +6,7 @@
       :options="options"
       ref="ft-table"
     >
-      <el-table-column label="操作" width="60" align="center">
+      <el-table-column label="操作" width="60" align="center" fixed='right'>
         <template scope="scope">
           <el-button type="text" @click="toDetail(scope.row)">详情</el-button>
         </template>
@@ -181,6 +181,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
+            fixed:'right'
           },
           {
             prop: "f50005",
@@ -194,6 +195,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
+            fixed:'right'
           },
           {
             label: "连阳",
@@ -206,6 +208,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
+            fixed:'right'
           },
           {
             prop: "f6",
@@ -219,6 +222,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
+            fixed:'right'
           },
         ],
         foldColums: [

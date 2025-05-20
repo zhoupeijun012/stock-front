@@ -177,7 +177,7 @@ export default {
   },
   methods: {
     calculatePageSize() {
-      const height = this.$refs["ft-table"].clientHeight - 100;
+      const height = this.$refs["ft-table"].clientHeight - 150;
       const pageHeight = 480;
       const pageIndex =
         Math.ceil(height / pageHeight) > 0
