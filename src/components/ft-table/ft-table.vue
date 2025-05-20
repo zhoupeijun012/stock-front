@@ -103,7 +103,7 @@
 import fullIcon from "@/components/full-icon";
 // import captureIcon from "@/components/capture-icon";
 import ColumnFold from "./column-fold.vue";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 export default {
   components: { fullIcon, ColumnFold },
   props: {
@@ -147,7 +147,11 @@ export default {
       return "pagination-" + parseInt(Math.random() * 1000);
     },
     updateTime() {
-        return this.tableData.length > 0 ? dayjs(this.tableData[0].updatedAt).format("YYYY-MM-DD HH:mm:ss"): null
+      if (this.tableData.length > 0) {
+        let fixedStr = this.tableData[0].updatedAt.split('.')[0];
+        return dayjs(fixedStr).format("YYYY-MM-DD HH:mm:ss");
+      }
+      return "";
     },
   },
   data() {
@@ -165,7 +169,10 @@ export default {
     };
   },
   created() {
-    if (this.options.defaultSort && Object.keys(this.options.defaultSort).length > 0) {
+    if (
+      this.options.defaultSort &&
+      Object.keys(this.options.defaultSort).length > 0
+    ) {
       this.orderArray.push({
         prop: this.options.defaultSort.prop,
         order: this.options.defaultSort.order,
