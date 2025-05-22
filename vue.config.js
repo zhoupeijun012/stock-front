@@ -73,6 +73,27 @@ module.exports = defineConfig({
               cacheName: 'network-first-cache',
             },
           },
+          {
+            urlPattern: /\/favicon\.ico$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'favicon-cache',
+            }
+          },
+          {
+            urlPattern: /\/chinese-days\.js$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'scripts-cache',
+            }
+          },
+          {
+            urlPattern: /\/icons\/favicon@.*\.png$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'icons-cache',
+            }
+          }
         ],
       })
     ],
