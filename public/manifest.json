@@ -21,7 +21,7 @@
         "minimal-ui"
     ],
     "orientation_override": "landscape", 
-    "start_url": "/index.html",
+    "start_url": "/b.html",
     "display": "standalone",
     "orientation": "landscape",
     "prefer_related_applications": false,
