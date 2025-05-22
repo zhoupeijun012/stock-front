@@ -13,7 +13,7 @@
         class="el-menu-vertical-demo"
         :collapse="isCollapse"
       >
-        <el-menu-item >
+        <el-menu-item v-if="showFullScreenBtn">
           <div class="full-screen-icon" style="background: #fff">
             <full-icon style="width: 40px; height: 40px"></full-icon>
           </div>
@@ -83,36 +83,40 @@ export default {
     };
   },
   mounted() {
-    // navigator
-    //   .getInstalledRelatedApps()
-    //   .then((relatedApps) => {
-    //     if (relatedApps.length > 0) {
-    //       console.log("PWA已安装到主屏幕");
-    //     } else {
-    //       // console.log('PWA未安装到主屏幕');
-    //       this.$confirm("安装至桌面以提升体验?", "提示", {
-    //         confirmButtonText: "确定",
-    //         cancelButtonText: "取消",
-    //         type: "warning",
-    //       })
-    //         .then(async () => {
-    //           // 显示安装提示
-    //           window.pwaInstaller.prompt();
-
-    //           // 等待用户响应
-    //           const { outcome } = await window.pwaInstaller.userChoice;
-    //           console.log(`用户选择: ${outcome}`);
-
-    //           // 清空事件，避免重复使用
-    //           window.pwaInstaller = null;
-    //         })
-    //         .catch(() => {});
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("检测失败:", error);
-    //   });
-      this.showFullScreenBtn = !detectPwaMode();
+    this.showFullScreenBtn = !detectPwaMode();
+    if (this.showFullScreenBtn) {
+      navigator
+        .getInstalledRelatedApps()
+        .then((relatedApps) => {
+          if (relatedApps.length > 0) {
+            console.log("PWA已安装到主屏幕");
+            debugger
+          } else {
+            // console.log('PWA未安装到主屏幕');
+            setTimeout(() => {
+              if (window.pwaInstaller) {
+                this.$confirm("是否安装至桌面以提升体验?", "提示", {
+                  confirmButtonText: "确定",
+                  cancelButtonText: "取消",
+                  type: "warning",
+                })
+                  .then(() => {
+                    // 显示安装提示
+                    window.pwaInstaller.prompt();
+                    window.pwaInstaller = null;
+                    // 清空事件，避免重复使用
+                  })
+                  .catch(() => {
+                    window.pwaInstaller = null;
+                  });
+              }
+            }, 500);
+          }
+        })
+        .catch((error) => {
+          console.log("检测失败:", error);
+        });
+    }
   },
   methods: {
     toggleSideBar() {

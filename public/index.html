@@ -7,8 +7,33 @@
     <title>巴韭特</title>
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <script>
+      // if ("serviceWorker" in navigator) {
+      //   navigator.serviceWorker
+      //     .register("./service-worker.js")
+      //     .then((registration) => {
+      //       console.log(
+      //         "Service Worker registered with scope:",
+      //         registration.scope
+      //       );
+      //     })
+      //     .catch((error) => {
+      //       console.error("Service Worker registration failed:", error);
+      //     });
+      // }
+      window.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("loading").remove();
+      });
+
+      window.addEventListener("beforeinstallprompt", function (e) {
+        // 阻止 Chrome 67 及更早版本自动显示安装提示
+        e.preventDefault();
+        // 保存事件用于后续触发安装
+        window.pwaInstaller = e;
+      });
+    </script>
     <link rel="manifest" href="./manifest.json" />
   </head>
   <body>
@@ -89,32 +114,6 @@
       </style>
     </div>
 
-    <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("loading").remove();
-      });
-
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("./service-worker.js")
-          .then((registration) => {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
-      }
-      let deferredPrompt; // 存储触发安装的事件
-      window.addEventListener("beforeinstallprompt", function (e) {
-        // 阻止 Chrome 67 及更早版本自动显示安装提示
-        e.preventDefault();
-        // 保存事件用于后续触发安装
-        window.pwaInstaller = e;
-      });
-    </script>
     <script src="./chinese-days.js"></script>
 
     <noscript>
