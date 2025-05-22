@@ -90,7 +90,6 @@ export default {
         .then((relatedApps) => {
           if (relatedApps.length > 0) {
             console.log("PWA已安装到主屏幕");
-            debugger
           } else {
             // console.log('PWA未安装到主屏幕');
             setTimeout(() => {
