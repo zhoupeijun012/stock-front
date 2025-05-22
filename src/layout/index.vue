@@ -13,7 +13,7 @@
         class="el-menu-vertical-demo"
         :collapse="isCollapse"
       >
-        <el-menu-item v-if="showFullScreenBtn">
+        <el-menu-item >
           <div class="full-screen-icon" style="background: #fff">
             <full-icon style="width: 40px; height: 40px"></full-icon>
           </div>
