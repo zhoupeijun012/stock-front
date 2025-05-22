@@ -6,19 +6,6 @@
     touch-action: manipulation;
 }
 
-/* 强制页面横屏显示（旋转内容适应屏幕方向） */
-@media screen and (orientation: portrait) {
-    body {
-      transform: rotate(-90deg); /* 竖屏时旋转内容为横屏 */
-      transform-origin: top left;
-      width: 100vh; /* 视口高度作为宽度 */
-      height: 100vw; /* 视口宽度作为高度 */
-      overflow-x: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  }
 .el-scrollbar {
     > .el-scrollbar__bar {
         opacity: 1 !important;
