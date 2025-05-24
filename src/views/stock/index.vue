@@ -76,6 +76,18 @@ export default {
               };
             },
           },
+          {
+            prop: "f40016",
+            label: "控盘程度",
+            minWidth: "90px",
+            align: "left",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
+            },
+          },
           // {
           //   prop: "f40005",
           //   label: "暴跌倍数",
@@ -178,7 +190,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
-            fixed:'right'
+            fixed: "right",
           },
           {
             prop: "f50005",
@@ -192,7 +204,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
-            fixed:'right'
+            fixed: "right",
           },
           {
             prop: "f40015",
@@ -205,7 +217,7 @@ export default {
             },
             sortable: "custom",
             align: "center",
-            fixed:'right'
+            fixed: "right",
           },
           // {
           //   prop: "f10",
@@ -232,7 +244,7 @@ export default {
             },
             sortable: "custom",
             align: "left",
-            fixed:'right'
+            fixed: "right",
           },
         ],
         foldColums: [
@@ -411,7 +423,7 @@ export default {
           },
           {
             prop: "f62",
-            label:  "净流入",
+            label: "净流入",
             span: 5,
             component: "text-cell",
             cellStyle: (row) => {
@@ -517,6 +529,10 @@ export default {
       if (params.where["f40014_ext"]) {
         params.where["f40014"] = params.where["f40014_ext"];
         delete params.where["f40014_ext"];
+      }
+      if (params.where["f40016_ext"]) {
+        params.where["f40016"] = params.where["f40016_ext"];
+        delete params.where["f40016_ext"];
       }
       if (params.where["f3_ext"]) {
         params.where["f3"] = params.where["f3_ext"];

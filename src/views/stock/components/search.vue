@@ -15,7 +15,7 @@
         @clear="change"
       />
     </el-form-item>
-    <el-form-item label="股票代码">
+    <!-- <el-form-item label="股票代码">
       <el-input
         v-model.trim="row.f12"
         placeholder="请输入"
@@ -23,7 +23,7 @@
         style="width: 100%"
         @clear="change"
       />
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item label="行业">
       <lazy-select
         style="width: 100%"
@@ -285,6 +285,21 @@
         ></el-option>
       </el-select>
     </el-form-item>
+    <el-form-item label="控盘程度">
+      <el-select
+        v-model="row.f40016"
+        @change="optionChange('f40016', f40016Options)"
+        clearable
+      >
+        <el-option
+          v-for="(typeItem, index) in f40016Options"
+          :key="'type-item-' + index"
+          :value="typeItem.value"
+          :label="typeItem.label"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+
     <el-form-item label="当日涨幅">
       <el-select
         v-model="row.f3"
@@ -346,7 +361,10 @@ const model = {
 
   f40014: "",
   f40014_ext: null,
-  
+
+  f40016: "",
+  f40016_ext: null,
+
   f3: "",
   f3_ext: null,
 
@@ -419,6 +437,12 @@ export default {
         { label: "4-6%", value: "4", range: [400, 600] },
         { label: "小于6%", value: "5", range: [400, 600] },
         { label: "大于6%", value: "6", range: [600] },
+      ],
+      f40016Options: [
+        { label: "小于50", value: "1", range: [0, 50] },
+        { label: "50-100", value: "1", range: [50, 100] },
+        { label: "大于80", value: "3", range: [80] },
+        { label: "大于100", value: "4", range: [100] },
       ],
     };
   },
