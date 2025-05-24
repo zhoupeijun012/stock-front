@@ -440,9 +440,10 @@ export default {
       ],
       f40016Options: [
         { label: "小于50", value: "1", range: [0, 50] },
-        { label: "50-100", value: "1", range: [50, 100] },
-        { label: "大于80", value: "3", range: [80] },
-        { label: "大于100", value: "4", range: [100] },
+        { label: "50-100", value: "2", range: [50, 100] },
+         { label: "大于50", value: "3", range: [50] },
+        { label: "大于80", value: "4", range: [80] },
+        { label: "大于100", value: "5", range: [100] },
       ],
     };
   },
