@@ -69,6 +69,18 @@ export default {
               };
             },
           },
+                    {
+            prop: "f40016",
+            label: "控盘程度",
+            minWidth: "90px",
+            align: "left",
+            sortable: "custom",
+            cellStyle: (row) => {
+              return {
+                color: "#f00",
+              };
+            },
+          },
 
           {
             prop: "f40006",
